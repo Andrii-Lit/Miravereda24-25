@@ -54,7 +54,7 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
             startActivity(intent);
         });
         carrito.setOnClickListener((View view)->{
-            Intent intent = new Intent(this, Ejemplo.class);
+            Intent intent = new Intent(this, CarritoActivity.class);
             startActivity(intent);
         });
 
