@@ -20,8 +20,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <activity android:name=".CatalogoActivity"></activity>
         </activity>
+        <activity android:name=".CatalogoActivity"></activity>
     </application>
 
 </manifest>
