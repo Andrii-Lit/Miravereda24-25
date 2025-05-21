@@ -18,6 +18,12 @@ public class Usuario {
         return id;
     }
 
+    public Usuario(String email, String contrasenya) {
+        this.email = email;
+        this.contrasenya = contrasenya;
+
+    }
+
     public String getContrasenya() {
         return contrasenya;
     }

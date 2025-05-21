@@ -28,9 +28,11 @@
 
         <ImageView
             android:id="@+id/ivPreference"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:srcCompat="@mipmap/settings" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@android:drawable/ic_menu_preferences" />
 
 
     </LinearLayout>
