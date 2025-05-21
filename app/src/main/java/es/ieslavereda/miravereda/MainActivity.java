@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         /*
-        Users simples para testing
+        Users simples para testingus
          */
         usuarios = new ArrayList<>();
         usuarios.add(new Usuario("usuario1@gmail.com", "password1"));
