@@ -34,9 +34,9 @@
         android:layout_marginBottom="4dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/carrito_totalTV"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/carrito_totalTV" />
 
     <TextView
         android:id="@+id/Tomatometer"
@@ -44,9 +44,9 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/Filmaffinity"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/carrito_precioTV"
         app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/carrito_precioTV"
         app:layout_constraintTop_toTopOf="@+id/Filmaffinity"
         app:layout_constraintVertical_bias="1.0" />
 
@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/carrito_totalTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -75,15 +75,15 @@
         app:layout_constraintVertical_bias="0.761" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/carrito_precioTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:text="Tomatometer"
         app:layout_constraintBottom_toTopOf="@+id/Tomatometer"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/carrito_totalTV"
+        app:layout_constraintTop_toTopOf="@+id/carrito_totalTV"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -96,7 +96,7 @@
         app:layout_constraintBottom_toTopOf="@+id/Popcornmeter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/carrito_precioTV"
+        app:layout_constraintTop_toTopOf="@+id/carrito_precioTV"
         app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
