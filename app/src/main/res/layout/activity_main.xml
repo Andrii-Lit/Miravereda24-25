@@ -43,7 +43,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usertxInput"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:textAlignment="viewStart">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
@@ -52,7 +53,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:hint="Introduce tu cliente"
-                android:textAlignment="center" />
+                android:textAlignment="viewStart" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -66,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:hint="Introduce tu contraseña"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textAlignment="viewStart" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

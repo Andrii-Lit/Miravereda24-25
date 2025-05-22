@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(MainActivity.this, PreferenciasActivity.class);
             startActivity(intent);
         });
+        //Ir a ver la info del usuario
+
 
         tvContrasenya.setOnClickListener(v->{
             String email= String.valueOf(username.getText());
