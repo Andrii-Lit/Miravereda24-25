@@ -2,7 +2,7 @@ package es.ieslavereda.miravereda.Model;
 
 import java.sql.Timestamp;
 
-public class Usuario {
+public class Cliente {
     private int id;
     private String contrasenya;
     private String nombre;
@@ -18,7 +18,7 @@ public class Usuario {
         return id;
     }
 
-    public Usuario(String email, String contrasenya) {
+    public Cliente(String email, String contrasenya) {
         this.email = email;
         this.contrasenya = contrasenya;
 
