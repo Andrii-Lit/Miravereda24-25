@@ -24,6 +24,7 @@
         <activity android:name=".CatalogoActivity"/>
         <activity android:name=".CarritoActivity"/>
         <activity android:name=".InformationActivity"/>
+        <activity android:name=".PreferenciasActivity"/>
     </application>
 
 </manifest>
