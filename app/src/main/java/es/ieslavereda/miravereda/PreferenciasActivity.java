@@ -1,6 +1,7 @@
 package es.ieslavereda.miravereda;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class PreferenciasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner bSpinner;
+    private FloatingActionButton botonVoladorMagico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,9 @@ public class PreferenciasActivity extends AppCompatActivity implements AdapterVi
             return insets;
         });
 
-
+        botonVoladorMagico = findViewById(R.id.floatingButtonReturnPreferences);
         bSpinner=findViewById(R.id.bSpinner);
+
         bSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -50,7 +55,13 @@ public class PreferenciasActivity extends AppCompatActivity implements AdapterVi
 
             }
         });
-
+        botonVoladorMagico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreferenciasActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Spinner aSpinner=findViewById(R.id.aSpinner);
         aSpinner.setOnItemSelectedListener(this);
