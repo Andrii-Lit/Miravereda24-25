@@ -83,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 });
 
+        btIniciarSesion.setOnClickListener(v -> {
+            String email = username.getText().toString();
+            String contrasenya = password.getText().toString();
+            if (usuarioCorrecto(email,contrasenya)) {
+                Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
+                startActivity(intent);
+            }
+            else
+                Toast.makeText(this,"Usuario o contraseña incorrects",Toast.LENGTH_LONG).show();
+        });
+
 
     }
 

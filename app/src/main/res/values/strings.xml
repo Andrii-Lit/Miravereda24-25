@@ -6,8 +6,8 @@
         <item>Inglés</item>
     </string-array>
     <string-array name="Spinner_items_tema">
-        <item>Claro</item>
-        <item>Oscuro</item>
         <item>Sistema</item>
+        <item>Oscuro</item>
+        <item>Claro</item>
     </string-array>
 </resources>
