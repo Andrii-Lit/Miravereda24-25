@@ -30,7 +30,7 @@ public class UserInfoActivity extends AppCompatActivity {
         Intent intent=getIntent();
 
         String email=intent.getStringExtra("email");
-        String contrasenya =intent.getStringExtra("contrasenya");
+        String contrasenya=intent.getStringExtra("contrasenya");
         tvEmail.setText(email);
         tvPassword.setText(contrasenya);
         fbtBack.setOnClickListener(v->{

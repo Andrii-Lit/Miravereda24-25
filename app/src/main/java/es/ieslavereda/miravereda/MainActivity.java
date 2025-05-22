@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         tvContrasenya.setOnClickListener(v->{
-            String email=username.getText().toString();
-            String contrasenya=username.getText().toString();
+            String email= String.valueOf(username.getText());
+            String contrasenya= String.valueOf(password.getText());
             Intent intent=new Intent(MainActivity.this,UserInfoActivity.class);
                 intent.putExtra("email",email);
                 intent.putExtra("contrasenya",contrasenya);
