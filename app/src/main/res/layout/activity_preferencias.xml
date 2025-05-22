@@ -14,39 +14,57 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="20dp"
-         android:entries="@array/Spinner_items"
+         android:layout_marginStart="20dp"
+         android:layout_marginEnd="20dp"
+         android:entries="@array/Spinner_items_idiomas"
          app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.189"
-         tools:ignore="MissingConstraints"
-         tools:layout_editor_absoluteX="-62dp" />
+         app:layout_constraintVertical_bias="0.155"
+         tools:ignore="MissingConstraints" />
+
+     <Spinner
+         android:id="@+id/bSpinner"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:entries="@array/Spinner_items_tema"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="@+id/aSpinner"
+         app:layout_constraintStart_toStartOf="@+id/aSpinner"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.343"
+         tools:ignore="MissingConstraints" />
 
      <com.google.android.material.floatingactionbutton.FloatingActionButton
          android:id="@+id/floatingActionButton"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:clickable="true"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
          app:srcCompat="?attr/homeAsUpIndicator"
-         tools:layout_editor_absoluteX="0dp"
-         tools:layout_editor_absoluteY="-1dp" />
+         tools:ignore="MissingConstraints" />
 
      <TextView
          android:id="@+id/textView"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:layout_marginBottom="12dp"
          android:text="Idioma"
-         android:textColor="#000000"
-         tools:layout_editor_absoluteX="27dp"
-         tools:layout_editor_absoluteY="116dp" />
+         app:layout_constraintBottom_toTopOf="@+id/aSpinner"
+         app:layout_constraintStart_toStartOf="@+id/aSpinner" />
 
      <TextView
          android:id="@+id/textView2"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:layout_marginBottom="12dp"
          android:text="Tema"
-         android:textColor="#050505"
-         tools:layout_editor_absoluteX="27dp"
-         tools:layout_editor_absoluteY="212dp" />
-
+         app:layout_constraintBottom_toTopOf="@+id/bSpinner"
+         app:layout_constraintEnd_toEndOf="@+id/bSpinner"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="@+id/bSpinner"
+         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

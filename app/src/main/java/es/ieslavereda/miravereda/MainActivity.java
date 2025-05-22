@@ -2,6 +2,7 @@ package es.ieslavereda.miravereda;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
             else
                 Toast.makeText(this,"Usuario o contraseña incorrects",Toast.LENGTH_LONG).show();
         });
+
+        //Entrar a preferencias
         ivPreference.setOnClickListener(v->{
             Intent intent=new Intent(MainActivity.this, PreferenciasActivity.class);
             startActivity(intent);
         });
+
         tvContrasenya.setOnClickListener(v->{
             String email= String.valueOf(username.getText());
             String contrasenya= String.valueOf(password.getText());
@@ -81,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     public Boolean usuarioCorrecto(String email, String password) {
         for (Cliente cliente : clientes) {
