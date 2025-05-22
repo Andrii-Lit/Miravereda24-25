@@ -1,0 +1,22 @@
+<!--<?php
+sesion_start();
+?>
+-->
+<!DOCTYPE html> 
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>MIRAVEREDA</title>
+		<link rel="stylesheet" type="text/css" href="micss.css">
+	</head>
+	<body>
+		<h2>Miravereda</h2>
+		<form action="" method="POST"> 
+			<label>Usuario:
+			<input type="text"	id="nomUsu" name="nomUsu" placeholder="Ej: Miravereda"></label>
+			<label>Contrasenya:
+			<input type="password"	id="contra" name="contra" placeholder="Ej: M/r4v3r3d4" minlength="8" maxlength="16" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$"></label>
+			<input type="submit">
+		</form>
+	</body>
+</html>
