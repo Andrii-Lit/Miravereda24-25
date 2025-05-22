@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ProyectoMiravereda</string>
+    <string-array name="spinnerPrueba">
+        <item>Castellano</item>
+        <item>Valenciano</item>
+        <item>English</item>
+    </string-array>
 </resources>
