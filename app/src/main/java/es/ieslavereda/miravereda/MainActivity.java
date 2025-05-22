@@ -2,7 +2,6 @@ package es.ieslavereda.miravereda;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.ieslavereda.miravereda.Model.Usuario;
+import es.ieslavereda.miravereda.Model.Cliente;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView ivLogo;
@@ -29,14 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvContrasenya;
     private Button btIniciarSesion;
     private TextView tvCrearCuenta;
-    private List<Usuario> usuarios;
+    private List<Cliente> clientes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tvUsername), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -44,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         /*
         Users simples para testingus
          */
-        usuarios = new ArrayList<>();
-        usuarios.add(new Usuario("usuario1@gmail.com", "password1"));
-        usuarios.add(new Usuario("usuario2@gmail.com", "password2"));
+        clientes = new ArrayList<>();
+        clientes.add(new Cliente("usuario1@gmail.com", "password1"));
+        clientes.add(new Cliente("usuario2@gmail.com", "password2"));
 
         ivLogo = findViewById(R.id.ivLogo);
         ivPreference = findViewById(R.id.ivPreference);
@@ -67,13 +66,25 @@ public class MainActivity extends AppCompatActivity {
             else
                 Toast.makeText(this,"Usuario o contraseña incorrects",Toast.LENGTH_LONG).show();
         });
+        ivPreference.setOnClickListener(v->{
+            Intent intent=new Intent(MainActivity.this, PreferenciasActivity.class);
+            startActivity(intent);
+        });
+        tvContrasenya.setOnClickListener(v->{
+            String email=username.getText().toString();
+            String contrasenya=username.getText().toString();
+            Intent intent=new Intent(MainActivity.this,UserInfoActivity.class);
+                intent.putExtra("email",email);
+                intent.putExtra("contrasenya",contrasenya);
+                startActivity(intent);
+                });
 
 
     }
 
     public Boolean usuarioCorrecto(String email, String password) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getEmail().equals(email) && usuario.getContrasenya().equals(password)) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getEmail().equals(email) && cliente.getContrasenya().equals(password)) {
                 return true;
             }
         }

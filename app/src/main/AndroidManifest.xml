@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ProyectoMiravereda"
         tools:targetApi="31">
         <activity
+            android:name=".UserInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,10 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CatalogoActivity"/>
-        <activity android:name=".CarritoActivity"/>
-        <activity android:name=".InformationActivity"/>
-        <activity android:name=".PreferenciasActivity"/>
+        <activity android:name=".CatalogoActivity" />
+        <activity android:name=".CarritoActivity" />
+        <activity android:name=".InformationActivity" />
+        <activity android:name=".PreferenciasActivity" />
     </application>
 
 </manifest>

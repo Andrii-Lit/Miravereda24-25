@@ -4,14 +4,14 @@ package es.ieslavereda.miravereda;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
+;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+
+
 
 public class PreferenciasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -23,8 +23,10 @@ public class PreferenciasActivity extends AppCompatActivity implements AdapterVi
         aSpinner.setOnItemSelectedListener(this);
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        adapterView.getSelectedItem();
         Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
     }
 
