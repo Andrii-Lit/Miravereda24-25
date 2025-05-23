@@ -116,7 +116,7 @@ create table capitulo(
 create table carrito(
     id int auto_increment primary key,
     cliente_id int,
-    total decimal(10,2),
+    total decimal(10,2) default 0.00,
     activo boolean default true,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (cliente_id) references cliente (id)
@@ -141,7 +141,7 @@ create table factura(
     total_con_iva decimal(10,2),
     total decimal(10,2),
     iva decimal default 0.21,
-    fecha date,
+    fecha date CURRENT_DATE,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (cliente_id) references cliente (id)
 );

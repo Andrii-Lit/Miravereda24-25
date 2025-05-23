@@ -3,40 +3,7 @@
 
 use miravereda2425;
 
-
 -- #### TABLA CLIENTE ####
--- PROCEDIMIENTO y TRIGGERS para actualizar el changedTS de CLIENTE
-delimiter $$
-drop procedure if exists actualizar_changedTS_cliente$$
-create procedure actualizar_changedTS_cliente(in cliente_id int)
-begin
-	update cliente set changedTS = now() where id = cliente_id;
-end
-$$
-delimiter ;
-
--- TRIGGER INSERT
-delimiter $$
-drop trigger if exists trigger_cliente_insert$$
-create trigger trigger_cliente_insert
-after insert on cliente for each row
-begin
-	call actualizar_changedTS_cliente(new.id);
-end
-$$
-delimiter ;
-
--- TRIGGER UPDATE
-delimiter $$
-drop trigger if exists trigger_cliente_update$$
-create trigger trigger_cliente_update
-after update on cliente for each row
-begin
-	call actualizar_changedTS_cliente;
-end
-$$
-delimiter ;
-
 -- TRIGGER al hacer INSERT en la tabla CLIENTE
 -- se crea un CARRITO asignado a este
 delimiter $$
@@ -44,15 +11,14 @@ drop trigger if exists trigger_cliente_carrito$$
 create trigger trigger_cliente_carrito
 after insert on cliente for each row
 begin
-	insert into carrito(cliente_id, total, changedTS)
-	values (new.id, 0, now());
+	insert into carrito(cliente_id)values (new.id);
 end
 $$
 delimiter ;
 
 
 -- #### TABLA VALORACION ####
--- TRIGGER al hacer INSERT en VALORACION para que la nota no sea mayor a 10 ni menor que 0, también el changedTS es now()
+-- TRIGGER al hacer INSERT en VALORACION para que la nota no sea mayor a 10 ni menor que 0
 delimiter $$
 drop trigger if exists trigger_valoracion_insert$$
 create trigger trigger_valoracion_insert
@@ -61,7 +27,6 @@ begin
 	if new.valor >10 then set new.valor = 10;
 	elseif new.valor < 0 then set new.valor = 0;
 	end if;
-	set new.changedTS = now();
 end
 delimiter ;
 
@@ -98,27 +63,37 @@ end
 $$
 delimiter ;
 
--- #### TABLA CONTENIDO ####
--- PROCEDIMIENTO actualizar_changedTS_contenido
+-- #### TABLA FACTURA ####
+-- PROCEDIMIENTO al que llamará el botón COMPRAR en carrito
 delimiter $$
-drop procedure if exists actualizar_changedTS_contenido$$
-create procedure actualizar_changedTS_contenido(in contenido_id int)
+drop procedure if exists comprar$$
+create procedure comprar(IN p_cliente_id int)
 begin
-	update contenido set changedTS = now() where id = contenido_id;
-end
-$$
-delimiter ;
--- TRIGGERS para changedTS
-delimiter $$
-drop trigger if exists trigger_contenido_insert$$
-create trigger trigger_contenido_insert
-after insert on contenido for each row
-begin
-	call actualizar_changedTS_contenido(new.id)
+    declare carrito_total decimal(10,2);
+    declare iva_rate decimal(10,2);
+    declare total_con_iva decimal(10,2);
+
+	select total into carrito_total from carrito where cliente_id = p_cliente_id and activo = true;
+
+	select iva into iva_rate from factura limit 1;
+
+	set total_con_iva = carrito_total + (carrito_total * iva_rate);
+
+	-- inserta en factura el id, total sin y con
+	insert into factura(cliente_id, total, total_con_iva)
+	values (p_cliente_id, carrito_total, total_con_iva);
+
+	-- desactiva el carrito
+	update carrito set activo = false where cliente_id = p_cliente_id and activo = true;
+
+    -- al final crea un nuevo carrito
+	insert into carrito(cliente_id) values (p_cliente_id);
+    end if;
 end
 $$
 delimiter ;
 
+-- #### PROCEDIMIENTO al que llamará el botón de añadir en
 
 
 
