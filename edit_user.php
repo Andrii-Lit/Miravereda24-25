@@ -1,7 +1,8 @@
-<?php
+<?php 
 include('connection.php');
 $con = connection();
 
+$id = $_POST['id'];
 $name = $_POST['name'];
 $lastname = $_POST['lastname'];
 $password = $_POST['password'];
@@ -11,11 +12,8 @@ $email = $_POST['email'];
 $date_of_birth = $_POST['date_of_birth'];
 $creditcard = $_POST['creditcard'];
 
-$sql = "INSERT INTO users (name,lastname,domicile,postal_code,email,date_of_birth,creditcard,password) VALUES ('$name','$lastname','$domicile','$postal_code','$email','$date_of_birth','$creditcard','$password')";
-//$sql = "INSERT INTO users VALUES ('$id','$name','$lastname','$domicile','$postal_code','$email','$date_of_birth','$creditcard','$password')";
+$sql = "UPDATE USERS SET name='$name',lastname='$lastname',password='$password',domicile='$domicile',postal_code='$postal_code', email='$email', date_of_birth='$date_of_birth',creditcard='$creditcard' WHERE id = '$id'";
 $query = mysqli_query($con, $sql);
-
-
 
 if($query){
     Header("Location: crudUsu.php");

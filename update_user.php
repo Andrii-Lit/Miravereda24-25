@@ -1,0 +1,39 @@
+<?php 
+include('connection.php');
+$con = connection();
+
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM users WHERE id='$id'";
+$query = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($query);
+?> 
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MIRAVEREDA</title>
+    </head>
+    <body>
+        <div>
+            <form action="edit_user.php" method="POST">
+                <h1>Editar usuario</h1>
+
+                <input type="hidden" name="id" value="<?= $row ['id'] ?>">
+                <input type="test" name="name" value="<?= $row ['name'] ?>">
+                <input type="test" name="lastname" value="<?= $row ['lastname'] ?>">
+                <input type="test" name="password" value="<?= $row ['password'] ?>">
+                <input type="test" name="domicile" value="<?= $row ['domicile'] ?>">
+                <input type="test" name="postal_code" value="<?= $row ['postal_code'] ?>">
+                <input type="test" name="email" value="<?= $row ['email'] ?>">
+                <input type="date" name="date_of_birth" value="<?= $row ['date_of_birth']?>">
+                <input type="test" name="creditcard" value="<?= $row ['creditcard'] ?>">
+
+                <input type="submit" value="Actualizar usuario">
+
+            </form>
+        </div>
+    </body>
+</html>
