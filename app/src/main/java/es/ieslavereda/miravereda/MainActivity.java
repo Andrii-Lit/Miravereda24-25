@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         /*
-        Users simples para testingus
+        Users simples para testing
          */
         clientes = new ArrayList<>();
         clientes.add(new Cliente("usuario1@gmail.com", "password1"));
@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         //Ir a ver la info del usuario
-
-
         tvContrasenya.setOnClickListener(v->{
             String email= String.valueOf(username.getText());
             String contrasenya= String.valueOf(password.getText());
