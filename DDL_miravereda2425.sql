@@ -1,6 +1,6 @@
 -- #### SCRIPT PARA CREAR LA BASE DE DATOS MIRAVEREDA
 -- by Cristóbal
-
+-- Se han dejado campos sin NOT NULL para hacer pruebas
 -- BASE DE DATOS
 create database miravereda2425;
 use miravereda2425;
@@ -73,7 +73,6 @@ create table pelicula(
 create table serie(
     contenido_id int primary key,
     tarifa_id int,
-    temporada int,
     disponibilidad boolean default true,
     precio decimal(10,2),
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
@@ -98,7 +97,8 @@ create table temporada(
     serie_id int,
     numero int,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (serie_id) references serie(contenido_id)
+    foreign key (serie_id) references serie(contenido_id),
+    unique (serie_id, numero)
 );
 
 -- tabla CAPITULO
