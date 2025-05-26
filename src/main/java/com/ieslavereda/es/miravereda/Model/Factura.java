@@ -2,6 +2,7 @@ package com.ieslavereda.es.miravereda.Model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Factura {
     private int id;
@@ -10,7 +11,7 @@ public class Factura {
     private double total;
     private double decimal;
     private Date fecha;
-    private LocalDate changedTS;
+    private LocalDateTime changedTS;
 
     public Factura(int id, int cliente_id, double total_con_iva, double total, double decimal, Date fecha) {
         this.id = id;
@@ -19,7 +20,7 @@ public class Factura {
         this.total = total;
         this.decimal = decimal;
         this.fecha = fecha;
-        changedTS = LocalDate.now();
+        changedTS = LocalDateTime.now();
     }
 
     public int getId() {
@@ -46,7 +47,7 @@ public class Factura {
         return fecha;
     }
 
-    public LocalDate getChangedTS() {
+    public LocalDateTime getChangedTS() {
         return changedTS;
     }
 }

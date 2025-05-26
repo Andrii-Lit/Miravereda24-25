@@ -1,18 +1,19 @@
 package com.ieslavereda.es.miravereda.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Lin_Fac {
     private int carrito_id;
     private int contenido_id;
     private double precio;
-    private LocalDate changedTS;
+    private LocalDateTime changedTS;
 
     public Lin_Fac(int carrito_id, int contenido_id, double precio) {
         this.carrito_id = carrito_id;
         this.contenido_id = contenido_id;
         this.precio = precio;
-        changedTS = LocalDate.now();
+        changedTS = LocalDateTime.now();
 
     }
 
@@ -28,7 +29,7 @@ public class Lin_Fac {
         return precio;
     }
 
-    public LocalDate getChangedTS() {
+    public LocalDateTime getChangedTS() {
         return changedTS;
     }
 }
