@@ -141,7 +141,7 @@ create table factura(
     total_con_iva decimal(10,2),
     total decimal(10,2),
     iva decimal default 0.21,
-    fecha date CURRENT_DATE,
+    fecha timestamp default CURRENT_TIMESTAMP,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (cliente_id) references cliente (id)
 );
