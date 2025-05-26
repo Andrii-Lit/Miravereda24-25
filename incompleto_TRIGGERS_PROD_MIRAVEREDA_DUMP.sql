@@ -106,7 +106,8 @@ end
 $$
 delimiter ;
 
--- 
+-- TO DO:
+-- trigger para borrar el carrito asociado a CLIENTE 
 
 
 
