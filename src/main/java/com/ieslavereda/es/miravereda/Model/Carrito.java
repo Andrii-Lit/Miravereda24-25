@@ -1,20 +1,21 @@
 package com.ieslavereda.es.miravereda.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Carrito {
     private int id;
     private  int cliente_id;
     private double total;
     private boolean activo;
-    private LocalDate changedTS;
+    private LocalDateTime changedTS;
 
     public Carrito(int id, int cliente_id) {
         this.id = id;
         this.cliente_id = cliente_id;
         activo = true;
         total = 0.00;
-        changedTS = LocalDate.now();
+        changedTS = LocalDateTime.now();
 
     }
 
@@ -34,7 +35,7 @@ public class Carrito {
         return activo;
     }
 
-    public LocalDate getChangedTS() {
+    public LocalDateTime getChangedTS() {
         return changedTS;
     }
 }

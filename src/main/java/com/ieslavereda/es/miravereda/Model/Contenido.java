@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.time.LocalDate;
-
-
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -22,7 +21,7 @@ public class Contenido {
             actores_principales, poster_path;
     private Date fecha_estreno;
     private double puntuacion_media;
-    private LocalDate changedTS;
+    private LocalDateTime changedTS;
 
 
 
@@ -39,7 +38,7 @@ public class Contenido {
         this.fecha_estreno = fecha_estreno;
         this.puntuacion_media = puntuacion_media;
         this.poster_path = poster_path;
-        this.changedTS = LocalDate.now();
+        this.changedTS = LocalDateTime.now();
     }
 
 

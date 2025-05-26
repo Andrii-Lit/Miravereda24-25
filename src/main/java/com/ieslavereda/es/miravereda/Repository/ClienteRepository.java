@@ -1,36 +1,152 @@
 package com.ieslavereda.es.miravereda.Repository;
 
+import com.ieslavereda.es.miravereda.Config.MyDataSource;
 import com.ieslavereda.es.miravereda.Model.Cliente;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+@Repository
+public class ClienteRepository implements IClienteRepository {
 
-public class ClienteRepository implements IClienteRepository{
 
 
     @Override
     public Cliente getCliente(int id) throws SQLException {
+        String sql = "SELECT * FROM cliente WHERE id = ?";
+        try (Connection con = MyDataSource.getMydataSource().getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+
+            return     Cliente.builder().id(rs.getInt("id")).contrasenya(rs.getString("contrasenya"))
+                        .nombre(rs.getString("nombre"))
+                        .apellidos(rs.getString("apellidos")).domicilio(rs.getString("domicilio"))
+                        .cod_postal(rs.getString("cod_postal"))
+                        .email(rs.getString("email"))
+                        .fecha_nac(rs.getDate("fecha_nac"))
+                        .num_tarjeta(rs.getString("num_tarjeta")).build();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
+
+
     }
 
     @Override
-    public Cliente addCliente(Cliente clienteInput) throws SQLException {
-        return null;
+    public Cliente addCliente(Cliente cliente) throws SQLException {
+        String sql = "INSERT INTO cliente (contrasenya, nombre, apellidos, domicilio, cod_postal, email, fecha_nac, num_tarjeta) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, cliente.getContrasenya());
+            ps.setString(2, cliente.getNombre());
+            ps.setString(3, cliente.getApellidos());
+            ps.setString(4, cliente.getDomicilio());
+            ps.setString(5, cliente.getCod_postal());
+            ps.setString(6, cliente.getEmail());
+            ps.setDate(7, cliente.getFecha_nac());
+            ps.setString(8, cliente.getNum_tarjeta());
+            ps.executeUpdate();
+
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int nuevoId = generatedKeys.getInt(1);
+                    return Cliente.builder()
+                            .id(nuevoId)
+                            .contrasenya(cliente.getContrasenya())
+                            .nombre(cliente.getNombre())
+                            .apellidos(cliente.getApellidos())
+                            .domicilio(cliente.getDomicilio())
+                            .cod_postal(cliente.getCod_postal())
+                            .email(cliente.getEmail())
+                            .fecha_nac(cliente.getFecha_nac())
+                            .num_tarjeta(cliente.getNum_tarjeta())
+                            .build();
+                }
+            }
+            return null;
+        }
     }
 
+
     @Override
-    public boolean updateCliente(Cliente clienteInput) throws SQLException {
+    public boolean updateCliente(Cliente cliente) throws SQLException {
+        Cliente cliente1=getCliente(cliente.getId());
+       String sql="Update cliente set contrasenya = ?, nombre = ?, " +
+               "apellidos = ?, domicilio = ?, " +
+               "cod_postal = ?, email = ?," +
+               " fecha_nac = ?, num_tarjeta = ?, " +
+               "changedTs = ? WHERE id = ? ";
+                try(Connection con = MyDataSource.getMydataSource().getConnection()){
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, cliente.getContrasenya());
+                    ps.setString(2, cliente.getNombre());
+                    ps.setString(3, cliente.getApellidos());
+                    ps.setString(4, cliente.getDomicilio());
+                    ps.setString(5, cliente.getCod_postal());
+                    ps.setString(6, cliente.getEmail());
+                    ps.setDate(7, cliente.getFecha_nac());
+                    ps.setString(8, cliente.getNum_tarjeta());
+                    ps.setTimestamp(10, Timestamp.valueOf(cliente.getChangedTs()));
+                    ps.executeUpdate();
+
+                }
+
+
+
         return false;
     }
 
     @Override
     public Cliente deleteCliente(int id) throws SQLException {
-        return null;
+        Cliente cliente=getCliente(id);
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try (Connection con = MyDataSource.getMydataSource().getConnection()) {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+        return cliente;
     }
 
     @Override
     public List<Cliente> getAllClientes() throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM cliente";
+        List<Cliente> clientes = new ArrayList<>();
+
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Cliente cliente = Cliente.builder()
+                        .id(rs.getInt("id"))
+                        .contrasenya(rs.getString("contrasenya"))
+                        .nombre(rs.getString("nombre"))
+                        .apellidos(rs.getString("apellidos"))
+                        .domicilio(rs.getString("domicilio"))
+                        .cod_postal(rs.getString("cod_postal"))
+                        .email(rs.getString("email"))
+                        .fecha_nac(rs.getDate("fecha_nac"))
+                        .num_tarjeta(rs.getString("num_tarjeta"))
+                        .build();
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // o maneja el error según convenga
+        }
+        return clientes;
     }
 
     @Override

@@ -31,19 +31,17 @@ public class ClienteService {
         return repository.updateCliente(cliente);
     }
 
-    /**
-     * Metodo que sirve para llamar al repositorio para dar respuesta a esta peticion de eliminar al cliente
-     * @param id número identificador que nos servira para eliminar al cliente correspondiente
-     * @return devolvera la respuesta del metodo que está en el repositorio
-     * @throws SQLException exepcion que se enviara en el caso de que la id correspondiente no este dentro de la base de datos
-     */
-    public Cliente deleteUsuario(int id) throws SQLException {
+
+    public Cliente deleteCliente(int id) throws SQLException {
         return repository.deleteCliente(id);
     }
 
 
-    public List<Cliente> getAllUsuarios() throws SQLException {
+    public List<Cliente> getAllClientes() throws SQLException {
         return repository.getAllClientes();
+    }
+    public Cliente login(String email, String contrasenya) throws SQLException {
+        return repository.login(email, contrasenya);
     }
 
 }

@@ -1,13 +1,14 @@
 package com.ieslavereda.es.miravereda.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Capitulo{
     private int id;
     private int temporada_id;
     private String titulo;
     private  double precio;
-    private LocalDate changedTS;
+    private LocalDateTime changedTS;
 
     public int getId() {
         return id;
@@ -25,7 +26,7 @@ public class Capitulo{
         return precio;
     }
 
-    public LocalDate getChangedTS() {
+    public LocalDateTime getChangedTS() {
         return changedTS;
     }
 }
