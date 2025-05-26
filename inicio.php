@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +12,8 @@
 <body>
     <h1>HOME</h1>
 
-    <button></button>
-    <button></button>
+    <button href="crudUsu.php">CRUD USUARIOS</button>
+    <button>CRUD PELÍCULAS</button>
 
     <a href="cerrarSesion.php">Cerrar Sesion</a>
 </body>
