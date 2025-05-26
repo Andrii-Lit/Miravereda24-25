@@ -1,5 +1,5 @@
 -- DUMP PROCEDIMIENTOS Y TRIGGERS SQL
--- by CristÛbal
+-- by Crist√≥bal
 
 use miravereda2425;
 
@@ -28,22 +28,23 @@ begin
 	elseif new.valor < 0 then set new.valor = 0;
 	end if;
 end
+$$
 delimiter ;
 
 -- PROCEDIMIENTO para actualizar la PUNTUACION_MEDIA de CONTENIDO 
--- (Se llamar· desde TRIGGER_ACTUALIZAR_NOTA)
+-- (Se llamar√° desde TRIGGER_ACTUALIZAR_NOTA)
 delimiter $$
 drop procedure if exists actualizar_nota$$
-create procedure if exists actualizar_nota(IN id int)
+create procedure actualizar_nota(IN p_cliente_id int)
 begin
 	declare puntos_totales decimal(10,2);
 	declare cantidad int;
-	declare media decimal(10,2)
+	declare media decimal(10,2);
 	
-	select sum(valor) into puntos_totales from valoracion where contenido_id = id;
-	select count(*) into cantidad from valoracion where contenido_id = id;
+	select sum(valor) into puntos_totales from valoracion where contenido_id = p_cliente_id;
+	select count(*) into cantidad from valoracion where contenido_id = p_cliente_id;
 	
-	if cantidad > 0 then set media = puntos_totales/cantidad
+	if cantidad > 0 then set media = puntos_totales/cantidad;
 	else set media = 0;
 	end if;
 	
@@ -64,7 +65,7 @@ $$
 delimiter ;
 
 -- #### TABLA FACTURA ####
--- PROCEDIMIENTO al que llamar· el botÛn COMPRAR en carrito
+-- PROCEDIMIENTO al que llamar√° el bot√≥n COMPRAR en carrito
 delimiter $$
 drop procedure if exists comprar$$
 create procedure comprar(IN p_cliente_id int)
@@ -88,13 +89,9 @@ begin
 
     -- al final crea un nuevo carrito
 	insert into carrito(cliente_id) values (p_cliente_id);
-    end if;
+    
 end
 $$
 delimiter ;
 
--- #### PROCEDIMIENTO al que llamar· el botÛn de aÒadir en
-
-
-
-
+-- #### PROCEDIMIENTO al que llamar√° el bot√≥n de a√±adir en la vista detalla del contenido ####
