@@ -8,13 +8,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CallMethods<T>  {
-
-
-
-
-
-
-
         private Retrofit retrofit = new Retrofit.Builder().baseUrl(Parameters.URL_API_BASE).build();
         private APIService service = retrofit.create(APIService.class);
         private static CallMethods callMethods;
