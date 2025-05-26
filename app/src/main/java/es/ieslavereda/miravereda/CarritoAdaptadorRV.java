@@ -49,6 +49,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         );
         holder.vh_carrito_costeTV.setText(""
             //query que vea si el contenido_id está en pelicula, serie o corto y sacar el precio
+                //o directamente lo quito y no me como la cabeza
         );
 
     }

@@ -20,10 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.ieslavereda.miravereda.Model.Posicion;
+import es.ieslavereda.miravereda.Model.Contenido;
 
 public class CatalogoActivity extends AppCompatActivity implements View.OnClickListener {
-    private List<Posicion> posicions;
+    private List<Contenido> contenidos;
     private RecyclerView recyclerView;
     private ImageView ivLogo;
     private FloatingActionButton volver;
@@ -42,7 +42,7 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
         ivLogo = findViewById(R.id.ivLogo);
 //        ivlogo.setImageResource(R.mipmap.miravereda_logo_foreground);
 
-        posicions = new ArrayList<>(List.of(
+        contenidos = new ArrayList<>(List.of(
 
 
         ));
@@ -59,7 +59,7 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
         });
 
         recyclerView=findViewById(R.id.recycled);
-        AdaptadorRV adaptadorRV = new AdaptadorRV(context, posicions, this);
+        AdaptadorRV adaptadorRV = new AdaptadorRV(context, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -69,8 +69,11 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         int pos = recyclerView.getChildLayoutPosition(v);
-        Posicion posicion = posicions.get(pos);
-        Toast.makeText(this, "Clic en: " + posicion.getTitulo(), Toast.LENGTH_SHORT).show();
+        Contenido contenido = contenidos.get(pos);
+        Intent intent = new Intent(this, InformationActivity.class);
+        intent.putExtra("contenido", contenido);
+        Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
 

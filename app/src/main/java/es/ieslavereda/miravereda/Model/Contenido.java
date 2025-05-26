@@ -1,9 +1,10 @@
 package es.ieslavereda.miravereda.Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Contenido {
+public class Contenido implements Serializable {
     private int id, duracion;
     private String titulo, descripcion, genero, nombre_dir,
             actores_principales, poster_path;

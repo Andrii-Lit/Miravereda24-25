@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import es.ieslavereda.miravereda.Model.Posicion;
+import es.ieslavereda.miravereda.Model.Contenido;
 
 public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
-    private List<Posicion> contenidos;
+    private List<Contenido> contenidos;
     private LayoutInflater inflater;
     private View.OnClickListener onClickListener;
 
-    public AdaptadorRV(Context context, List<Posicion> posicions, View.OnClickListener onClickListener){
-        this.contenidos= posicions;
+    public AdaptadorRV(Context context, List<Contenido> contenidos, View.OnClickListener onClickListener){
+        this.contenidos= contenidos;
         this.onClickListener=onClickListener;
         inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -36,12 +36,8 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AdaptadorRV.ViewHolder holder, int position) {
-        Posicion posicion =contenidos.get(position);
-        holder.titulo.setText(posicion.getTitulo());
-        holder.imageView.setImageResource(posicion.getPortadaImagen());
-        holder.filmaffinity.setText(posicion.getFilmaffinity());
-        holder.tomatometer.setText(posicion.getTomatometer());
-        holder.popcornmeter.setText(posicion.getPopcornmeter());
+        Contenido contenido =contenidos.get(position);
+        holder.titulo.setText(contenido.getTitulo());
     }
 
     //devuelve el número de elementos de la lista
@@ -61,9 +57,6 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView); // Nombre corregido
             titulo = itemView.findViewById(R.id.Titulo);
-            filmaffinity = itemView.findViewById(R.id.Filmaffinity);
-            tomatometer = itemView.findViewById(R.id.Tomatometer);
-            popcornmeter = itemView.findViewById(R.id.Popcornmeter);
         }
     }
 
