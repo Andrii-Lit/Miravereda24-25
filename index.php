@@ -1,7 +1,3 @@
-<!--<?php
-sesion_start();
-?>
--->
 <!DOCTYPE html> 
 <html>
 	<head>
@@ -10,11 +6,29 @@ sesion_start();
 	</head>
 	<body>
 		<h1>Miravereda</h1>
-		<form>
-			<label>Usuario</label>
-			<input type="text">
-			<label>Contraseña</label>
-			<input type="password">
-		</form>
+        
+        <div>
+            <form action="iniciarSesion.php" method="POST">
+                <h2>Inicio de sesión</h2>
+				<hr>
+				<?php
+					if(isset($_GET['error'])){
+						?>
+						<p>
+							<?php
+								echo $_GET['error'];
+							?>
+						</p>
+						<?php
+					}
+				?>
+				<hr>
+                <label>Usuario</label>
+                <input type="text" name="usuario" placeholder="Nombre de Usuario">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="Contraseña">
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
 	</body>
 </html>
