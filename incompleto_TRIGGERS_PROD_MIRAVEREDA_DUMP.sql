@@ -94,4 +94,19 @@ end
 $$
 delimiter ;
 
--- #### PROCEDIMIENTO al que llamará el botón de añadir en la vista detalla del contenido ####
+-- #### TABLA LIN_FAC ####
+-- PROCEDIMIENTO al que llamará el botón de añadir en la vista detallada del contenido
+delimiter $$
+drop procedure if exists anyadir_al_carrito$$
+create procedure anyadir_al_carrito
+begin
+	-- falta acceder al cliente_id de la sesión actual
+	insert into lin_fac, 
+end
+$$
+delimiter ;
+
+-- 
+
+
+
