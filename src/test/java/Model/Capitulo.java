@@ -9,5 +9,23 @@ public class Capitulo{
     private  double precio;
     private LocalDate changedTS;
 
+    public int getId() {
+        return id;
+    }
 
+    public int getTemporada_id() {
+        return temporada_id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public LocalDate getChangedTS() {
+        return changedTS;
+    }
 }

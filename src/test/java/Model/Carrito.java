@@ -33,6 +33,7 @@ public class Carrito {
     public boolean isActivo() {
         return activo;
     }
+
     public LocalDate getChangedTS() {
         return changedTS;
     }

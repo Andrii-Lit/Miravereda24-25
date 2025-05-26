@@ -21,4 +21,32 @@ public class Factura {
         this.fecha = fecha;
         changedTS = LocalDate.now();
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCliente_id() {
+        return cliente_id;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public double getTotal_con_iva() {
+        return total_con_iva;
+    }
+
+    public double getDecimal() {
+        return decimal;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public LocalDate getChangedTS() {
+        return changedTS;
+    }
 }

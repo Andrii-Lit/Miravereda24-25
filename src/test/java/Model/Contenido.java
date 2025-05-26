@@ -47,10 +47,15 @@ public class Contenido {
         CORTO("Corto");
         private String tipo;
 
-            private Genero(String tipo) {
+             Genero(String tipo) {
                 this.tipo = tipo;
             }
+
+        public String getTipo() {
+            return tipo;
+        }
     }
+
 
 
 }

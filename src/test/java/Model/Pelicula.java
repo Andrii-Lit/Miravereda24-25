@@ -16,7 +16,7 @@ public class Pelicula extends Contenido {
         disponible_hasta = null;
     }
 
-    public Date isDisponibilidad() {
+    public Date getDisponible_hasta() {
         return disponible_hasta;
     }
 }

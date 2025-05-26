@@ -8,6 +8,7 @@ public class Corto extends Contenido{
         super(id, tarifa_id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media);
         this.disponibilidad=true;
     }
+
     public boolean isDisponibilidad() {
         return disponibilidad;
     }
