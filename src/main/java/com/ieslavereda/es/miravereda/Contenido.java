@@ -1,4 +1,4 @@
-package Model;
+package com.ieslavereda.es.miravereda;
 
 import lombok.Builder;
 import lombok.Getter;

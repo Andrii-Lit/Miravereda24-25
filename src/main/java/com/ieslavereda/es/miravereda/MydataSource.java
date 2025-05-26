@@ -1,4 +1,4 @@
-package Config;
+package com.ieslavereda.es.miravereda;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.context.annotation.Bean;

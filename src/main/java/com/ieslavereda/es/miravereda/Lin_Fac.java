@@ -1,7 +1,6 @@
-package Model;
+package com.ieslavereda.es.miravereda;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Lin_Fac {
     private int carrito_id;

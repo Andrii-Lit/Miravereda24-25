@@ -1,4 +1,4 @@
-package Model;
+package com.ieslavereda.es.miravereda;
 
 import java.sql.Date;
 import java.time.LocalDate;
