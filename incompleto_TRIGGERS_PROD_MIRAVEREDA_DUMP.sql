@@ -17,6 +17,7 @@ $$
 delimiter ;
 
 
+
 -- #### TABLA VALORACION ####
 -- TRIGGER al hacer INSERT en VALORACION para que la nota no sea mayor a 10 ni menor que 0
 delimiter $$
@@ -108,6 +109,17 @@ delimiter ;
 
 -- TO DO:
 -- trigger para borrar el carrito asociado a CLIENTE 
+
+-- #### TABLA CARRITO ####
+Delimiter $$
+drop trigger if exists trg_del_carrito_cliente$$
+create trigger trg_del_carrito_cliente
+after delete on cliente for each row
+begin
+    delete from carrito where cliente_id=old.id;
+    end;
+
+  Delimiter $  
 
 
 
