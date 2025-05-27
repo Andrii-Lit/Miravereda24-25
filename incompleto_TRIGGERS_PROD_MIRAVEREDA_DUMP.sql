@@ -12,10 +12,10 @@ begin
 	select contrasenya into contra_correcta from cliente where email = p_email limit 1;
 	
 	if contra_correcta is null 
-		then resultado = false;
+		then set resultado = false;
 	elseif p_contrasenya = contra_correcta 
-		then resultado = true;
-	else resultado = false;
+		then set resultado = true;
+	else set resultado = false;
 	end if;
 end
 $$
