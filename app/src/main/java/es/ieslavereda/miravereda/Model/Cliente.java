@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Cliente {
+    private int id;
     private String contrasenya, nombre, apellidos, domicilio,
             cod_postal, email, num_tarjeta;
     private Date fecha_nac;
@@ -14,8 +15,9 @@ public class Cliente {
         this.contrasenya = contrasenya;
         this.changedTs = LocalDateTime.now();
     }
-    public Cliente(String contrasenya, String nombre, String apellidos,
+    public Cliente(int id, String contrasenya, String nombre, String apellidos,
                    String domicilio, String cod_postal, String email, Date fecha_nac, String num_tarjeta) {
+        this.id = id;
         this.contrasenya = contrasenya;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -26,7 +28,9 @@ public class Cliente {
         this.num_tarjeta = num_tarjeta;
         this.changedTs = LocalDateTime.now();
     }
-
+    public int getId(){
+        return id;
+    }
     public String getContrasenya() {
         return contrasenya;
     }
