@@ -6,8 +6,7 @@ use miravereda2425;
 -- #### FUNCIONES ####
 delimiter $$
 drop procedure if exists iniciar_sesion$$
-create procedure iniciar_sesion(out resultado boolean, 
-								in p_email varchar(100), in p_contrasenya varchar(255))
+create procedure iniciar_sesion(out resultado boolean, in p_email varchar(100), in p_contrasenya varchar(255))
 begin
 	declare contra_correcta varchar(255);
 	select contrasenya into contra_correcta from cliente where email = p_email limit 1;
