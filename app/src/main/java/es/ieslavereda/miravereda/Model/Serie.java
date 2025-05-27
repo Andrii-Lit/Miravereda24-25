@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Serie extends Contenido{
-    private int tarifa_id;
+    private static final Tarifa tarifa = new Tarifa(Tarifa.Tipo.SERIE);
+
     private boolean disponibilidad;
     private double precio;
     private LocalDateTime changedTS;
@@ -15,7 +16,24 @@ public class Serie extends Contenido{
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales,
                 fecha_estreno, puntuacion_media, poster_path);
         this.disponibilidad = disponibilidad;
-        this.precio = precio;
+        this.precio = precio * tarifa.getPorcentaje();
         this.changedTS = LocalDateTime.now();
+    }
+    public boolean isDisponible() {
+        return disponibilidad;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public LocalDateTime getChangedTS() {
+        return changedTS;
+    }
+    public void setDisponibilidad(boolean disponibilidad){
+        this.disponibilidad = disponibilidad;
+    }
+    public void setPrecio(double precio){
+        this.precio = precio;
     }
 }

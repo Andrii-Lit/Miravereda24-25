@@ -12,8 +12,6 @@ public class Contenido implements Serializable {
     private double puntuacion_media;
     private LocalDate changedTS;
 
-
-
     public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
                      int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
                      String poster_path) {
@@ -29,6 +27,7 @@ public class Contenido implements Serializable {
         this.poster_path = poster_path;
         this.changedTS = LocalDate.now();
     }
+
 
     public String getTitulo() {
         return titulo;
