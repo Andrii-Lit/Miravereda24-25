@@ -40,12 +40,14 @@ public class DetalleContenidoActivity extends AppCompatActivity {
         valorar=findViewById(R.id.Valorar);
         volver=findViewById(R.id.floatingButtonReturn);
         titulo=findViewById(R.id.Titulo);
+        nombreautor=findViewById(R.id.NombreDirector);
 
         Picasso.get().load(contenido.getPoster_path()).into(poster);
         titulo.setText(contenido.getTitulo());
         anyo.setText(String.valueOf(contenido.getFecha_estreno()));
         descripcion.setText(contenido.getDescripcion());
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
+        nombreautor.setText(contenido.getNombre_dir());
 
 
         volver.setOnClickListener(new View.OnClickListener() {
