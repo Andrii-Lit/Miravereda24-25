@@ -2,12 +2,17 @@ package es.ieslavereda.miravereda;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
+import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,57 +26,51 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class PreferenciasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner bSpinner;
-    private Spinner aSpinner;
     private FloatingActionButton botonVoladorMagico;
+
+    public class LocaleHelper {
+        public void setLocale(Context context, String languageCode) {
+            Locale locale = new Locale(languageCode);
+            Locale.setDefault(locale);
+            Resources resources = context.getResources();
+            Configuration configuration = resources.getConfiguration();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                configuration.setLocale(locale);
+            } else {
+                configuration.locale = locale;
+            }
+
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_preferencias);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tvUsername), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         botonVoladorMagico = findViewById(R.id.floatingButtonReturnPreferences);
         bSpinner=findViewById(R.id.bSpinner);
-        aSpinner=findViewById(R.id.aSpinner);
-
-       SharedPreferences sharedPreferences=getSharedPreferences("Preferencias",MODE_PRIVATE);
-        int tema = sharedPreferences.getInt("tema", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        //Aplica el tema segun la preferencia
-        AppCompatDelegate.setDefaultNightMode(tema);
-        if (tema==AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM){
-            bSpinner.setSelection(0);
-
-        }else if(tema==AppCompatDelegate.MODE_NIGHT_YES){
-            bSpinner.setSelection(1);
-        }else {
-            bSpinner.setSelection(2);
-        }
-        String idioma=sharedPreferences.getString("idioma","es");
-        if (idioma.equals("es"))
-            aSpinner.setSelection(0);
-        else if (idioma.equals("en"))
-            aSpinner.setSelection(1);
-        else
-            aSpinner.setSelection(2);
-
 
         bSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-            SharedPreferences sharedPreferences=getSharedPreferences("Preferencias", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                //Cambiar el tema segun la selección
+
                 if (position == 0){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    editor.putInt("tema",AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 } else if (position == 1) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putInt("tema",AppCompatDelegate.MODE_NIGHT_YES);
                 } else{
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putInt("tema",AppCompatDelegate.MODE_NIGHT_NO);
                 }
-                //Guardar la preferencia
-                editor.apply();
             }
 
             @Override
