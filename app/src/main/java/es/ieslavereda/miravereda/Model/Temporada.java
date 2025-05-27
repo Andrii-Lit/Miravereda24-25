@@ -35,8 +35,20 @@ public class Temporada {
         return capitulos;
     }
 
+    public void setCapitulos(List<Capitulo> capitulos) {
+        this.capitulos = capitulos;
+    }
+
     public void addCapitulo(Capitulo capitulo) {
         capitulos.add(capitulo);
+    }
+
+    public double getPrecioTotal() {
+        double total = 0.0;
+        for (Capitulo c : capitulos) {
+            total += c.getPrecio();
+        }
+        return total;
     }
 
     public LocalDateTime getChangedTS() {
