@@ -33,6 +33,18 @@ begin
 end
 $$
 delimiter ;
+delimiter $$ 
+drop procedure if exists get_cliente_por_email;
+
+create procedure get_cliente_por_email(
+    in p_email VARCHAR(100)
+)
+begin
+    select * from cliente where email = p_email limit 1;
+END
+$$
+DELIMITER ;
+
 
 
 -- #### TABLA VALORACION ####
