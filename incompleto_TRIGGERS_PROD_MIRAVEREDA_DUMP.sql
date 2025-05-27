@@ -4,6 +4,7 @@
 use miravereda2425;
 
 -- #### FUNCIONES ####
+-- PROCEDIMIENTO para iniciar sesión que devuelva un booleano
 delimiter $$
 drop procedure if exists iniciar_sesion$$
 create procedure iniciar_sesion(out resultado boolean, in p_email varchar(100), in p_contrasenya varchar(255))
@@ -38,9 +39,7 @@ delimiter ;
 delimiter $$ 
 drop procedure if exists get_cliente_por_email$$
 
-create procedure get_cliente_por_email(
-    in p_email VARCHAR(100)
-)
+create procedure get_cliente_por_email(in p_email VARCHAR(100))
 begin
     select * from cliente where email = p_email limit 1;
 END
@@ -122,14 +121,51 @@ end
 $$
 delimiter ;
 
+-- #### TABLA CARRITO ####
+-- PROCEDIMIENTO que actualiza el precio del carrito activo según las líneas de factura
+-- le pasamos el cliente_id para identificar el carrito activo
+delimiter $$
+drop procedure if exists actualizar_precio_carrito$$
+create procedure actualizar_precio_carrito(in p_cliente_id int)
+begin
+	declare carrito_activo_id int;
+	declare precio_total decimal(10,2);
+	-- sacamos el carrito activo
+	select id into carrito_activo_id from carrito where cliente_id = p_cliente_id and activo = true;
+	-- sacamos la suma de las lin_fac asociadas al carrito activo
+	select sum(precio) into precio_total from lin_fac where carrito_id = carrito_activo_id;
+
+	update carrito set total = precio_total where id = carrito_activo_id;
+
+end
+$$
+delimiter;
+
 -- #### TABLA LIN_FAC ####
--- PROCEDIMIENTO al que llamará el botón de añadir en la vista detallada del contenido
+-- PROCEDIMIENTO al que llamará el botón de añadir al carrito en la vista detallada del contenido
+-- le pasamos el cliente_id porque buscará luego el carrito activo del cliente
 delimiter $$
 drop procedure if exists anyadir_al_carrito$$
-create procedure anyadir_al_carrito(in p_cliente_id int)
+create procedure anyadir_al_carrito(in p_cliente_id int, in p_contenido_id int)
 begin
-	-- falta acceder al cliente_id de la sesión actual
-	insert into lin_fac, 
+	declare carrito_activo_id int;
+	declare contenido_precio decimal(10,2);
+	-- variable que recoge el id del carrito activo del cliente
+	select id into carrito_activo_id from carrito
+	where cliente_id = p_cliente_id and activo = true;
+	-- variable que recoge el precio según el tipo de contenido
+	if p_contenido_id in (select contenido_id from pelicula)
+		then set contenido_precio = (select precio from pelicula where contenido_id = p_contenido_id);
+	 elseif p_contenido_id in (select contenido_id from serie)
+	 	then set contenido_precio = (select precio from serie where contenido_id = p_contenido_id);
+	 elseif p_contenido_id in (select contenido_id from corto)
+	 	then set contenido_precio = (select precio from corto where contenido_id = p_contenido_id);
+	else set contenido_precio = 0.00;
+	end if; 	
+	insert into lin_fac(carrito_id, contenido_id, precio) 
+	values (carrito_activo_id, p_contenido_id, contenido_precio);
+
+	call actualizar_precio_carrito(p_cliente_id);
 end
 $$
 delimiter ;
