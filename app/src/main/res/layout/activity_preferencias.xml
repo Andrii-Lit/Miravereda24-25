@@ -49,7 +49,7 @@
               tools:ignore="MissingConstraints" />
 
           <TextView
-              android:id="@+id/textView"
+              android:id="@+id/Idioma"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginBottom="12dp"
@@ -58,7 +58,7 @@
               app:layout_constraintStart_toStartOf="@+id/aSpinner" />
 
           <TextView
-              android:id="@+id/textView2"
+              android:id="@+id/Nota1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginBottom="12dp"

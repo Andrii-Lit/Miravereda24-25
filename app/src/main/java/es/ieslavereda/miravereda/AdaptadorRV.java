@@ -55,7 +55,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView); // Nombre corregido
+            imageView = itemView.findViewById(R.id.Poster); // Nombre corregido
             titulo = itemView.findViewById(R.id.Titulo);
         }
     }
