@@ -120,7 +120,7 @@ create table carrito(
     total decimal(10,2) default 0.00,
     activo boolean default true,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (cliente_id) references cliente (id) on delete cascade;
+    foreign key (cliente_id) references cliente (id) on delete cascade
 );
 
 -- tabla LIN_FAC

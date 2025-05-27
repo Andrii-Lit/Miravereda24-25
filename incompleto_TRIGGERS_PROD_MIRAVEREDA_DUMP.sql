@@ -33,6 +33,8 @@ begin
 end
 $$
 delimiter ;
+
+-- PROCEDIMIENTO para obtener CLIENTE por email
 delimiter $$ 
 drop procedure if exists get_cliente_por_email;
 
