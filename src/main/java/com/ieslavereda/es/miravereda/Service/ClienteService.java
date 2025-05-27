@@ -27,7 +27,7 @@ public class ClienteService {
 
 
 
-    public boolean updateCliente(Cliente cliente) throws SQLException {
+    public Cliente updateCliente(Cliente cliente) throws SQLException {
         return repository.updateCliente(cliente);
     }
 

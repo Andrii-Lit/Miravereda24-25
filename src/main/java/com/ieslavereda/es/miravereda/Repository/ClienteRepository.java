@@ -2,11 +2,9 @@ package com.ieslavereda.es.miravereda.Repository;
 
 import com.ieslavereda.es.miravereda.Config.MyDataSource;
 import com.ieslavereda.es.miravereda.Model.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -80,13 +78,13 @@ public class ClienteRepository implements IClienteRepository {
 
 
     @Override
-    public boolean updateCliente(Cliente cliente) throws SQLException {
+    public Cliente updateCliente(Cliente cliente) throws SQLException {
         Cliente cliente1=getCliente(cliente.getId());
        String sql="Update cliente set contrasenya = ?, nombre = ?, " +
                "apellidos = ?, domicilio = ?, " +
                "cod_postal = ?, email = ?," +
-               " fecha_nac = ?, num_tarjeta = ?, " +
-               "changedTs = ? WHERE id = ? ";
+               " fecha_nac = ?, num_tarjeta = ? " +
+               " WHERE id = ? ";
                 try(Connection con = MyDataSource.getMydataSource().getConnection()){
                     PreparedStatement ps = con.prepareStatement(sql);
                     ps.setString(1, cliente.getContrasenya());
@@ -97,14 +95,17 @@ public class ClienteRepository implements IClienteRepository {
                     ps.setString(6, cliente.getEmail());
                     ps.setDate(7, cliente.getFecha_nac());
                     ps.setString(8, cliente.getNum_tarjeta());
-                    ps.setTimestamp(10, Timestamp.valueOf(cliente.getChangedTs()));
+                    ps.setInt(9,cliente.getId());
+
                     ps.executeUpdate();
+
+                    cliente1=cliente;
 
                 }
 
 
 
-        return false;
+        return cliente1;
     }
 
     @Override
@@ -144,7 +145,7 @@ public class ClienteRepository implements IClienteRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw e; // o maneja el error según convenga
+            throw e;
         }
         return clientes;
     }

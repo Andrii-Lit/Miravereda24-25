@@ -9,7 +9,7 @@ public interface IClienteRepository {
 
         Cliente getCliente(int id) throws SQLException;
     Cliente addCliente(Cliente clienteInput) throws SQLException;
-        boolean updateCliente(Cliente clienteInput) throws SQLException;
+        Cliente updateCliente(Cliente clienteInput) throws SQLException;
     Cliente deleteCliente(int id) throws SQLException;
         List<Cliente> getAllClientes() throws SQLException;
     Cliente login(String email, String contrasenya) throws SQLException;
