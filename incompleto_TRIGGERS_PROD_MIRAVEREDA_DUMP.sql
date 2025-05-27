@@ -97,11 +97,7 @@ begin
 
 	-- inserta en factura el id, total sin y con
 	insert into factura(cliente_id, total, total_con_iva)
-<<<<<<< HEAD
-	values (p_cliente_id, carrito_totreign key (cliente_id) references cliente(al, total_con_iva));
-=======
-	values (p_cliente_id, carrito_totreign key (cliente_id) references cliente(al, total_con_iva);
->>>>>>> 0352879 (unique para el email del cliente y login)
+	values (p_cliente_id, carrito_total, total_con_iva);
 
 	-- desactiva el carrito
 	update carrito set activo = false where cliente_id = p_cliente_id and activo = true;
@@ -117,7 +113,7 @@ delimiter ;
 -- PROCEDIMIENTO al que llamará el botón de añadir en la vista detallada del contenido
 delimiter $$
 drop procedure if exists anyadir_al_carrito$$
-create procedure anyadir_al_carrito
+create procedure anyadir_al_carrito(in p_cliente_id int)
 begin
 	-- falta acceder al cliente_id de la sesión actual
 	insert into lin_fac, 
