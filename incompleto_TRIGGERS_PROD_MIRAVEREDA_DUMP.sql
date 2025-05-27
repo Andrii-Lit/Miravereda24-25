@@ -3,6 +3,25 @@
 
 use miravereda2425;
 
+-- #### FUNCIONES ####
+delimiter $$
+drop procedure if exists iniciar_sesion$$
+create procedure iniciar_sesion(out resultado boolean, 
+								in p_email varchar(100), in p_contrasenya varchar(255))
+begin
+	declare contra_correcta varchar(255);
+	select contrasenya into contra_correcta from cliente where email = p_email limit 1;
+	
+	if contra_correcta is null 
+		then resultado = false;
+	elseif p_contrasenya = contra_correcta 
+		then resultado = true;
+	else resultado = false;
+	end if;
+end
+$$
+delimiter ;
+
 -- #### TABLA CLIENTE ####
 -- TRIGGER al hacer INSERT en la tabla CLIENTE
 -- se crea un CARRITO asignado a este
@@ -15,7 +34,6 @@ begin
 end
 $$
 delimiter ;
-
 
 
 -- #### TABLA VALORACION ####
@@ -79,7 +97,7 @@ begin
 
 	-- inserta en factura el id, total sin y con
 	insert into factura(cliente_id, total, total_con_iva)
-	values (p_cliente_id, carrito_total, total_con_iva);
+	values (p_cliente_id, carrito_totreign key (cliente_id) references cliente(al, total_con_iva);
 
 	-- desactiva el carrito
 	update carrito set activo = false where cliente_id = p_cliente_id and activo = true;
@@ -103,22 +121,5 @@ end
 $$
 delimiter ;
 
-<<<<<<< HEAD
--- TO DO:
--- trigger para borrar el carrito asociado a CLIENTE 
-
--- #### TABLA CARRITO ####
-Delimiter $$
-drop trigger if exists trg_del_carrito_cliente$$
-create trigger trg_del_carrito_cliente
-after delete on cliente for each row
-begin
-    delete from carrito where cliente_id=old.id;
-    end;
-
-  Delimiter $  
-
-=======
->>>>>>> 37c0860 (on delete cascade añadidos cuando se borre un cliente)
 
 

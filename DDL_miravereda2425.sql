@@ -14,7 +14,7 @@ create table cliente (
     apellidos varchar(100),
     domicilio varchar(255),
     cod_postal varchar(50),
-    email varchar(100),
+    email varchar(100) unique,
     fecha_nac date,
     num_tarjeta varchar(100),
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
