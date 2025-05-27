@@ -36,7 +36,7 @@ delimiter ;
 
 -- PROCEDIMIENTO para obtener CLIENTE por email
 delimiter $$ 
-drop procedure if exists get_cliente_por_email;
+drop procedure if exists get_cliente_por_email$$
 
 create procedure get_cliente_por_email(
     in p_email VARCHAR(100)
