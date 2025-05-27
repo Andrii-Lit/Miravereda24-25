@@ -3,10 +3,11 @@ package es.ieslavereda.miravereda.Model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class Serie extends Contenido{
     private static final Tarifa tarifa = new Tarifa(Tarifa.Tipo.SERIE);
-
+    private List<Temporada> temporadas;
     private boolean disponibilidad;
     private double precio;
     private LocalDateTime changedTS;
@@ -16,7 +17,7 @@ public class Serie extends Contenido{
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales,
                 fecha_estreno, puntuacion_media, poster_path);
         this.disponibilidad = disponibilidad;
-        this.precio = precio * tarifa.getPorcentaje();
+        this.precio = getPrecio() * tarifa.getPorcentaje();
         this.changedTS = LocalDateTime.now();
     }
     public boolean isDisponible() {
