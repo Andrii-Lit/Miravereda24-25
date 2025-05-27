@@ -97,7 +97,7 @@ begin
 
 	-- inserta en factura el id, total sin y con
 	insert into factura(cliente_id, total, total_con_iva)
-	values (p_cliente_id, carrito_totreign key (cliente_id) references cliente(al, total_con_iva);
+	values (p_cliente_id, carrito_totreign key (cliente_id) references cliente(al, total_con_iva));
 
 	-- desactiva el carrito
 	update carrito set activo = false where cliente_id = p_cliente_id and activo = true;
