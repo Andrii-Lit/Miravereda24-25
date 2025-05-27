@@ -75,10 +75,6 @@ begin
     declare iva_rate decimal(10,2);
     declare total_con_iva decimal(10,2);
 
-	select total into carrito_total from carrito where cliente_id = p_cliente_id and activo = true;
-
-	select iva into iva_rate from factura limit 1;
-
 	set total_con_iva = carrito_total + (carrito_total * iva_rate);
 
 	-- inserta en factura el id, total sin y con
@@ -107,6 +103,7 @@ end
 $$
 delimiter ;
 
+<<<<<<< HEAD
 -- TO DO:
 -- trigger para borrar el carrito asociado a CLIENTE 
 
@@ -121,5 +118,7 @@ begin
 
   Delimiter $  
 
+=======
+>>>>>>> 37c0860 (on delete cascade añadidos cuando se borre un cliente)
 
 
