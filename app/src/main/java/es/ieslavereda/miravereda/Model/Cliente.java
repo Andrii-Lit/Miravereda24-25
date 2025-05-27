@@ -1,27 +1,30 @@
 package es.ieslavereda.miravereda.Model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Cliente {
-    private int id;
-    private String contrasenya;
-    private String nombre;
-    private String apellidos;
-    private String domicilio;
-    private String cod_postal;
-    private String email;
-    private long fecha_nac;
-    private String num_tarjeta;
-    private Timestamp changedTs;
+    private String contrasenya, nombre, apellidos, domicilio,
+            cod_postal, email, num_tarjeta;
+    private Date fecha_nac;
+    private LocalDateTime changedTs;
 
-    public int getId() {
-        return id;
-    }
-
-    public Cliente(String email, String contrasenya) {
+    public Cliente(String email, String contrasenya){
         this.email = email;
         this.contrasenya = contrasenya;
-
+        this.changedTs = LocalDateTime.now();
+    }
+    public Cliente(String contrasenya, String nombre, String apellidos,
+                   String domicilio, String cod_postal, String email, Date fecha_nac, String num_tarjeta) {
+        this.contrasenya = contrasenya;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.domicilio = domicilio;
+        this.cod_postal = cod_postal;
+        this.email = email;
+        this.fecha_nac = fecha_nac;
+        this.num_tarjeta = num_tarjeta;
+        this.changedTs = LocalDateTime.now();
     }
 
     public String getContrasenya() {
@@ -48,7 +51,7 @@ public class Cliente {
         return email;
     }
 
-    public long getFecha_nac() {
+    public Date getFecha_nac() {
         return fecha_nac;
     }
 
@@ -56,7 +59,7 @@ public class Cliente {
         return num_tarjeta;
     }
 
-    public Timestamp getChangedTs() {
+    public LocalDateTime getChangedTs() {
         return changedTs;
     }
 }
