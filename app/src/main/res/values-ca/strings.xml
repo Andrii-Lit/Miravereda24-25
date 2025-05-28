@@ -1,16 +1,15 @@
 <resources>
     <string name="app_name">ProyectoMiravereda</string>
     <string-array name="Spinner_items_idiomas">
-        <item>Castellano</item>
-        <item>Valenciano</item>
-        <item>Inglés</item>
+        <item>Castellà</item>
+        <item>Valencià</item>
+        <item>Anglés</item>
     </string-array>
     <string-array name="Spinner_items_tema">
         <item>Sistema</item>
-        <item>Oscuro</item>
-        <item>Claro</item>
+        <item>Fosc</item>
+        <item>Clar</item>
     </string-array>
     <string name="Idioma">Idioma</string>
     <string name="Tema">Tema</string>
 </resources>
-

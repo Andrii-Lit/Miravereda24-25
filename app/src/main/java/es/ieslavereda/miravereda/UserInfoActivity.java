@@ -13,7 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class UserInfoActivity extends AppCompatActivity {
+import es.ieslavereda.miravereda.Base.BaseActivity;
+
+public class UserInfoActivity extends BaseActivity {
     private TextView tvEmail;
     private TextView tvPassword;
     private FloatingActionButton fbtBack;
