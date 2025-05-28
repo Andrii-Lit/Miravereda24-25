@@ -1,32 +1,24 @@
 package com.ieslavereda.es.miravereda.Model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public class Capitulo{
+import java.time.LocalDateTime;
+@Getter
+@Setter
+public class Capitulo {
     private int id;
-    private int temporada_id;
     private String titulo;
-    private  double precio;
+    private double precio;
+    private Temporada temporada;
     private LocalDateTime changedTS;
 
-    public int getId() {
-        return id;
+    public Capitulo(int id, String titulo, double precio, Temporada temporada) {
+        this.id = id;
+        this.titulo = titulo;
+        this.precio = precio;
+        this.temporada = temporada;
+        this.changedTS = LocalDateTime.now();
     }
 
-    public int getTemporada_id() {
-        return temporada_id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public LocalDateTime getChangedTS() {
-        return changedTS;
-    }
 }

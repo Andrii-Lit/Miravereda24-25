@@ -1,34 +1,37 @@
 package com.ieslavereda.es.miravereda.Model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+@Getter
+@Setter
 public class Tarifa {
-    private int id;
-    private String tipo;
-    private double Porcentaje;
+    private Tipo tipo;
+    private double porcentaje;
     private LocalDateTime changedTS;
 
-    public Tarifa(int id, String tipo, double porcentaje) {
-        this.id = id;
+    public Tarifa (Tipo tipo){
         this.tipo = tipo;
-        Porcentaje = porcentaje;
-        changedTS = LocalDateTime.now();
+        this.changedTS = LocalDateTime.now();
+        if (tipo == Tipo.PELICULA){
+            this.porcentaje = 0.20;
+        } else if (tipo == Tipo.SERIE) {
+            this.porcentaje = 0.10;
+        } else {
+            this.porcentaje = 0.05;
+        }
     }
 
-    public int getId() {
-        return id;
-    }
+    @Getter
+    public enum Tipo{
+        PELICULA("pelicula"),
+        SERIE("serie"),
+        CORTO("corto");
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public double getPorcentaje() {
-        return Porcentaje;
-    }
-
-    public LocalDateTime getChangedTS() {
-        return changedTS;
+        Tipo(String tipo){
+            this.tipo = tipo;
+        }
+        private String tipo;
     }
 }

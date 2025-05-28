@@ -1,35 +1,38 @@
 package com.ieslavereda.es.miravereda.Model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+@Getter
+@Setter
 public class Temporada {
     private int id;
-    private int serie_id;
     private int numero;
+    private Serie serie;
+    private List<Capitulo> capitulos;
     private LocalDateTime changedTS;
 
-    public Temporada(int id, int serie_id, int numero) {
+    public Temporada(int id, int numero, Serie serie) {
         this.id = id;
-        this.serie_id = serie_id;
         this.numero = numero;
-        changedTS = LocalDateTime.now();
-
+        this.serie = serie;
+        this.capitulos = new ArrayList<>();
+        this.changedTS = LocalDateTime.now();
     }
 
-    public int getSerie_id() {
-        return serie_id;
+    public void addCapitulo(Capitulo capitulo) {
+        capitulos.add(capitulo);
     }
 
-    public int getNumero() {
-        return numero;
+    public double getPrecioTotal() {
+        double total = 0.0;
+        for (Capitulo c : capitulos) {
+            total += c.getPrecio();
+        }
+        return total;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public LocalDateTime getChangedTS() {
-        return changedTS;
-    }
 }
