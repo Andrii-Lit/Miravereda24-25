@@ -29,4 +29,25 @@
         app:layout_constraintStart_toEndOf="@+id/Poster"
         app:layout_constraintTop_toTopOf="@+id/Poster" />
 
+    <TextView
+        android:id="@+id/NotaMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Nota Media:"
+        app:layout_constraintStart_toEndOf="@+id/Poster"
+        app:layout_constraintTop_toBottomOf="@+id/Titulo" />
+
+    <TextView
+        android:id="@+id/NotaMediaNumero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:hint="0"
+        app:layout_constraintBottom_toBottomOf="@+id/NotaMedia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NotaMedia"
+        app:layout_constraintTop_toTopOf="@+id/NotaMedia" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

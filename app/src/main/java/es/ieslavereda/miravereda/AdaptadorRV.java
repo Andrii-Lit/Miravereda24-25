@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     public void onBindViewHolder(@NonNull AdaptadorRV.ViewHolder holder, int position) {
         Contenido contenido =contenidos.get(position);
         holder.titulo.setText(contenido.getTitulo());
+        Picasso.get().load(contenido.getPoster_path()).into(holder.poster);
+        holder.notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
     }
 
     //devuelve el número de elementos de la lista
@@ -47,16 +50,15 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        ImageView poster;
         TextView titulo;
-        TextView filmaffinity; // Corregido a TextView
-        TextView tomatometer;  // Corregido a TextView
-        TextView popcornmeter; // Corregido a TextView
+        TextView notaMediaValor; // Corregido a TextView
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.Poster); // Nombre corregido
+            poster = itemView.findViewById(R.id.Poster); // Nombre corregido
             titulo = itemView.findViewById(R.id.Titulo);
+            notaMediaValor=itemView.findViewById(R.id.NotaMediaNumero);
         }
     }
 
