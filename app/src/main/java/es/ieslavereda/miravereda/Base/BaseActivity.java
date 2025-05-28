@@ -14,8 +14,6 @@ import java.util.concurrent.Executors;
 import es.ieslavereda.miravereda.API.Connector;
 
 public class BaseActivity extends AppCompatActivity {
-
-
         protected Connector connector;
         protected ExecutorService executor = Executors.newSingleThreadExecutor();
         protected Handler handler = new Handler(Looper.getMainLooper());

@@ -13,7 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class InformationActivity extends AppCompatActivity {
+import es.ieslavereda.miravereda.Base.BaseActivity;
+
+public class InformationActivity extends BaseActivity {
 
     private FloatingActionButton volver;
     private ImageView poster;

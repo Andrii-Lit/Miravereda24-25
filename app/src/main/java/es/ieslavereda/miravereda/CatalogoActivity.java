@@ -23,9 +23,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Model.Contenido;
 
-public class CatalogoActivity extends AppCompatActivity implements View.OnClickListener {
+public class CatalogoActivity extends BaseActivity implements View.OnClickListener {
     private List<Contenido> contenidos;
     private RecyclerView recyclerView;
     private ImageView ivLogo;

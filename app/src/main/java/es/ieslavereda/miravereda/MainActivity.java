@@ -19,9 +19,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Model.Cliente;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ImageView ivLogo;
     private ImageView ivPreference;
     private TextInputEditText username;

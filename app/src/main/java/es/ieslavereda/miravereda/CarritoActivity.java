@@ -17,9 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ieslavereda.miravereda.API.Connector;
+import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Model.Contenido;
 
-public class CarritoActivity extends AppCompatActivity{
+public class CarritoActivity extends BaseActivity {
     private List<Contenido> contenidos_anyadidos;
     private FloatingActionButton carrito_backButton;
     private Button carrito_comprarButton;

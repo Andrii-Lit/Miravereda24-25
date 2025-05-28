@@ -1,4 +1,4 @@
-package es.ieslavereda.miravereda.Model;
+package es.ieslavereda.miravereda;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
-import es.ieslavereda.miravereda.R;
+import es.ieslavereda.miravereda.Base.BaseActivity;
+import es.ieslavereda.miravereda.Model.Contenido;
 
-public class DetalleContenidoActivity extends AppCompatActivity {
+public class DetalleContenidoActivity extends BaseActivity {
     private ImageView poster;
     private TextView descripcion,nombreautor,preciovalor,notaMediaValor,titulo,anyo;
     private EditText notaCliente;

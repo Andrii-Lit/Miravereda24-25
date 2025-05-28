@@ -26,7 +26,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class PreferenciasActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import es.ieslavereda.miravereda.Base.BaseActivity;
+
+public class PreferenciasActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner bSpinner, aSpinner;
 
