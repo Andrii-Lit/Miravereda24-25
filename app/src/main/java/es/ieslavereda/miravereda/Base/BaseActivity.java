@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 
 import es.ieslavereda.miravereda.API.Connector;
 
-public class BaseActivity extends AppCompatActivity {
+public  class BaseActivity extends AppCompatActivity {
 
 
         protected Connector connector;
@@ -28,11 +28,11 @@ public class BaseActivity extends AppCompatActivity {
             progressBar = new MyProgressBar(this);
         }
 
-        protected <T> void executeCall(CallInterface<T> callInterface){
+        protected<T> void executeCall(CallInterface<T>callInterface){
             showProgress();
             executor.execute(() -> {
                 try {
-                    T data = callInterface.doInBackground();
+                   T  data = callInterface.doInBackground();
                     handler.post(() -> {
                         hideProgress();
                         callInterface.doInUI(data);
@@ -65,5 +65,6 @@ public class BaseActivity extends AppCompatActivity {
             hideProgress();
         }
 
-    }
+
+}
 

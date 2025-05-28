@@ -1,5 +1,4 @@
 package es.ieslavereda.miravereda.Base;
-
 import android.content.Context;
 import android.widget.Toast;
 
@@ -13,4 +12,8 @@ public interface CallInterface<T> {
         Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
     }
 }
+
+
+
+
 
