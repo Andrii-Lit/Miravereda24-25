@@ -1,5 +1,6 @@
 package es.ieslavereda.miravereda;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -63,6 +66,7 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
         recyclerView.setAdapter(adaptadorRV);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        
 
     }
 
@@ -75,6 +79,7 @@ public class CatalogoActivity extends AppCompatActivity implements View.OnClickL
         Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
+
 
 
 }

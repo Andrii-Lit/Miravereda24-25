@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Contenido implements Serializable {
+public class Contenido implements Serializable,Comparable<Contenido> {
     private int id, duracion;
     private String titulo, descripcion, genero, nombre_dir,
             actores_principales, poster_path;
@@ -67,5 +67,10 @@ public class Contenido implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public int compareTo(Contenido contenido) {
+        return titulo.compareToIgnoreCase(contenido.getTitulo());
     }
 }
