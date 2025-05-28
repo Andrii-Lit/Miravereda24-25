@@ -15,8 +15,8 @@ public class Serie extends Contenido {
                  String poster_path, boolean disponibilidad, List<Temporada> temporadas) {
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales,
                 fecha_estreno, puntuacion_media, poster_path);
-        this.temporadas = temporadas;
         this.disponibilidad = disponibilidad;
+        this.temporadas = temporadas;
         this.changedTS = LocalDateTime.now();
     }
 
