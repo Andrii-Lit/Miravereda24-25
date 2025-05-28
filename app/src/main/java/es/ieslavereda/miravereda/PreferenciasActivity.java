@@ -2,6 +2,7 @@ package es.ieslavereda.miravereda;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +32,7 @@ import es.ieslavereda.miravereda.Base.BaseActivity;
 public class PreferenciasActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner bSpinner, aSpinner;
-
+    private boolean userSelect = false;
     private FloatingActionButton botonVoladorMagico;
 
     int  rar;
@@ -55,6 +56,7 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        loadLocale();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_preferencias);
@@ -67,9 +69,41 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
         botonVoladorMagico = findViewById(R.id.floatingButtonReturnPreferences);
         bSpinner=findViewById(R.id.bSpinner);
         aSpinner = findViewById(R.id.aSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Spinner_items_idiomas, android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Spinner_items_idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         aSpinner.setAdapter(adapter);
+        setSpinnerSelection();
+        aSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
+                if (!userSelect) {
+                    userSelect = true;
+                    return;
+                }
+
+                String selectedLanguage = parent.getItemAtPosition(position).toString();
+                String currentLang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "es");
+
+                String newLang = currentLang;
+
+                if (selectedLanguage.equals("Castellano")) {
+                    newLang = "es";
+                } else if (selectedLanguage.equals("Inglés")) {
+                    newLang = "en";
+                } else if (selectedLanguage.equals("Valenciano")) {
+                    newLang = "ca";
+                }
+
+                if (!newLang.equals(currentLang)) {
+                    changeLanguage(newLang);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
 
         bSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -97,37 +131,57 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
             }
         });
 
-        Spinner aSpinner=findViewById(R.id.aSpinner);
-        aSpinner.setOnItemSelectedListener(this);
 
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
 
-        String lang= adapterView.getItemAtPosition(position).toString();
-        String languageToLoad = null;
-
-        if(lang.equals("Castellano")){
-            languageToLoad="es";
-        } else if (lang.equals("Valenciano")) {
-            languageToLoad="ca";
-        } else if (lang.equals("Inglés")) {
-            languageToLoad="en";
-        }
-        if(languageToLoad!=null){
-            Locale locale = new Locale (languageToLoad);
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private void setSpinnerSelection() {
+        String lang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "es");
+        int position = 0; // Default to English
+
+        if (lang.equals("es")) {
+            position = 0;
+        } else if (lang.equals("ca")) {
+            position = 1;
+        } else if (lang.equals("en")) {
+            position = 2;
+        }
+
+        aSpinner.setSelection(position);
+    }
+    private void changeLanguage(String langCode) {
+        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang", langCode);
+        editor.apply();
+
+        setLocale(langCode);
+
+
+        recreate();
+    }
+    private void loadLocale() {
+        String lang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "");
+        if (!lang.equals("")) {
+            setLocale(lang);
+        }
+    }
+
+    private void setLocale(String langCode) {
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Configuration config = getResources().getConfiguration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
 

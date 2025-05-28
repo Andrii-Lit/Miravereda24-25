@@ -5,58 +5,68 @@
     android:id="@+id/tvUsername"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/Idioma"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Idioma"
-        app:layout_constraintStart_toStartOf="@+id/aSpinner"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"/>
-
-    <TextView
-        android:id="@+id/Nota1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="80dp"
-        android:text="Tema"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
 
     <Spinner
         android:id="@+id/aSpinner"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:entries="@array/Spinner_items_idiomas"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Titulo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155"
+        tools:ignore="MissingConstraints" />
 
     <Spinner
         android:id="@+id/bSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="36dp"
         android:entries="@array/Spinner_items_tema"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Nota1" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/aSpinner"
+        app:layout_constraintStart_toStartOf="@+id/aSpinner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.343"
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButtonReturnPreferences"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
-        tools:ignore="MissingConstraints"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="?attr/homeAsUpIndicator"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/Idioma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Idioma"
+        app:layout_constraintBottom_toTopOf="@+id/aSpinner"
+        app:layout_constraintStart_toStartOf="@+id/aSpinner" />
+
+    <TextView
+        android:id="@+id/Nota1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Tema"
+        app:layout_constraintBottom_toTopOf="@+id/bSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/bSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/bSpinner"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

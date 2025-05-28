@@ -12,5 +12,7 @@
     </string-array>
     <string name="Idioma">Idioma</string>
     <string name="Tema">Tema</string>
+    <string name="loginPlaceHolderCliente">Introduce cliente</string>
+    <string name="loginPlaceHolderContrasena">Introduce tu contraseña</string>
 </resources>
 
