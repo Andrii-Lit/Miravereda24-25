@@ -13,7 +13,7 @@ public class MyDataSource {
             MysqlDataSource dataSource=new MysqlDataSource();
             dataSource.setUser("proyecto2425");// cambiar a futuro
             dataSource.setPassword("1111");
-            dataSource.setUrl("jdbc:mysql://10.249.158.3:3306/miraveredapractica");//cambiar por id de servidor
+            dataSource.setUrl("jdbc:mysql://172.28.201.195:3306/miravereda2425");//cambiar por id de servidor
 
             return dataSource;
         }catch(Exception e){
