@@ -5,16 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 public class Serie extends Contenido {
-    private static final Tarifa tarifa = new Tarifa(Tarifa.Tipo.SERIE);
+    private int tarifa_id;
     private List<Temporada> temporadas;
     private boolean disponibilidad;
     private LocalDateTime changedTS;
 
     public Serie(int id, String titulo, String descripcion, String genero, String nombre_dir,
-                 int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
-                 String poster_path, boolean disponibilidad, List<Temporada> temporadas) {
+                 int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media, String poster_path,
+                 int tarifa_id, boolean disponibilidad, List<Temporada> temporadas) {
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales,
                 fecha_estreno, puntuacion_media, poster_path);
+        this.tarifa_id = tarifa_id;
         this.disponibilidad = disponibilidad;
         this.temporadas = temporadas;
         this.changedTS = LocalDateTime.now();
@@ -43,7 +44,7 @@ public class Serie extends Contenido {
                 total += temporada.getPrecioTotal();
             }
         }
-        return total * tarifa.getPorcentaje();
+        return total;
     }
 
     public LocalDateTime getChangedTS() {
