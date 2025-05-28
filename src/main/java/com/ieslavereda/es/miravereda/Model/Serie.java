@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Serie extends Contenido {
-    private static final Tarifa tarifa = new Tarifa(Tarifa.Tipo.SERIE);
     private List<Temporada> temporadas;
     private boolean disponibilidad;
     private LocalDateTime changedTS;
@@ -35,7 +34,7 @@ public class Serie extends Contenido {
                 total += temporada.getPrecioTotal();
             }
         }
-        return total * tarifa.getPorcentaje();
+        return total;
     }
 
 }

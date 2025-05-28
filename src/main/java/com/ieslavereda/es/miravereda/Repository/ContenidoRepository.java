@@ -1,10 +1,7 @@
 package com.ieslavereda.es.miravereda.Repository;
 
 import com.ieslavereda.es.miravereda.Config.MyDataSource;
-import com.ieslavereda.es.miravereda.Model.Actor;
-import com.ieslavereda.es.miravereda.Model.CompraCliente;
 import com.ieslavereda.es.miravereda.Model.Contenido;
-import com.ieslavereda.es.miravereda.Model.Credenciales;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -73,7 +70,7 @@ public class ContenidoRepository implements IContenidoRepository {
     @Override
     public Contenido updateContenido(Contenido contenido) throws SQLException {
             String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?,actores_principales = ?, poster_path = ?,fecha_estreno = ?, puntuacion_media = ? where id = ?";
-//            Contenido contenidoActualizado = null;
+            Contenido contenidoActualizado = null;
 
             try (Connection conn = MyDataSource.getMydataSource().getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -91,12 +88,11 @@ public class ContenidoRepository implements IContenidoRepository {
 
                 ps.executeUpdate();
 
-//                if (updatedRows > 0) {
-//
-//                    contenidoActualizado = contenido;
-//                }
 
-            }
+                    contenidoActualizado = contenido;
+                }
+
+
 
             return contenido;
         }
@@ -147,34 +143,6 @@ public class ContenidoRepository implements IContenidoRepository {
     }
 
 
-    @Override
-    public List<Contenido> getCarrito(Credenciales credenciales) throws SQLException {
-        return List.of();
-    }
 
-    @Override
-    public int addCarrito(CompraCliente compraCliente) throws SQLException {
-        return 0;
-    }
-
-    @Override
-    public int deleteCarrito(CompraCliente compraCliente) throws SQLException {
-        return 0;
-    }
-
-    @Override
-    public int pagar(Credenciales credenciales) throws SQLException {
-        return 0;
-    }
-
-    @Override
-    public void addActor(Actor actor) throws SQLException {
-
-    }
-
-    @Override
-    public boolean estaAlquilada(CompraCliente compraCliente) throws SQLException {
-        return false;
-    }
 }
 

@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 public class Capitulo {
     private int id;
     private String titulo;
-    private double precio;
+    private double precio_base;
     private Temporada temporada;
     private LocalDateTime changedTS;
 
     public Capitulo(int id, String titulo, double precio, Temporada temporada) {
         this.id = id;
         this.titulo = titulo;
-        this.precio = precio;
+        this.precio_base = precio;
         this.temporada = temporada;
         this.changedTS = LocalDateTime.now();
     }

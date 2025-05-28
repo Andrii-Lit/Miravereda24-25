@@ -30,7 +30,7 @@ public class Temporada {
     public double getPrecioTotal() {
         double total = 0.0;
         for (Capitulo c : capitulos) {
-            total += c.getPrecio();
+            total += c.getPrecio_base();
         }
         return total;
     }

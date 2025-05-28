@@ -9,17 +9,19 @@ import java.sql.Date;
 @Getter
 @Setter
 public class Pelicula extends Contenido{
-    private static final Tarifa tarifa = new Tarifa(Tarifa.Tipo.PELICULA);
+
+    private int tarifa_id;
     private Date disponible_hasta;
-    private double precio;
+    private double precio_base;
     private LocalDateTime changedTS;
     public Pelicula(int id, String titulo, String descripcion, String genero,
                     String nombre_dir, int duracion, String actores_principales,
-                    Date fecha_estreno, double puntuacion_media, String poster_path,
-                    Date disponible_hasta, double precio) {
+                    Date fecha_estreno, double puntuacion_media, String poster_path,int tarifa_id,
+                    Date disponible_hasta, double precio_base) {
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path);
+        this.tarifa_id = tarifa_id;
         this.disponible_hasta = disponible_hasta;
-        this.precio = precio * tarifa.getPorcentaje();
+        this.precio_base = precio_base;
         this.changedTS = LocalDateTime.now();
     }
 

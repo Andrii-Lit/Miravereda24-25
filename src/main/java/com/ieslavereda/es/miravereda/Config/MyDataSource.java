@@ -11,9 +11,9 @@ public class MyDataSource {
     public static DataSource getMydataSource(){
         try{
             MysqlDataSource dataSource=new MysqlDataSource();
-            dataSource.setUser("proyecto2425");// cambiar a futuro
+            dataSource.setUser("proyecto2425");//userDeBase de Datos
             dataSource.setPassword("1111");
-            dataSource.setUrl("jdbc:mysql://172.28.201.195:3306/miravereda2425");//cambiar por id de servidor
+            dataSource.setUrl("jdbc:mysql://172.28.201.195:3306/miravereda2425?noAccessToProcedureBodies=true");//ya esta la ip del servidor
 
             return dataSource;
         }catch(Exception e){

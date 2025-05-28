@@ -152,6 +152,48 @@ public class ClienteRepository implements IClienteRepository {
 
     @Override
     public Cliente login(String email, String contrasenya) throws SQLException {
-        return null;
+            String sql="{call iniciar_sesion(?,?,?)}";
+            try(Connection con=MyDataSource.getMydataSource().getConnection()){
+               CallableStatement cs=con.prepareCall(sql);
+               cs.registerOutParameter(1,Types.BOOLEAN);
+               cs.setString(2,email);
+               cs.setString(3,contrasenya);
+               cs.execute();
+             boolean loginOk=cs.getBoolean(1);
+             if(!loginOk){
+                 return null;
+             }
+             return getClientePorEmail(email);
+            }
+
+
     }
-}
+    private Cliente getClientePorEmail(String email) throws SQLException {
+        String sqlGetCliente = "{CALL get_cliente_por_email(?)}";
+
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             CallableStatement csCliente = conn.prepareCall(sqlGetCliente)) {
+
+            csCliente.setString(1, email);
+
+            ResultSet rs = csCliente.executeQuery();
+                if (rs.next()) {
+
+                    return Cliente.builder().id(rs.getInt("id"))
+                            .contrasenya(rs.getString("contrasenya"))
+                            .nombre(rs.getString("nombre"))
+                            .apellidos(rs.getString("apellidos"))
+                            .domicilio(rs.getString("domicilio"))
+                            .cod_postal(rs.getString("cod_postal"))
+                            .email(rs.getString("email"))
+                            .fecha_nac(rs.getDate("fecha_nac"))
+                            .num_tarjeta(rs.getString("num_tarjeta"))
+                            .build();
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+
+

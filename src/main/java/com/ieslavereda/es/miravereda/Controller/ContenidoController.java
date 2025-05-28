@@ -1,8 +1,6 @@
 package com.ieslavereda.es.miravereda.Controller;
 
-import com.ieslavereda.es.miravereda.Model.CompraCliente;
 import com.ieslavereda.es.miravereda.Model.Contenido;
-import com.ieslavereda.es.miravereda.Model.Credenciales;
 import com.ieslavereda.es.miravereda.Service.ContenidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import com.ieslavereda.es.miravereda.Model.Credenciales;
 
 @RestController
 @RequestMapping("/api")
@@ -96,42 +92,5 @@ public class ContenidoController {
         }
     }
 
-//    @PostMapping("/carrito/ver/")
-//    public ResponseEntity<?> getCarrito(@RequestBody Credenciales credenciales) {
-//        try {
-//            List<Contenido> carrito = service.getCarrito(credenciales);
-//            return new ResponseEntity<>(carrito, HttpStatus.OK);
-//        } catch (SQLException e) {
-//            Map<String,Object> response = new HashMap<>();
-//            response.put("code", e.getErrorCode());
-//            response.put("message", e.getMessage());
-//            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
-//    @PostMapping("/carrito/")
-//    public ResponseEntity<?> addCarrito(@RequestBody CompraCliente compraCliente) {
-//        try {
-//            int id = service.addCarrito(compraCliente);
-//            return new ResponseEntity<>(id, HttpStatus.OK);
-//        } catch (SQLException e) {
-//            Map<String,Object> response = new HashMap<>();
-//            response.put("code", e.getErrorCode());
-//            response.put("message", e.getMessage());
-//            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-//    @DeleteMapping("/carrito/")
-//    public ResponseEntity<?> deleteCarrito(@RequestBody CompraCliente compraCliente) {
-//        try {
-//            int id = service.deleteCarrito(compraCliente);
-//            return new ResponseEntity<>(id, HttpStatus.OK);
-//        } catch (SQLException e) {
-//            Map<String,Object> response = new HashMap<>();
-//            response.put("code", e.getErrorCode());
-//            response.put("message", e.getMessage());
-//            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 }

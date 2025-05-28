@@ -1,8 +1,6 @@
 package com.ieslavereda.es.miravereda.Controller;
 
 import com.ieslavereda.es.miravereda.Model.Cliente;
-import com.ieslavereda.es.miravereda.Model.Contenido;
-import com.ieslavereda.es.miravereda.Model.Credenciales;
 import com.ieslavereda.es.miravereda.Service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -102,7 +100,7 @@ public class ClienteController extends BaseController {
 
 
     @PostMapping("/login/")
-    public ResponseEntity<?> login(@RequestBody Credenciales credenciales) {
+    public ResponseEntity<?> login(@RequestBody Cliente credenciales) {
         try {
             Cliente cliente = service.login(credenciales.getEmail(), credenciales.getContrasenya());
             if (cliente == null)

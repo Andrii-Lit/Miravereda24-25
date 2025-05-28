@@ -1,9 +1,6 @@
 package com.ieslavereda.es.miravereda.Service;
 
-import com.ieslavereda.es.miravereda.Model.Actor;
-import com.ieslavereda.es.miravereda.Model.CompraCliente;
 import com.ieslavereda.es.miravereda.Model.Contenido;
-import com.ieslavereda.es.miravereda.Model.Credenciales;
 import com.ieslavereda.es.miravereda.Repository.ContenidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,28 +34,8 @@ public class ContenidoService {
         return repository.getAllContenidos();
     }
 
-    public List<Contenido> getCarrito(Credenciales credenciales) throws SQLException {
-        return repository.getCarrito(credenciales);
-    }
 
-    public int addCarrito(CompraCliente compraCliente) throws SQLException {
-        return repository.addCarrito(compraCliente);
-    }
 
-    public int deleteCarrito(CompraCliente compraCliente) throws SQLException {
-        return repository.deleteCarrito(compraCliente);
-    }
 
-    public int pagar(Credenciales credenciales) throws SQLException {
-        return repository.pagar(credenciales);
-    }
-
-    public void addActor(Actor actor) throws SQLException {
-        repository.addActor(actor);
-    }
-
-    public boolean estaAlquilada(CompraCliente compraCliente) throws SQLException {
-        return repository.estaAlquilada(compraCliente);
-    }
 }
 
