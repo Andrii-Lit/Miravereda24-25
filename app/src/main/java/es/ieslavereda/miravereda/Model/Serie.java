@@ -36,7 +36,7 @@ public class Serie extends Contenido {
         this.temporadas = temporadas;
     }
 
-    public double getPrecio() {
+    public double getPrecioTotal() {
         double total = 0.0;
         if (temporadas != null) {
             for (Temporada temporada : temporadas) {
