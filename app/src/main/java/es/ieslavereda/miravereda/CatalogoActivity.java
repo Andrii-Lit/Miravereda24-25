@@ -75,7 +75,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int pos = recyclerView.getChildLayoutPosition(v);
         Contenido contenido = contenidos.get(pos);
-        Intent intent = new Intent(this, InformationActivity.class);
+        Intent intent = new Intent(this, DetalleContenidoActivity.class);
         intent.putExtra("contenido", contenido);
         Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
