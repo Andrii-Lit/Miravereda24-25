@@ -32,6 +32,7 @@ public class PreferenciasActivity extends AppCompatActivity implements AdapterVi
 
     private FloatingActionButton botonVoladorMagico;
 
+    int  rar;
     public class LocaleHelper {
         public void setLocale(Context context, String languageCode) {
             Locale locale = new Locale(languageCode);
