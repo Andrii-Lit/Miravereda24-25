@@ -1,17 +1,15 @@
 package es.ieslavereda.miravereda;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,51 +22,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.ieslavereda.miravereda.Base.BaseActivity;
+import es.ieslavereda.miravereda.Model.Cliente;
 import es.ieslavereda.miravereda.Model.Contenido;
 
 public class CatalogoActivity extends BaseActivity implements View.OnClickListener {
+
     private List<Contenido> contenidos;
     private RecyclerView recyclerView;
     private ImageView ivLogo;
     private FloatingActionButton volver;
     private FloatingActionButton carrito;
+    private Cliente cliente;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.catalogo_layout);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tvUsername), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Context context=this;
+
+        // Leer datos de sesión
+        SharedPreferences prefs = getSharedPreferences("cliente", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", null);
+        String contrasenya = prefs.getString("contrasenya", null);
+
+        // Log para comprobar lectura
+        Log.d("PREFS", "Leído email: " + email);
+        Log.d("PREFS", "Leído contrasenya: " + contrasenya);
+
+        if (email != null && contrasenya != null) {
+            cliente = new Cliente(email, contrasenya);
+        } else {
+            Toast.makeText(this, "No hay sesión iniciada", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return;
+        }
+
+        // Configurar vistas
+        Context context = this;
         ivLogo = findViewById(R.id.ivLogo);
-//        ivlogo.setImageResource(R.mipmap.miravereda_logo_foreground);
+        contenidos = new ArrayList<>();
 
-        contenidos = new ArrayList<>(List.of(
+        volver = findViewById(R.id.Volver);
+        carrito = findViewById(R.id.Carrito);
 
-
-        ));
-
-        volver=findViewById(R.id.Volver);
-        carrito=findViewById(R.id.Carrito);
-        volver.setOnClickListener((View view)->{
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
-        carrito.setOnClickListener((View view)->{
-            Intent intent = new Intent(this, CarritoActivity.class);
-            startActivity(intent);
+        volver.setOnClickListener(view -> {
+            startActivity(new Intent(this, MainActivity.class));
         });
 
-        recyclerView=findViewById(R.id.recycled);
+        carrito.setOnClickListener(view -> {
+            startActivity(new Intent(this, CarritoActivity.class));
+        });
+
+        recyclerView = findViewById(R.id.recycled);
         AdaptadorRV adaptadorRV = new AdaptadorRV(context, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -80,7 +95,4 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
-
-
-
 }
