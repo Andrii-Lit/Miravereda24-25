@@ -1,64 +1,68 @@
 package es.ieslavereda.miravereda;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import es.ieslavereda.miravereda.API.Connector;
 import es.ieslavereda.miravereda.Base.BaseActivity;
+import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Contenido;
 
-public class CarritoActivity extends BaseActivity {
-    private List<Contenido> contenidos_anyadidos;
-    private FloatingActionButton carrito_backButton;
-    private Button carrito_comprarButton;
-    private RecyclerView carrito_recyclerView;
-    private TextView carrito_totalTV, carrito_precioTV;
+public class CarritoActivity extends BaseActivity implements CallInterface<List<Contenido>> {
+
+    private List<Contenido> contenidosAnyadidos;
+    private RecyclerView carritoRecyclerView;
+    private Button carritoComprarButton;
+    private TextView carritoTotalTV, carritoPrecioTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_carrito);
-        //pillar el endpoint que devuelva la lista
-        try {
-            contenidos_anyadidos = new ArrayList<>(
-                    Connector.getConector().getAsList(Contenido.class, "")
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        //comentar el recycler en caso de no funcionar
-        CarritoAdaptadorRV adaptadorRV = new CarritoAdaptadorRV(this, contenidos_anyadidos);
-        carrito_recyclerView.setAdapter(adaptadorRV);
-        carrito_recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        carrito_backButton = findViewById(R.id.carrito_backButton);
-        carrito_comprarButton = findViewById(R.id.carrito_comprarButton);
-        carrito_recyclerView = findViewById(R.id.carrito_recyclerView);
-        carrito_totalTV = findViewById(R.id.carrito_totalTV);
-        carrito_precioTV = findViewById(R.id.carrito_precioTV);
+        carritoRecyclerView = findViewById(R.id.carrito_recyclerView);
+        carritoComprarButton = findViewById(R.id.carrito_comprarButton);
+        carritoTotalTV = findViewById(R.id.carrito_totalTV);
+        carritoPrecioTV = findViewById(R.id.carrito_precioTV);
 
-        carrito_precioTV.setText(""
-                // implementar la llamada a la tabla carrito
-        );
+        carritoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        carrito_backButton.setOnClickListener((View view)->{
-            finish();
+        carritoComprarButton.setOnClickListener(v -> {
+            // Aquí puedes implementar la acción de compra, ej. enviar pedido al servidor
         });
+
+        executeCall(this);
+        showProgress();
     }
 
+    @Override
+    public List<Contenido> doInBackground() throws Exception {
+        Collection<Contenido> contenidos = Connector.getConector().getAsList(Contenido.class, "contenido/");
+        return (contenidos != null) ? List.copyOf(contenidos) : List.of();
+    }
 
+    @Override
+    public void doInUI(List<Contenido> data) {
+        hideProgress();
+        contenidosAnyadidos = data;
+
+        if (carritoRecyclerView.getAdapter() == null) {
+            carritoRecyclerView.setAdapter(new CarritoAdaptadorRV(this, contenidosAnyadidos));
+        } else {
+            carritoRecyclerView.getAdapter().notifyDataSetChanged();
+        }
+
+
+    }
 }
+
