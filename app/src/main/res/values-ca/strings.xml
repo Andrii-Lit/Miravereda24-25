@@ -1,12 +1,40 @@
 <resources>
     <string name="app_name">ProyectoMiravereda</string>
+    <string-array name="Spinner_items_idiomas">
+        <item>Castella</item>
+        <item>Valencia</item>
+        <item>Anglés</item>
+    </string-array>
     <string-array name="Spinner_items_tema">
         <item>Sistema</item>
         <item>Fosc</item>
         <item>Clar</item>
     </string-array>
+
+    <!-- Preferencias -->
     <string name="Idioma">Idioma</string>
     <string name="Tema">Tema</string>
+
+    <!-- Login -->
     <string name="loginPlaceHolderCliente">Introduïx client</string>
     <string name="loginPlaceHolderContrasena">Introduïx la teua contrasenya</string>
+    <string name="loginTextOlvidadoContra">¿Has oblidat la contrasenya?</string>
+    <string name="loginTextIniciarSesion">Iniciar Sessió</string>
+    <string name="loginTextCrearCuenta">No tens compte? Crea el teu compte</string>
+
+    <!-- Carrito -->
+    <string name="carritoConfirmarCompra">CONFIRMAR COMPRA</string>
+    <string name="carritoTotal">TOTAL: </string>
+
+    <!-- View Holder Peliculas -->
+    <string name="viewholderNotaMedia">Nota Mitjana: </string>
+
+    <!-- Informacion pelicula -->
+    <string name="informacionNotaPelicula">Nota: </string>
+    <string name="informacionNotaMedia">Nota Mitjana: </string>
+    <string name="informacionPrecio">Preu: </string>
+    <string name="informacionAñadirCarrito">Afegir al carret</string>
+    <string name="informacionSinopsis">Sinopsi</string>
+    <string name="informacionDirector">Director: </string>
+    <string name="informacionValorar">Valorar</string>
 </resources>

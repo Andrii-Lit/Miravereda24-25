@@ -32,7 +32,7 @@
         android:id="@+id/Titulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Título de película"
+        android:hint="Título de película"
         android:textStyle="bold|italic"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@id/Poster"
@@ -44,7 +44,7 @@
         android:id="@+id/NotaMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nota media:"
+        android:text="@string/informacionNotaMedia"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/Titulo"
         app:layout_constraintTop_toBottomOf="@id/Titulo"
@@ -64,7 +64,7 @@
         android:id="@+id/Precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Precio:"
+        android:text="@string/informacionPrecio"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/Titulo"
         app:layout_constraintTop_toBottomOf="@id/NotaMedia"
@@ -84,7 +84,7 @@
         android:id="@+id/AddCarrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir al carrito"
+        android:text="@string/informacionAñadirCarrito"
         app:layout_constraintStart_toStartOf="@id/Titulo"
         app:layout_constraintTop_toBottomOf="@id/Precio"
         android:layout_marginTop="16dp" />
@@ -94,7 +94,7 @@
         android:id="@+id/SinopsisTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sinopsis"
+        android:text="@string/informacionSinopsis"
         app:layout_constraintTop_toBottomOf="@id/AddCarrito"
         app:layout_constraintStart_toStartOf="@id/Titulo"
         android:layout_marginTop="16dp" />
@@ -114,7 +114,7 @@
         android:id="@+id/AutorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Director"
+        android:text="@string/informacionDirector"
         app:layout_constraintTop_toBottomOf="@id/Descripcion"
         app:layout_constraintStart_toStartOf="@id/Descripcion"
         android:layout_marginTop="8dp" />
@@ -124,7 +124,7 @@
         android:id="@+id/Nota1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nota:"
+        android:text="@string/informacionNotaPelicula"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -142,7 +142,7 @@
         android:id="@+id/Valorar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Valorar"
+        android:text="@string/informacionValorar"
         app:layout_constraintStart_toEndOf="@id/notaCliente"
         app:layout_constraintBaseline_toBaselineOf="@id/Nota1"
         android:layout_marginStart="8dp" />

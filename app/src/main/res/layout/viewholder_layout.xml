@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Nota Media:"
+        android:text="@string/viewholderNotaMedia"
         app:layout_constraintStart_toEndOf="@+id/Poster"
         app:layout_constraintTop_toBottomOf="@+id/Titulo" />
 

@@ -1,13 +1,41 @@
 <resources>
     <string name="app_name">ProyectoMiravereda</string>
+    <string-array name="Spinner_items_idiomas">
+        <item>Spanish</item>
+        <item>Valencian</item>
+        <item>English</item>
+    </string-array>
     <string-array name="Spinner_items_tema">
         <item>System</item>
         <item>Dark</item>
         <item>Light</item>
     </string-array>
+
+    <!-- Preferencias -->
     <string name="Idioma">Language</string>
     <string name="Tema">Theme</string>
+
+    <!-- Login -->
     <string name="loginPlaceHolderCliente">Insert client</string>
     <string name="loginPlaceHolderContrasena">Enter your password</string>
+    <string name="loginTextOlvidadoContra">¿Did you forget your password?</string>
+    <string name="loginTextIniciarSesion">Login</string>
+    <string name="loginTextCrearCuenta">Don\'t have an account? Create your account</string>
+
+    <!-- Carrito -->
+    <string name="carritoConfirmarCompra">CONFIRM PURCHASE</string>
+    <string name="carritoTotal">TOTAL: </string>
+
+    <!-- View Holder Peliculas -->
+    <string name="viewholderNotaMedia">Average Grade: </string>
+
+    <!-- Informacion pelicula -->
+    <string name="informacionNotaPelicula">Rating: </string>
+    <string name="informacionNotaMedia">Average Grade: </string>
+    <string name="informacionPrecio">Price: </string>
+    <string name="informacionAñadirCarrito">Add to cart</string>
+    <string name="informacionSinopsis">Synopsis</string>
+    <string name="informacionDirector">Director: </string>
+    <string name="informacionValorar">Rate</string>
 </resources>
 

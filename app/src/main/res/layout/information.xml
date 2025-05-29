@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
-        android:text="Nota:"
+        android:text="@string/informacionNotaPelicula"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -53,7 +53,7 @@
         android:layout_height="33dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
-        android:text="Nota media:"
+        android:text="@string/informacionNotaMedia"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/Precio"
         app:layout_constraintStart_toEndOf="@+id/Poster" />
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginBottom="16dp"
-        android:text="Precio:"
+        android:text="@string/informacionPrecio"
         app:layout_constraintBottom_toTopOf="@+id/AddCarrito"
         app:layout_constraintStart_toEndOf="@+id/Poster" />
 
@@ -72,7 +72,7 @@
         android:id="@+id/AddCarrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir al carrito"
+        android:text="@string/informacionAñadirCarrito"
         app:layout_constraintBottom_toBottomOf="@+id/Poster"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Poster" />
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Sinopsis"
+        android:text="@string/informacionSinopsis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Poster" />
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Director:"
+        android:text="@string/informacionDirector"
         app:layout_constraintStart_toStartOf="@+id/Descripcion"
         app:layout_constraintTop_toBottomOf="@+id/Descripcion" />
 
@@ -154,7 +154,7 @@
         android:id="@+id/Valorar"
         android:layout_width="93dp"
         android:layout_height="37dp"
-        android:text="Valorar"
+        android:text="@string/informacionValorar"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/notaCliente"
         app:layout_constraintEnd_toEndOf="parent"

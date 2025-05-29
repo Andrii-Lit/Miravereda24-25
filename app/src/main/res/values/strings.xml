@@ -10,9 +10,32 @@
         <item>Oscuro</item>
         <item>Claro</item>
     </string-array>
+
+    <!-- Preferencias -->
     <string name="Idioma">Idioma</string>
     <string name="Tema">Tema</string>
+
+    <!-- Login -->
     <string name="loginPlaceHolderCliente">Introduce cliente</string>
     <string name="loginPlaceHolderContrasena">Introduce tu contraseña</string>
+    <string name="loginTextOlvidadoContra">¿Has olvidado  tu Contraseña?</string>
+    <string name="loginTextIniciarSesion">Iniciar Sesion</string>
+    <string name="loginTextCrearCuenta">¿No tienes cuenta? Crea tu cuenta</string>
+
+    <!-- Carrito -->
+    <string name="carritoConfirmarCompra">CONFIRMAR COMPRA</string>
+    <string name="carritoTotal">TOTAL: </string>
+
+    <!-- View Holder Peliculas -->
+    <string name="viewholderNotaMedia">Nota Media: </string>
+
+    <!-- Informacion pelicula -->
+    <string name="informacionNotaPelicula">Nota: </string>
+    <string name="informacionNotaMedia">Nota Media: </string>
+    <string name="informacionPrecio">Precio: </string>
+    <string name="informacionAñadirCarrito">Añadir al carrito</string>
+    <string name="informacionSinopsis">Sinopsis</string>
+    <string name="informacionDirector">Director: </string>
+    <string name="informacionValorar">Valorar</string>
 </resources>
 

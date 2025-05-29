@@ -78,7 +78,7 @@
             android:layout_marginTop="20dp"
             android:clickable="true"
             android:gravity="center"
-            android:text="¿Has olvidado  tu Contraseña?"
+            android:text="@string/loginTextOlvidadoContra"
             android:textAlignment="center" />
 
 
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Iniciar Sesion"
+        android:text="@string/loginTextIniciarSesion"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="¿No tienes cuenta? Crea tu cuenta"
+        android:text="@string/loginTextCrearCuenta"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
