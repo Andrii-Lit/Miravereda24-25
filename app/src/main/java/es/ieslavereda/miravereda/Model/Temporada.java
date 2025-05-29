@@ -9,14 +9,14 @@ public class Temporada {
     private int numero;
     private Serie serie;
     private List<Capitulo> capitulos;
-    private LocalDateTime changedTS;
+
 
     public Temporada(int id, int numero, Serie serie) {
         this.id = id;
         this.numero = numero;
         this.serie = serie;
         this.capitulos = new ArrayList<>();
-        this.changedTS = LocalDateTime.now();
+
     }
 
     public int getId() {
@@ -51,7 +51,5 @@ public class Temporada {
         return total;
     }
 
-    public LocalDateTime getChangedTS() {
-        return changedTS;
-    }
+
 }

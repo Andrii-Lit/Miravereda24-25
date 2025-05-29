@@ -19,20 +19,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import es.ieslavereda.miravereda.API.Connector;
 import es.ieslavereda.miravereda.Base.BaseActivity;
+import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Cliente;
 import es.ieslavereda.miravereda.Model.Contenido;
 
-public class CatalogoActivity extends BaseActivity implements View.OnClickListener {
+public class CatalogoActivity extends BaseActivity implements View.OnClickListener, CallInterface<Collection<Contenido>> {
 
-    private List<Contenido> contenidos;
+    private List<Contenido> contenidos = new ArrayList<>();
     private RecyclerView recyclerView;
     private ImageView ivLogo;
     private FloatingActionButton volver;
     private FloatingActionButton carrito;
     private Cliente cliente;
+    private AdaptadorRV adaptadorRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         String email = prefs.getString("email", null);
         String contrasenya = prefs.getString("contrasenya", null);
 
-        // Log para comprobar lectura
         Log.d("PREFS", "Leído email: " + email);
         Log.d("PREFS", "Leído contrasenya: " + contrasenya);
 
@@ -64,26 +67,22 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        // Configurar vistas
-        Context context = this;
         ivLogo = findViewById(R.id.ivLogo);
-        contenidos = new ArrayList<>();
-
         volver = findViewById(R.id.Volver);
         carrito = findViewById(R.id.Carrito);
-
-        volver.setOnClickListener(view -> {
-            startActivity(new Intent(this, MainActivity.class));
-        });
-
-        carrito.setOnClickListener(view -> {
-            startActivity(new Intent(this, CarritoActivity.class));
-        });
-
         recyclerView = findViewById(R.id.recycled);
-        AdaptadorRV adaptadorRV = new AdaptadorRV(context, contenidos, this);
+
+        volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+        carrito.setOnClickListener(view -> startActivity(new Intent(this, CarritoActivity.class)));
+
+        // Inicializa adaptador vacío, lo actualizaremos al recibir datos
+        adaptadorRV = new AdaptadorRV(this, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Ejecuta la carga de datos en background
+        executeCall(this);
+        showProgress();
     }
 
     @Override
@@ -94,5 +93,29 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         intent.putExtra("contenido", contenido);
         Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
+    }
+
+    @Override
+    public Collection<Contenido> doInBackground() throws Exception {
+
+        return (contenidos!=null)?
+                Connector.getConector().getAsList(Contenido.class, "contenido/")
+                :List.of();
+    }
+
+    @Override
+    public void doInUI(Collection<Contenido> contenido) {
+        hideProgress();
+        if (contenido != null) {
+            contenidos.clear();
+            contenidos.addAll(contenido);
+            adaptadorRV.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void doInError(Context context, Exception e) {
+        hideProgress();
+        Toast.makeText(context, "Error cargando contenidos: " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

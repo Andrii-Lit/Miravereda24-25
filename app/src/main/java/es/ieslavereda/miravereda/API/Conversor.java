@@ -1,6 +1,7 @@
 package es.ieslavereda.miravereda.API;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,15 +20,18 @@ public class Conversor {
     public static Conversor getConversor() {
         if (conversor == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Android Oreo o superior: gson con adaptadores para fechas
                 gson = new GsonBuilder()
                         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                         .create();
+            } else {
+                gson = new GsonBuilder().create();
             }
             conversor = new Conversor();
         }
         return conversor;
     }
+
 
     public <T> String toJson(T data) {
         return gson.toJson(data);
@@ -47,6 +51,7 @@ public class Conversor {
 
     public <T> List<T> fromJsonList(String json, Class<T> clazz) throws Exception {
         try {
+            Log.d("Conversor", "JSON a parsear: " + json);
             Type typeOfT = TypeToken.getParameterized(List.class, clazz).getType();
             return gson.fromJson(json, typeOfT);
         } catch (Exception e) {

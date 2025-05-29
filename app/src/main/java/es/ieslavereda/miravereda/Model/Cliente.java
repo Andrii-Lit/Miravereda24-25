@@ -18,7 +18,7 @@ public class Cliente implements Serializable {
         private String email;
         private LocalDate fecha_nac;
         private String num_tarjeta;
-        private LocalDateTime changedTs;
+
 
         // Constructor vacío obligatorio para Gson
         public Cliente() {
@@ -58,7 +58,6 @@ public class Cliente implements Serializable {
         public String getNum_tarjeta() { return num_tarjeta; }
         public void setNum_tarjeta(String num_tarjeta) { this.num_tarjeta = num_tarjeta; }
 
-        public LocalDateTime getChangedTs() { return changedTs; }
-        public void setChangedTs(LocalDateTime changedTs) { this.changedTs = changedTs; }
+
     }
 

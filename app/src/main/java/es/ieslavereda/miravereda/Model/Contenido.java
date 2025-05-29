@@ -1,19 +1,27 @@
 package es.ieslavereda.miravereda.Model;
 
+import android.os.Build;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Contenido implements Serializable,Comparable<Contenido> {
     private int id, duracion;
     private String titulo, descripcion, genero, nombre_dir,
             actores_principales, poster_path;
-    private Date fecha_estreno;
+    private LocalDate fecha_estreno;
     private double puntuacion_media;
-    private LocalDate changedTS;
+
+
+    public Contenido(){
+
+    }
 
     public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
-                     int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
+                     int duracion, String actores_principales, LocalDate fecha_estreno, double puntuacion_media,
                      String poster_path) {
         this.id = id;
         this.titulo = titulo;
@@ -25,7 +33,7 @@ public class Contenido implements Serializable,Comparable<Contenido> {
         this.fecha_estreno = fecha_estreno;
         this.puntuacion_media = puntuacion_media;
         this.poster_path = poster_path;
-        this.changedTS = LocalDate.now();
+
     }
 
 
@@ -57,8 +65,15 @@ public class Contenido implements Serializable,Comparable<Contenido> {
         return duracion;
     }
 
-    public Date getFecha_estreno() {
-        return fecha_estreno;
+
+    public String getFecha_estreno() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            return fecha_estreno.format(formatter);
+        }
+        return "";
+
     }
 
     public double getPuntuacion_media() {
@@ -68,6 +83,8 @@ public class Contenido implements Serializable,Comparable<Contenido> {
     public int getId() {
         return id;
     }
+
+
 
     @Override
     public int compareTo(Contenido contenido) {
