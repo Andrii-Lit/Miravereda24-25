@@ -166,7 +166,8 @@ create table lin_fac(
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     primary key(carrito_id, contenido_id),
     foreign key (carrito_id) references carrito(id) on delete cascade,
-    foreign key (contenido_id) references contenido(id)
+    foreign key (contenido_id) references contenido(id),
+    unique key unq_carrito_contenido (carrito_id, contenido_id);
 
 );
 

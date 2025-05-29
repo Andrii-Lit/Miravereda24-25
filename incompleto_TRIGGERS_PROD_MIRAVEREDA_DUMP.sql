@@ -39,15 +39,31 @@ begin
     declare carrito_total decimal(10,2);
     declare iva decimal(10,2);
     declare total_con_iva decimal(10,2);
+	declare cant_lineas int;
+
 	-- Recogemos el total del CARRITO activo
 	select total into carrito_total 
 	from carrito 
 	where cliente_id = p_cliente_id and activo = true;
-	-- Seteamos el iva
-	set iva = 0.21;
 
+	-- mensaje de error en caso de no haber carritos activos
+	if carrito_total is null then
+		signal sqlstate '45000' set message_text = 'No hay carrito activo para este cliente, prueba a añadir algo para crearlo';
+	end if;
+
+	-- Seteamos el iva y el total con iva
+	set iva = 0.21;
 	set total_con_iva = carrito_total + (carrito_total * iva);
 
+	-- Contamos cuántas líneas tiene el carrito activo
+	-- para no comprar un carrito vacío
+	select count(*) into cant_lineas 
+	from lin_fac 
+	where carrito_id = (select id from carrito where cliente_id = p_cliente_id and activo = true);
+
+	if cant_lineas = 0 then
+		signal sqlstate '45000' set message_text = 'El carrito está vacío. Añade algunos productos antes de comprar.';
+	end if;
 	-- Hace INSERT en FACTURA el cliente_id, total sin y con el IVA
 	insert into factura(cliente_id, total, total_con_iva)
 	values (p_cliente_id, carrito_total, total_con_iva);
@@ -107,11 +123,41 @@ begin
 	end if; 	
 
 	-- Añadimos la LIN_FAC (el producto al carrito)
+	-- Si añadimos el mismo producto actualiza el precio
 	insert into lin_fac(carrito_id, contenido_id, precio) 
-	values (carrito_activo_id, p_contenido_id, contenido_precio);
+	values (carrito_activo_id, p_contenido_id, contenido_precio)
+	on duplicate key update precio = values(precio);
 
 	-- Actualizamos el precio del carrito
 	call actualizar_precio_carrito(p_cliente_id);
+end$$
+delimiter ;
+
+#----------------------------------------------------------------------------------
+#-- PROCEDIMIENTO al que llamará el botón para QUITAR UN PRODUCTO del CARRITO
+#----------------------------------------------------------------------------------
+delimiter $$
+drop procedure if exists quitar_producto$$
+create procedure quitar_producto(in p_cliente_id int, in p_contenido_id int)
+begin
+    declare carrito_activo_id int;
+
+    -- Recogemos el carrito activo
+    select id into carrito_activo_id 
+    from carrito 
+    where cliente_id = p_cliente_id and activo = true;
+
+	-- En caso de ser nulo, error
+    if carrito_activo_id is null then
+        signal sqlstate '45000' set message_text = 'No hay carrito activo para este cliente.';
+    end if;
+
+    -- Borramos el LIN_FAC de la bbdd
+    delete from lin_fac 
+    where carrito_id = carrito_activo_id and contenido_id = p_contenido_id;
+
+    -- Actualizamos el total del carrito
+    call actualizar_precio_carrito(p_cliente_id);
 end$$
 delimiter ;
 
@@ -142,7 +188,7 @@ delimiter $$
 drop procedure if exists get_cliente_por_email$$
 create procedure get_cliente_por_email(in p_email VARCHAR(100))
 begin
-    select * from cliente where email = p_email limit 1;
+    select * from cliente where email = p_email;
 END$$
 DELIMITER ;
 
@@ -218,6 +264,12 @@ begin
 		select id into carrito_activo_id from carrito
 		where cliente_id = p_cliente_id and activo = true;
 	end if;
+	
+	-- De tener nulo el precio (lo dudo, está inicializado pero por si acaso)
+	if precio_total is null then
+		set precio_total = 0.00;
+	end if;
+
 
 	-- Sacamos la suma de las lin_fac asociadas al carrito activo
 	select sum(precio) into precio_total from lin_fac where carrito_id = carrito_activo_id;
