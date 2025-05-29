@@ -30,7 +30,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btIniciarSesion = findViewById(R.id.btIniciarSesion);
@@ -52,31 +51,41 @@ public class MainActivity extends BaseActivity {
         final String email = username.getText().toString();
         final String contrasenya = password.getText().toString();
 
+        if (email.isEmpty() || contrasenya.isEmpty()) {
+            Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final Cliente cliente = new Cliente(email, contrasenya);
 
         executeCall(new CallInterface<Cliente>() {
             @Override
             public Cliente doInBackground() throws Exception {
-                return connector.post(Cliente.class, cliente, "login/");
+                try {
+                    return connector.post(Cliente.class, cliente, "login/");
+                } catch (Exception e) {
+                    Log.e("LOGIN", "Error during login", e);
+                    throw new Exception("Error de red, por favor intente más tarde.");
+                }
             }
+
             @Override
             public void doInUI(Cliente clienteResponse) {
                 if (clienteResponse != null) {
-                    Log.d("LOGIN", "Login correcto, nombre: " + clienteResponse.getNombre());
                     Toast.makeText(MainActivity.this, "Login correcto: " + clienteResponse.getEmail(), Toast.LENGTH_SHORT).show();
                     SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("email", clienteResponse.getEmail());
                     editor.putString("contrasenya", password.getText().toString());
                     editor.apply();
-                    // Log para verificar
+
                     Log.d("PREFS", "Guardado email: " + clienteResponse.getEmail());
                     Log.d("PREFS", "Guardado contrasenya: " + password.getText().toString());
 
-                    Intent intent = new Intent(MainActivity.this  , CatalogoActivity.class);
+                    Log.d("LOGIN", "Attempting to start CatalogoActivity");
+                    Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
                     startActivity(intent);
                     finish();
-
                 } else {
                     Log.d("LOGIN", "Login fallido: clienteResponse es null");
                     Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_LONG).show();
@@ -84,4 +93,5 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+
 }
