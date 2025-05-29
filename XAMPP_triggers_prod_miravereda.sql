@@ -190,17 +190,23 @@ drop procedure if exists actualizar_precio_serie$$
 create procedure actualizar_precio_serie(in p_serie_id int)
 begin
     declare precio_total decimal(10,2);
-
+	declare porcentaje decimal(5,4);
     select sum(precio) into precio_total
     from capitulo c
     join temporada t on c.temporada_id = t.id
     where t.serie_id = p_serie_id;
 
+	select t.porcentaje into porcentaje
+    from contenido c
+    join tarifa t on c.tarifa_id = t.id
+    where c.id = p_serie_id;
+
     if precio_total is null then
         set precio_total = 0.00;
     end if;
 
-    update serie set precio = precio_total where contenido_id = p_serie_id;
+    update serie set precio_base = precio_total where contenido_id = p_serie_id;
+	update serie set precio = (precio_base * porcentaje);
 end$$
 
 #-----------------------------------------------------------------------------------------
