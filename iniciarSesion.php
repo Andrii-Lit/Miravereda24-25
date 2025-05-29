@@ -23,17 +23,17 @@
             exit();
         }else{
 
-            //$password = md5($password);
+        
 
-            $sql = "SELECT * FROM users WHERE name = '$usuario' AND password = '$password'";
+            $sql = "SELECT * FROM cliente WHERE email = '$usuario' AND contrasenya = '$password'";
             $result = mysqli_query($con, $sql);
 
             if(mysqli_num_rows($result) === 1){
                 $row = mysqli_fetch_assoc($result);
-                if($row['name'] === $usuario && $row['password'] === $password){
-                    $_SESSION['name'] = $row['name'];
+                if($row['email'] === $usuario && $row['contrasenya'] === $password){
+                    $_SESSION['email'] = $row['email'];
                     $_SESSION['id'] = $row['id'];
-                    $_SESSION['lastname'] = $row['lastname'];   
+                    $_SESSION['apellidos'] = $row['apellidos'];   
                     header("Location: inicio.php");
                     exit();
                 }else{

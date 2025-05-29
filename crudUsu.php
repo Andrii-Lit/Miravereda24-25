@@ -4,7 +4,7 @@ session_start();
     include('connection.php');
     $con = connection();
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM cliente";
 $query = mysqli_query($con, $sql);
 
 ?>
@@ -39,6 +39,7 @@ $query = mysqli_query($con, $sql);
 
         <div class="user_crud">
             <h2>Crud de usuarios</h2>
+            <h3>MIRAVEREDA</h3>
             <table>
                 <thead>
                     <tr>
@@ -53,20 +54,20 @@ $query = mysqli_query($con, $sql);
                         <th>TARJETA</th>
                         <th></th>
                         <th></th>
-                    </tr>MiraveredaMIRA
+                    </tr>
                 </thead>
                 <tbody>
                     <?php while($row = mysqli_fetch_array($query)): ?>
                         <tr>
                             <th> <?= $row['id'] ?> </th>
-                            <th> <?= $row['name'] ?> </th>
-                            <th> <?= $row['lastname'] ?> </th>
-                            <th> <?= $row['password'] ?> </th>
-                            <th> <?= $row['domicile'] ?> </th>
-                            <th> <?= $row['postal_code'] ?> </th>
+                            <th> <?= $row['nombre'] ?> </th>
+                            <th> <?= $row['apellidos'] ?> </th>
+                            <th> <?= $row['contrasenya'] ?> </th>
+                            <th> <?= $row['domicilio'] ?> </th>
+                            <th> <?= $row['cod_postal'] ?> </th>
                             <th> <?= $row['email'] ?> </th>
-                            <th> <?= $row['date_of_birth'] ?> </th>
-                            <th> <?= $row['creditcard'] ?> </th>
+                            <th> <?= $row['fecha_nac'] ?> </th>
+                            <th> <?= $row['num_tarjeta'] ?> </th>
 
                             <th><a href="update_user.php?id=<?=$row['id']?>">Editar</th>
                             <th><a href="delete_user.php?id=<?=$row['id']?>">Eliminar</th>

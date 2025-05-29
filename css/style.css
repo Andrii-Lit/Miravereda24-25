@@ -7,6 +7,10 @@ html {
     text-align: center;
 }
 
+img {
+    width: 5%;
+}
+
 a{
     text-decoration:none;
 }

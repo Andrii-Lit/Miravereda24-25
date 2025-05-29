@@ -11,8 +11,7 @@ $email = $_POST['email'];
 $date_of_birth = $_POST['date_of_birth'];
 $creditcard = $_POST['creditcard'];
 
-$sql = "INSERT INTO users (name,lastname,domicile,postal_code,email,date_of_birth,creditcard,password) VALUES ('$name','$lastname','$domicile','$postal_code','$email','$date_of_birth','$creditcard','$password')";
-//$sql = "INSERT INTO users VALUES ('$id','$name','$lastname','$domicile','$postal_code','$email','$date_of_birth','$creditcard','$password')";
+$sql = "INSERT INTO cliente (nombre,apellidos,domicilio,cod_postal,email,fecha_nac,num_tarjeta,contrasenya) VALUES ('$name','$lastname','$domicile','$postal_code','$email','$date_of_birth','$creditcard','$password')";
 $query = mysqli_query($con, $sql);
 
 

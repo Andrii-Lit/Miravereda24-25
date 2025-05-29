@@ -4,7 +4,7 @@ $con = connection();
 
 $id = $_GET['id'];
 
-$sql = "DELETE FROM users WHERE id='$id'";
+$sql = "DELETE FROM cliente WHERE id='$id'";
 
 $query = mysqli_query($con, $sql);
 

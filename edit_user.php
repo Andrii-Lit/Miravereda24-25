@@ -12,7 +12,7 @@ $email = $_POST['email'];
 $date_of_birth = $_POST['date_of_birth'];
 $creditcard = $_POST['creditcard'];
 
-$sql = "UPDATE USERS SET name='$name',lastname='$lastname',password='$password',domicile='$domicile',postal_code='$postal_code', email='$email', date_of_birth='$date_of_birth',creditcard='$creditcard' WHERE id = '$id'";
+$sql = "UPDATE cliente SET nombre='$name',apellidos='$lastname',contrasenya='$password',domicilio='$domicile',cod_postal='$postal_code', email='$email', fecha_nac='$date_of_birth',num_tarjeta='$creditcard' WHERE id = '$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){

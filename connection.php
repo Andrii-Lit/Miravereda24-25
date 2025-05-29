@@ -3,9 +3,9 @@
     function connection(){
         $host = "localhost";
         $user = "root";
-        $pass = "1234";
+        $pass = "";
 
-        $bd = "web_test";
+        $bd = "miravereda2425";
 
         $connect = mysqli_connect($host, $user, $pass);
 

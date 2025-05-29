@@ -4,7 +4,7 @@ $con = connection();
 
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM users WHERE id='$id'";
+$sql = "SELECT * FROM cliente WHERE id='$id'";
 $query = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($query);
 ?> 
@@ -22,14 +22,14 @@ $row = mysqli_fetch_array($query);
                 <h1>Editar usuario</h1>
 
                 <input type="hidden" name="id" value="<?= $row ['id'] ?>">
-                <input type="test" name="name" value="<?= $row ['name'] ?>">
-                <input type="test" name="lastname" value="<?= $row ['lastname'] ?>">
-                <input type="test" name="password" value="<?= $row ['password'] ?>">
-                <input type="test" name="domicile" value="<?= $row ['domicile'] ?>">
-                <input type="test" name="postal_code" value="<?= $row ['postal_code'] ?>">
+                <input type="test" name="name" value="<?= $row ['nombre'] ?>">
+                <input type="test" name="lastname" value="<?= $row ['apellidos'] ?>">
+                <input type="test" name="password" value="<?= $row ['contrasenya'] ?>">
+                <input type="test" name="domicile" value="<?= $row ['domicilio'] ?>">
+                <input type="test" name="postal_code" value="<?= $row ['cod_postal'] ?>">
                 <input type="test" name="email" value="<?= $row ['email'] ?>">
-                <input type="date" name="date_of_birth" value="<?= $row ['date_of_birth']?>">
-                <input type="test" name="creditcard" value="<?= $row ['creditcard'] ?>">
+                <input type="date" name="date_of_birth" value="<?= $row ['fecha_nac']?>">
+                <input type="test" name="creditcard" value="<?= $row ['num_tarjeta'] ?>">
 
                 <input type="submit" value="Actualizar usuario">
 
