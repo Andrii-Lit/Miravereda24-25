@@ -5,10 +5,8 @@
 
 use miravereda2425;
 
-#--------------------------------------------
+#-----------------------------------------------------------------------
 #-- FUNCIONALIDADES DE LA APLICACIÓN CLIENTE
-#--------------------------------------------
-
 #-----------------------------------------------------------------------
 #-- PROCEDIMIENTO para el botón INICIAR SESIÓN que devuelva un booleano
 #-----------------------------------------------------------------------
@@ -32,17 +30,23 @@ end$$
 delimiter ;
 
 #------------------------------------------------------------
-#-- PROCEDIMIENTO al que llamará el botón COMPRAR en carrito
+#-- PROCEDIMIENTO al que llamará el botón COMPRAR en CARRITO
 #------------------------------------------------------------
 delimiter $$
 drop procedure if exists comprar$$
 create procedure comprar(IN p_cliente_id int)
 begin
     declare carrito_total decimal(10,2);
-    declare iva_rate decimal(10,2);
+    declare iva decimal(10,2);
     declare total_con_iva decimal(10,2);
+	-- Recogemos el total del CARRITO activo
+	select total into carrito_total 
+	from carrito 
+	where cliente_id = p_cliente_id and activo = true;
+	-- Seteamos el iva
+	set iva = 0.21;
 
-	set total_con_iva = carrito_total + (carrito_total * iva_rate);
+	set total_con_iva = carrito_total + (carrito_total * iva);
 
 	-- Hace INSERT en FACTURA el cliente_id, total sin y con el IVA
 	insert into factura(cliente_id, total, total_con_iva)
@@ -64,7 +68,9 @@ drop procedure if exists votar$$
 create procedure votar(in p_cliente_id, p_contenido_id, p_valor)
 begin
 	insert into valoracion (cliente_id, contenido_id, valor)
-	values(p_cliente_id, p_contenido_id, p_valor);
+	values(p_cliente_id, p_contenido_id, p_valor)
+	on duplicate key update valor = p_valor;
+	-- on duplicate actualiza el valor en caso de votar otra vez
 end$$
 delimiter ;
 
@@ -82,7 +88,14 @@ begin
 	-- Recogemos el id del carrito activo del cliente
 	select id into carrito_activo_id from carrito
 	where cliente_id = p_cliente_id and activo = true;
-	
+
+	-- En caso de que no haya carrito asignado al cliente
+	if carrito_activo_id is null then
+		insert into carrito(cliente_id) values (p_cliente_id);
+		select id into carrito_activo_id from carrito
+		where cliente_id = p_cliente_id and activo = true;
+	end if;
+
 	-- Recogemos el precio según el tipo de contenido
 	if p_contenido_id in (select contenido_id from pelicula)
 		then set contenido_precio = (select precio from pelicula where contenido_id = p_contenido_id);
@@ -92,6 +105,8 @@ begin
 	 	then set contenido_precio = (select precio from corto where contenido_id = p_contenido_id);
 	else set contenido_precio = 0.00;
 	end if; 	
+
+	-- Añadimos la LIN_FAC (el producto al carrito)
 	insert into lin_fac(carrito_id, contenido_id, precio) 
 	values (carrito_activo_id, p_contenido_id, contenido_precio);
 
@@ -100,14 +115,15 @@ begin
 end$$
 delimiter ;
 
-#------------------------------------------
-#-- PROCEDIMIENTOS Y TRIGGERS para la BBDD
-#------------------------------------------
 
+#----------------------------------------------------------------------------------
+#-- PROCEDIMIENTOS Y TRIGGERS para la BBDD
 #----------------------------------------------------------------------------------
 #-- TABLA CLIENTE
 #----------------------------------------------------------------------------------
-#-- TRIGGER al hacer INSERT en la tabla CLIENTE se crea un CARRITO asignado a este
+#-- TRIGGER que al hacer INSERT en la tabla CLIENTE se crea un CARRITO asignado a este
+#-- De momento no añadimos la opción de cambiar la información del cliente
+#-- Los que tienen el cliente_id como clave ajena tienen on delete cascade
 #----------------------------------------------------------------------------------
 delimiter $$
 drop trigger if exists trigger_cliente_carrito$$
@@ -117,6 +133,7 @@ begin
 	insert into carrito(cliente_id) values (new.id);
 end$
 delimiter ;
+
 #-------------------------------------------------
 #-- PROCEDIMIENTO para obtener CLIENTE por email
 #-- Hecho por Iván
@@ -164,11 +181,11 @@ begin
 	else set media = 0;
 	end if;
 	
-	update contenido set puntuacion_media = media;
+	update contenido set puntuacion_media = media where id = p_contenido_id;
 end$$
 delimiter ;
 #----------------------------------------------------------------------
-#-- TRIGGER que llama a ACTUALIZAR_NOTA al hacer INSERT en VALORACION
+#-- TRIGGER que actualiza la nota al hacer INSERT en VALORACION
 #----------------------------------------------------------------------
 delimiter $$
 drop trigger if exists trigger_actualizar_nota$$
@@ -191,9 +208,18 @@ create procedure actualizar_precio_carrito(in p_cliente_id int)
 begin
 	declare carrito_activo_id int;
 	declare precio_total decimal(10,2);
-	-- sacamos el carrito activo
-	select id into carrito_activo_id from carrito where cliente_id = p_cliente_id and activo = true;
-	-- sacamos la suma de las lin_fac asociadas al carrito activo
+	-- Recogemos el id del carrito activo del cliente
+	select id into carrito_activo_id from carrito
+	where cliente_id = p_cliente_id and activo = true;
+
+	-- En caso de que no haya carrito asignado al cliente
+	if carrito_activo_id is null then
+		insert into carrito(cliente_id) values (p_cliente_id);
+		select id into carrito_activo_id from carrito
+		where cliente_id = p_cliente_id and activo = true;
+	end if;
+
+	-- Sacamos la suma de las lin_fac asociadas al carrito activo
 	select sum(precio) into precio_total from lin_fac where carrito_id = carrito_activo_id;
 
 	update carrito set total = precio_total where id = carrito_activo_id;
@@ -233,28 +259,35 @@ create procedure actualizar_precio_serie(in p_serie_id int)
 begin
     declare precio_total decimal(10,2);
 	declare porcentaje decimal(5,4);
+	
+	-- El precio_total es la suma de los capitulos
     select sum(precio) into precio_total
     from capitulo c
     join temporada t on c.temporada_id = t.id
     where t.serie_id = p_serie_id;
-
+	
+	-- Recogemos el porcentaje de la TARIFA de la serie
 	select t.porcentaje into porcentaje
-    from contenido c
-    join tarifa t on c.tarifa_id = t.id
-    where c.id = p_serie_id;
+	from serie s
+	join tarifa t on s.tarifa_id = t.id
+	where s.contenido_id = p_serie_id;
 
-    if precio_total is null then
-        set precio_total = 0.00;
-    end if;
-
+	-- Actualizamos el precio_base de la serie (la suma del precio de los capitulos)
+	-- Actualizamos el precio de la serie (el precio_base aplicándole el porcentaje de la TARIFA)
     update serie set precio_base = precio_total where contenido_id = p_serie_id;
-	update serie set precio = (precio_base * porcentaje);
+	update serie set precio = (precio_base * porcentaje) where contenido_id = p_serie_id;
 end$$
 delimiter ;
 
-#-----------------------------------------------------------------------------------------
-#-- TRIGGER que actualiza el precio de SERIE al insertar en CAPITULO
-#-----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el precio de SERIE al hacer INSERT/UPDATE/DELETE en CAPITULO
+#----------------------------------------------------------------------------------------
+#-- EXPLICACIÓN:
+#-- Recogemos el serie_id de la TEMPORADA a la que pertenece el CAPITULO insertado
+#-- y llamamos al método con el serie_id por parámetro
+#----------------------------------------------------------------------------------------
+#-- INSERT
+#----------------------------------------------------------------------------------------
 delimiter $$
 drop trigger if exists trigger_actualizar_precio_serie_after_insert_capitulo$$
 create trigger trigger_actualizar_precio_serie_after_insert_capitulo
@@ -262,9 +295,35 @@ after insert on capitulo
 for each row
 begin
     declare serie_id int;
-
     select serie_id into serie_id from temporada where id = new.temporada_id;
-
+    call actualizar_precio_serie(serie_id);
+end$$
+delimiter ;
+#----------------------------------------------------------------------------------------
+#-- UPDATE
+#----------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trigger_actualizar_precio_serie_after_update_capitulo$$
+create trigger trigger_actualizar_precio_serie_after_update_capitulo
+after update on capitulo
+for each row
+begin
+    declare serie_id int;
+    select serie_id into serie_id from temporada where id = new.temporada_id;
+    call actualizar_precio_serie(serie_id);
+end$$
+delimiter ;
+delimiter $$
+#----------------------------------------------------------------------------------------
+#-- DELETE
+#----------------------------------------------------------------------------------------
+drop trigger if exists trigger_actualizar_precio_serie_after_delete_capitulo$$
+create trigger trigger_actualizar_precio_serie_after_delete_capitulo
+after delete on capitulo
+for each row
+begin
+    declare serie_id int;
+    select serie_id into serie_id from temporada where id = new.temporada_id;
     call actualizar_precio_serie(serie_id);
 end$$
 delimiter ;

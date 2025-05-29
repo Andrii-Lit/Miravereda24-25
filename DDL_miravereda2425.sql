@@ -44,7 +44,7 @@ create table contenido (
  duracion int,
  actores_principales text,
  fecha_estreno date,
- puntuacion_media decimal(3,1),
+ puntuacion_media decimal(2,1),
  poster_path varchar(255),
  changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
 );
@@ -80,8 +80,8 @@ create table pelicula(
     contenido_id int primary key,
     tarifa_id int,
     disponible_hasta date,
-    precio decimal(10,2),
     precio decimal(10,2) default 0.00,
+    precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
     foreign key (tarifa_id) references tarifa(id)
@@ -94,7 +94,7 @@ create table serie(
     contenido_id int primary key,
     tarifa_id int,
     disponibilidad boolean default true,
-    precio decimal(10,2),
+    precio decimal(10,2) default 0.00,
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
@@ -108,7 +108,7 @@ create table corto(
     contenido_id int primary key,
     tarifa_id int,
     disponibilidad boolean default true,
-    precio decimal(10,2),
+    precio decimal(10,2) default 0.00,
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
@@ -254,13 +254,13 @@ insert into temporada (serie_id, numero)
 values (2, 1);
 
 -- Capítulos (ejemplo con 5)
-insert into capitulo (temporada_id, titulo, precio_base, precio_base)
+insert into capitulo (temporada_id, titulo, precio_base)
 values
-(1, '1.1 - 1:23:45', 3.00, 3.30),
-(1, '1.2 - Please Remain Calm', 3.00, 3.30),
-(1, '1.3 - Open Wide, O Earth', 3.00, 3.30),
-(1, '1.4 - The Happiness of All Mankind', 3.00, 3.30),
-(1, '1.5 - Vichnaya Pamyat', 3.00, 3.30);
+(1, '1.1 - 1:23:45', 3.00),
+(1, '1.2 - Please Remain Calm', 3.00),
+(1, '1.3 - Open Wide, O Earth', 3.00),
+(1, '1.4 - The Happiness of All Mankind', 3.00),
+(1, '1.5 - Vichnaya Pamyat', 3.00);
 
 #-----------------------------------------------
 #-- CORTO
