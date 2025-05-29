@@ -1,11 +1,16 @@
 package es.ieslavereda.miravereda.API;
 
+import android.os.Build;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Conversor {
     private static Gson gson;
@@ -13,49 +18,48 @@ public class Conversor {
 
     public static Conversor getConversor() {
         if (conversor == null) {
-            gson = new Gson();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                gson = new GsonBuilder()
+                        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                        .create();
+            }
             conversor = new Conversor();
         }
         return conversor;
     }
 
     public <T> String toJson(T data) {
-        String json = gson.toJson(data);
-        return json;
+        return gson.toJson(data);
     }
 
     public <T> String toJson(List<T> data) {
-        String json = gson.toJson(data);
-        return json;
+        return gson.toJson(data);
     }
 
     public <T> T fromJson(String json, Class<T> clazz) throws Exception {
         try {
-            T object = gson.fromJson(json, clazz);
-            return object;
+            return gson.fromJson(json, clazz);
         } catch (Exception e) {
-            throw new Exception(json);
+            throw new Exception("Error al parsear JSON: " + json, e);
         }
     }
 
     public <T> List<T> fromJsonList(String json, Class<T> clazz) throws Exception {
         try {
             Type typeOfT = TypeToken.getParameterized(List.class, clazz).getType();
-            List<T> object = gson.fromJson(json, typeOfT);
-            return object;
+            return gson.fromJson(json, typeOfT);
         } catch (Exception e) {
-            throw new Exception(json);
+            throw new Exception("Error al parsear lista JSON: " + json, e);
         }
     }
 
     public <K, V> Map<K, V> fromJsonMap(String json, Class<K> clazzK, Class<V> clazzV) throws Exception {
         try {
             Type typeOfT = TypeToken.getParameterized(Map.class, clazzK, clazzV).getType();
-            Map<K, V> object = gson.fromJson(json, typeOfT);
-            return object;
+            return gson.fromJson(json, typeOfT);
         } catch (Exception e) {
-            throw new Exception(json);
+            throw new Exception("Error al parsear mapa JSON: " + json, e);
         }
     }
-
 }
