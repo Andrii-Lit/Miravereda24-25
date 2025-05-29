@@ -81,6 +81,7 @@ create table pelicula(
     tarifa_id int,
     disponible_hasta date,
     precio decimal(10,2),
+    precio decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
     foreign key (tarifa_id) references tarifa(id)
@@ -94,6 +95,7 @@ create table serie(
     tarifa_id int,
     disponibilidad boolean default true,
     precio decimal(10,2),
+    precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
     foreign key (tarifa_id) references tarifa(id)
@@ -107,6 +109,7 @@ create table corto(
     tarifa_id int,
     disponibilidad boolean default true,
     precio decimal(10,2),
+    precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (contenido_id) references contenido(id),
     foreign key (tarifa_id) references tarifa(id)
@@ -131,8 +134,8 @@ create table capitulo(
     id int auto_increment primary key,
     temporada_id int,
     titulo varchar(255),
-    precio_base decimal(10,2),
     precio decimal(10,2),
+    precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (temporada_id) references temporada(id)
 );

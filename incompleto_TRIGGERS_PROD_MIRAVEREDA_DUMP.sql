@@ -222,6 +222,7 @@ begin
     set new.precio = new.precio_base + (new.precio_base * porcentaje);
 end$$
 delimiter ;
+
 #-----------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO para actualizar el precio en SERIE al insertar en CAPITULO
 #-- se llamará desde un TRIGGER INSERT en CAPITULO
@@ -231,23 +232,29 @@ drop procedure if exists actualizar_precio_serie$$
 create procedure actualizar_precio_serie(in p_serie_id int)
 begin
     declare precio_total decimal(10,2);
-
+	declare porcentaje decimal(5,4);
     select sum(precio) into precio_total
     from capitulo c
     join temporada t on c.temporada_id = t.id
     where t.serie_id = p_serie_id;
 
+	select t.porcentaje into porcentaje
+    from contenido c
+    join tarifa t on c.tarifa_id = t.id
+    where c.id = p_serie_id;
+
     if precio_total is null then
         set precio_total = 0.00;
     end if;
 
-    update serie set precio = precio_total where contenido_id = p_serie_id;
+    update serie set precio_base = precio_total where contenido_id = p_serie_id;
+	update serie set precio = (precio_base * porcentaje);
 end$$
 delimiter ;
+
 #-----------------------------------------------------------------------------------------
 #-- TRIGGER que actualiza el precio de SERIE al insertar en CAPITULO
 #-----------------------------------------------------------------------------------------
-
 delimiter $$
 drop trigger if exists trigger_actualizar_precio_serie_after_insert_capitulo$$
 create trigger trigger_actualizar_precio_serie_after_insert_capitulo
