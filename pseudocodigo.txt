@@ -1,0 +1,161 @@
+Algoritmo APP
+    Escribir "### Bienvenido a MiraVereda ###"
+    
+    usuario1 = ""
+    contraseña1 = ""
+    
+    //Bucle que me repite las opciones en caso de poner cualquier otro valor que los me pide
+    Repetir
+        Escribir "Que quieres hacer?"
+        Escribir "(1) Registrarte"
+        Escribir "(2) Iniciar Sesión"
+        Escribir "(3) Reiniciar Contraseña"
+        Escribir "(4) Salir"
+        Leer respuesta
+    Hasta Que respuesta = "1" o respuesta = "2" o respuesta = "3" o respuesta = "4"
+    
+    Mientras respuesta ≠ "4" Hacer
+        
+        // Pantalla de registro
+        Si respuesta = "1" Entonces
+            Escribir "### REGISTRO ###"
+            Escribir "Inserta tu nombre de usuario"
+            Leer usuario
+            usuario1 = usuario
+            Escribir "Ahora inserta tu contraseña"
+            Leer contraseña
+            contraseña1 = contraseña
+        FinSi
+        
+        // Pantalla de inicio de sesión
+        Si respuesta = "2" Entonces
+            Escribir "### INICIO DE SESIÓN ###"
+            Escribir "Nombre de usuario:"
+            Leer usuario2
+            Si usuario2 ≠ usuario1 Entonces
+                Escribir "Usuario incorrecto"
+            Sino
+                Escribir "Contraseña"
+                Leer contraseña2 
+                Si contraseña2 ≠ contraseña1 Entonces
+                    Escribir "Contraseña incorrecta"
+                Sino
+                    // Esta es la pantalla Main con las Películas
+                    Escribir "### BIENVENIDO " + usuario1 + " ###"
+                    Escribir "# Este es nuestro catálogo #"
+                    Escribir ""
+                    Escribir "- Matrix"
+                    Escribir "- Malditos Bastardos"
+                    Escribir "- Mi vecino Totoro"
+                    Escribir ""
+                    Repetir
+                        Escribir "### ¿Que deseas hacer? ###"
+                        Escribir "(1) Alquilar una película"
+                        Escribir "(2) Ir al carrito"
+                        Escribir "(3) Salir"
+                        Leer accion
+                    Hasta Que accion = "1" o accion = "2" o accion = "3"
+                    
+                    Mientras accion ≠ "3" Hacer
+                        
+                        // Pantalla de alquilar una película
+                        Si accion = "1" Entonces
+                            Escribir "¿Cuál?"
+                            Escribir "(1) Matrix - 3.99"
+                            Escribir "(2) Malditos Bastardos - 4.99"
+                            Escribir "(3) Mi vecino Totoro - 2.99"
+                            Leer peli
+                            Si peli = "1" Entonces
+                                Escribir "### Matrix añadido al carrito ###"
+                                peliculaMatrix = "- Matrix"
+                                precioMatrix = 3.99
+                            FinSi
+                            Si peli = "2" Entonces
+                                Escribir "### Malditos Bastardos añadido al carrito ###"
+                                peliBast = "- Malditos Bastardos"
+                                precioBast = 4.99
+                            FinSi
+                            Si peli = "3" Entonces
+                                Escribir "### Mi vecino Totoro añadido al carrito ###"
+                                peliTotoro = "- Mi vecino Totoro"
+                                precioTotoro = 2.99
+                            FinSi
+                        FinSi
+                        
+                        // Pantalla carrito
+                        Si accion = "2" Entonces
+                            precioTotal = 0
+                            Escribir "### CARRITO ###"
+                            Escribir ""
+                            Escribir "### TIENES: ###"
+                            Si peliculaMatrix ≠ "" Entonces
+                                Escribir peliculaMatrix
+                                precioTotal = precioTotal + precioMatrix
+                            FinSi
+                            Si peliBast ≠ "" Entonces
+                                Escribir peliBast
+                                precioTotal = precioTotal + precioBast
+                            FinSi
+                            Si peliTotoro ≠ "" Entonces
+                                Escribir peliTotoro
+                                precioTotal = precioTotal + precioTotoro
+                            FinSi
+                            Escribir ""
+                            Escribir "TOTAL:"
+                            Escribir precioTotal
+                            Escribir "### ¿Qué quieres hacer? ###"
+                            Escribir "(1) Confirmar la compra"
+                            Escribir "(2) Volver"
+                            Leer accionCarrito
+                            Si accionCarrito = "1" Entonces
+                                Escribir "Confirmado ¡Gracias por tu compra!"
+                                
+                                // Con esto reinicio el carrito al confirmar la compra
+                                peliculaMatrix = ""
+                                precioMatrix = 0
+                                peliBast = ""
+                                precioBast = 0
+                                peliTotoro = ""
+                                precioTotoro = 0
+                            FinSi
+                        FinSi
+                        
+                        //Bucle que me repite las opciones en caso de poner cualquier otro valor que los me pide al final de una acción
+                        Repetir
+                            Escribir "### ¿Que deseas hacer? ###"
+                            Escribir "(1) Alquilar una película"
+                            Escribir "(2) Ir al carrito"
+                            Escribir "(3) Salir"
+                            Leer accion
+                        Hasta Que accion = "1" o accion = "2" o accion = "3"
+                    FinMientras
+                FinSi
+            FinSi
+        FinSi
+        
+        // Pantalla de reinicio de contraseña
+        Si respuesta = "3" Entonces
+            Escribir "### REINICIO DE CONTRASEÑA ###"
+            Escribir "Inserta el nombre de usuario"
+            Leer usuario3
+            Si usuario3 = usuario1 Entonces
+                Escribir "Pon la nueva contraseña"
+                Leer contraseña3
+                contraseña1 = contraseña3
+                Escribir "Contraseña cambiada con éxito"
+            Sino
+                Escribir "Usuario no encontrado"
+            FinSi
+        FinSi
+        
+        //Bucle que me repite las opciones en caso de poner cualquier otro valor que los me pide al finalizar una accion
+        Escribir "Que quieres hacer?" 
+        Escribir "(1) Registrarte"
+        Escribir "(2) Iniciar Sesión"
+        Escribir "(3) Reiniciar Contraseña"
+        Escribir "(4) Salir"
+        Leer respuesta
+    FinMientras
+    
+    Escribir "### Adiós ###"
+FinAlgoritmo
