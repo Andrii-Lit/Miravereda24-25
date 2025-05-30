@@ -39,42 +39,48 @@ begin
     declare carrito_total decimal(10,2);
     declare iva decimal(10,2);
     declare total_con_iva decimal(10,2);
-	declare cant_lineas int;
+    declare cant_lineas int;
+    declare carrito_id int;
 
-	-- Recogemos el total del CARRITO activo
-	select total into carrito_total 
-	from carrito 
-	where cliente_id = p_cliente_id and activo = true;
+    -- Recogemos el CARRITO_id activo
+    select id, total into carrito_id, carrito_total
+    from carrito 
+    where cliente_id = p_cliente_id and activo = true;
 
-	-- mensaje de error en caso de no haber carritos activos
-	if carrito_total is null then
-		signal sqlstate '45000' set message_text = 'No hay carrito activo para este cliente, prueba a añadir algo para crearlo';
-	end if;
+    -- Recogemos el total del CARRITO activo
+    -- (ya se obtuvo junto al carrito_id)
 
-	-- Seteamos el iva y el total con iva
-	set iva = 0.21;
-	set total_con_iva = carrito_total + (carrito_total * iva);
+    -- mensaje de error en caso de no haber carritos activos
+    if carrito_total is null then
+        signal sqlstate '45000' set message_text = 'No hay carrito activo para este cliente, prueba a añadir algo para crearlo';
+    end if;
 
-	-- Contamos cuántas líneas tiene el carrito activo
-	-- para no comprar un carrito vacío
-	select count(*) into cant_lineas 
-	from lin_fac 
-	where carrito_id = (select id from carrito where cliente_id = p_cliente_id and activo = true);
+    -- Seteamos el iva y el total con iva
+    set iva = 0.21;
+    set total_con_iva = carrito_total + (carrito_total * iva);
 
-	if cant_lineas = 0 then
-		signal sqlstate '45000' set message_text = 'El carrito está vacío. Añade algunos productos antes de comprar.';
-	end if;
-	-- Hace INSERT en FACTURA el cliente_id, total sin y con el IVA
-	insert into factura(cliente_id, total, total_con_iva)
-	values (p_cliente_id, carrito_total, total_con_iva);
+    -- Contamos cuántas líneas tiene el carrito activo
+    -- para no comprar un carrito vacío
+    select count(*) into cant_lineas 
+    from lin_fac 
+    where carrito_id = carrito_id;
 
-	-- Desactiva el CARRITO
-	update carrito set activo = false where cliente_id = p_cliente_id and activo = true;
+    if cant_lineas = 0 then
+        signal sqlstate '45000' set message_text = 'El carrito está vacío. Añade algunos productos antes de comprar.';
+    end if;
+
+    -- Hace INSERT en FACTURA el cliente_id, total sin y con el IVA
+    insert into factura(cliente_id, total, total_con_iva)
+    values (p_cliente_id, carrito_total, total_con_iva);
+
+    -- Desactiva el CARRITO
+    update carrito set activo = false where id = carrito_id;
 
     -- Al final crea un nuevo CARRITO
-	insert into carrito(cliente_id) values (p_cliente_id);
+    insert into carrito(cliente_id) values (p_cliente_id);
 end$$
 delimiter ;
+
 
 #---------------------------------------------------------------------
 #-- PROCEDIMIENTO para el botón de VOTAR para insertar una VALORACION
@@ -100,6 +106,10 @@ create procedure anyadir_al_carrito(in p_cliente_id int, in p_contenido_id int)
 begin
 	declare carrito_activo_id int;
 	declare contenido_precio decimal(10,2);
+	declare tipo_contenido varchar(50);
+
+	-- Recogemos el tipo de contenido
+	select tipo into tipo_contenido from contenido where id = p_contenido_id;
 	
 	-- Recogemos el id del carrito activo del cliente
 	select id into carrito_activo_id from carrito
@@ -113,14 +123,15 @@ begin
 	end if;
 
 	-- Recogemos el precio según el tipo de contenido
-	if p_contenido_id in (select contenido_id from pelicula)
-		then set contenido_precio = (select precio from pelicula where contenido_id = p_contenido_id);
-	 elseif p_contenido_id in (select contenido_id from serie)
-	 	then set contenido_precio = (select precio from serie where contenido_id = p_contenido_id);
-	 elseif p_contenido_id in (select contenido_id from corto)
-	 	then set contenido_precio = (select precio from corto where contenido_id = p_contenido_id);
-	else set contenido_precio = 0.00;
-	end if; 	
+	if tipo_contenido = 'pelicula' then
+        select precio into contenido_precio from pelicula where contenido_id = p_contenido_id;
+    elseif tipo_contenido = 'serie' then
+        select precio into contenido_precio from serie where contenido_id = p_contenido_id;
+    elseif tipo_contenido = 'corto' then
+        select precio into contenido_precio from corto where contenido_id = p_contenido_id;
+    else
+        set contenido_precio = 0.00;
+	end if;
 
 	-- Añadimos la LIN_FAC (el producto al carrito)
 	-- Si añadimos el mismo producto actualiza el precio
@@ -177,7 +188,7 @@ create trigger trigger_cliente_carrito
 after insert on cliente for each row
 begin
 	insert into carrito(cliente_id) values (new.id);
-end$
+end$$
 delimiter ;
 
 #-------------------------------------------------
@@ -265,14 +276,11 @@ begin
 		where cliente_id = p_cliente_id and activo = true;
 	end if;
 	
-	-- De tener nulo el precio (lo dudo, está inicializado pero por si acaso)
+	-- Sacamos la suma de las lin_fac asociadas al carrito activo
+	select sum(precio) into precio_total from lin_fac where carrito_id = carrito_activo_id;
 	if precio_total is null then
 		set precio_total = 0.00;
 	end if;
-
-
-	-- Sacamos la suma de las lin_fac asociadas al carrito activo
-	select sum(precio) into precio_total from lin_fac where carrito_id = carrito_activo_id;
 
 	update carrito set total = precio_total where id = carrito_activo_id;
 
@@ -283,9 +291,17 @@ delimiter;
 #-----------------------------------------------------------------------------------------
 delimiter $$
 drop procedure if exists get_all_carrito$$
-create procedure get_all_carrito
+create procedure get_all_carrito(in p_cliente_id int)
 begin
-	
+    declare carrito_id int;
+
+    -- Recogemos el carrito activo
+    select id into carrito_id from carrito where cliente_id = p_cliente_id and activo = true;
+
+    -- Seleccionar * de contenido asociado al carrito activo
+    select c.* from contenido c
+    join lin_fac l on l.contenido_id = c.id
+    where l.carrito_id = carrito_id;
 end$$
 delimiter ;
 #-----------------------------------------------------------------------------------------
@@ -334,9 +350,11 @@ begin
 	where s.contenido_id = p_serie_id;
 
 	-- Actualizamos el precio_base de la serie (la suma del precio de los capitulos)
-	-- Actualizamos el precio de la serie (el precio_base aplicándole el porcentaje de la TARIFA)
-    update serie set precio_base = precio_total where contenido_id = p_serie_id;
-	update serie set precio = (precio_base * porcentaje) where contenido_id = p_serie_id;
+	-- y el precio de la serie (el precio_base aplicándole el porcentaje de la TARIFA)
+	update serie set precio_base = precio_total,
+			precio = precio_total * porcentaje 
+	where contenido_id = p_serie_id;
+
 end$$
 delimiter ;
 
