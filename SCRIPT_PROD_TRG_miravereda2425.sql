@@ -320,8 +320,9 @@ begin
     declare porcentaje decimal(5,4);
 
     select t.porcentaje into porcentaje
-    from contenido c
-    join tarifa t on c.tarifa_id = t.id
+    from contenido c 
+    join pelicula p on p.contenido_id = c.id
+    join tarifa t on p.tarifa_id = t.id
     where c.id = new.contenido_id;
 
     set new.precio = new.precio_base + (new.precio_base * porcentaje);
@@ -479,6 +480,21 @@ begin
     update contenido set tipo = 'corto' where id = new.contenido_id;
 	call set_precio_contenido(new.contenido_id);
 end$$
+
+#----------------------------------------------------------------------------------------------
+#-- TABLA TARIFA
+#----------------------------------------------------------------------------------------------
+#-- PROCEDIMIENTO que modifica TODAS las TARIFAS de golpe
+#-- Se le pasará el valor por el que sumar o restar el porcentaje (positivo o negativo) 
+#----------------------------------------------------------------------------------------------
+delimiter $$
+drop procedure if exists alter_all_tarifas$$
+create procedure alter_all_tarifas(in p_valor decimal(5,2))
+begin
+    if p_valor != 0 then 
+        update tarifa set porcentaje = (porcentaje + p_valor);
+    else
+        signal sqlstate '45000' set message_text = 'Ingresa un valor diferente a 0.';
+    endif;
+end
 delimiter ;
-
-

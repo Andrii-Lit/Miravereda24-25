@@ -57,7 +57,7 @@ create table contenido (
 create table tarifa(
     id int primary key,
     tipo varchar(50),
-    porcentaje decimal(5,4),
+    porcentaje decimal(5,2),
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
 
 );
