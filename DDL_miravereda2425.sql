@@ -46,6 +46,8 @@ create table contenido (
  fecha_estreno date,
  puntuacion_media decimal(2,1),
  poster_path varchar(255),
+ tipo varchar(50),
+ precio decimal(10,2),
  changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
 );
 
@@ -83,7 +85,7 @@ create table pelicula(
     precio decimal(10,2) default 0.00,
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (contenido_id) references contenido(id),
+    foreign key (contenido_id) references contenido(id) on delete cascade,
     foreign key (tarifa_id) references tarifa(id)
 );
 
@@ -97,7 +99,7 @@ create table serie(
     precio decimal(10,2) default 0.00,
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (contenido_id) references contenido(id),
+    foreign key (contenido_id) references contenido(id) on delete cascade,
     foreign key (tarifa_id) references tarifa(id)
 );
 
@@ -111,7 +113,7 @@ create table corto(
     precio decimal(10,2) default 0.00,
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (contenido_id) references contenido(id),
+    foreign key (contenido_id) references contenido(id) on delete cascade,
     foreign key (tarifa_id) references tarifa(id)
 );
 
@@ -123,7 +125,7 @@ create table temporada(
     serie_id int,
     numero int,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (serie_id) references serie(contenido_id),
+    foreign key (serie_id) references serie(contenido_id) on delete cascade,
     unique (serie_id, numero)
 );
 
@@ -137,7 +139,7 @@ create table capitulo(
     precio decimal(10,2),
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    foreign key (temporada_id) references temporada(id)
+    foreign key (temporada_id) references temporada(id) on delete cascade
 );
 
 #-----------------------
@@ -167,7 +169,7 @@ create table lin_fac(
     primary key(carrito_id, contenido_id),
     foreign key (carrito_id) references carrito(id) on delete cascade,
     foreign key (contenido_id) references contenido(id),
-    unique key unq_carrito_contenido (carrito_id, contenido_id);
+    unique key unq_carrito_contenido (carrito_id, contenido_id)
 
 );
 

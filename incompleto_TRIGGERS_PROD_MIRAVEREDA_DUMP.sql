@@ -278,7 +278,16 @@ begin
 
 end$$
 delimiter;
-
+#-----------------------------------------------------------------------------------------
+#-- PROCEDIMIENTO para obtener todos los productos del carrito
+#-----------------------------------------------------------------------------------------
+delimiter $$
+drop procedure if exists get_all_carrito$$
+create procedure get_all_carrito
+begin
+	
+end$$
+delimiter ;
 #-----------------------------------------------------------------------------------------
 #-- TABLAS DE CONTENIDO
 #-----------------------------------------------------------------------------------------
@@ -377,6 +386,78 @@ begin
     declare serie_id int;
     select serie_id into serie_id from temporada where id = new.temporada_id;
     call actualizar_precio_serie(serie_id);
+end$$
+delimiter ;
+
+#----------------------------------------------------------------------------------------------
+#-- PROCEDIMIENTO que setea el precio calculado de PELICULA/SERIE/CAPITULO en CONTENIDO
+#----------------------------------------------------------------------------------------------
+delimiter $$  
+drop procedure if exists set_precio_contenido$$
+create procedure set_precio_contenido(in p_contenido_id int)  
+begin  
+    declare tipocontenido varchar(10);  
+    declare preciofinal decimal(10,2);  
+
+    -- Recogemos el tipo de contenido  
+    select tipo into tipocontenido from contenido where id =  p_contenido_id;  
+
+	-- Según el tipo de CONTENIDO recogemos el precio ya calculado
+    if tipocontenido = 'pelicula' then  
+        select p.precio into preciofinal from pelicula p where p.contenido_id =  p_contenido_id;  
+
+    elseif tipocontenido = 'corto' then  
+        select c.precio into preciofinal from corto c where c.contenido_id =  p_contenido_id;  
+
+    elseif tipocontenido = 'serie' then  
+        select s.precio into preciofinal from serie s where s.contenido_id =  p_contenido_id;  
+    else  
+        set preciofinal = 0.0;  
+    end if;  
+
+    -- seteamos el precio de CONTENIDO con el de PELICULA/SERIE/CORTO
+    update contenido set precio = preciofinal where id = p_contenido_id;  
+end$$  
+delimiter ;
+
+
+#----------------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
+#----------------------------------------------------------------------------------------------
+#-- PELICULA
+#----------------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_set_tipo_precio_pelicula$$
+create trigger trg_set_tipo_precio_pelicula
+after insert on pelicula for each row
+begin
+    update contenido set tipo = 'pelicula' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
+
+end$$
+delimiter ;
+#----------------------------------------------------------------------------------------------
+#-- SERIE
+#----------------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_set_tipo_precio_serie$$
+create trigger trg_set_tipo_precio_serie
+after insert on serie for each row
+begin
+    update contenido set tipo = 'serie' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
+end$$
+delimiter ;
+#----------------------------------------------------------------------------------------------
+#-- CORTO
+#----------------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_set_tipo_precio_corto$$
+create trigger trg_set_tipo_precio_corto
+after insert on corto for each row
+begin
+    update contenido set tipo = 'corto' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
 end$$
 delimiter ;
 
