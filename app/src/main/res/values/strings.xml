@@ -37,5 +37,13 @@
     <string name="informacionSinopsis">Sinopsis</string>
     <string name="informacionDirector">Director: </string>
     <string name="informacionValorar">Valorar</string>
+
+    <!-- Tostadas -->
+    <string name="tostadaRellenarCampos">Por favor, rellena todos los campos</string>
+    <string name="tostadaLogin">Login correcto</string>
+    <string name="tostadaCredencialesIncorrectas">Credenciales incorrectas</string>
+    <string name="tostadaErrorRed">Error de red, por favor intente más tarde.</string>
+    <string name="toastSesionNoIniciada">No hay sesión iniciada</string>
+    <string name="toastErrorCargandoContenidos">Error cargando contenidos</string>
 </resources>
 

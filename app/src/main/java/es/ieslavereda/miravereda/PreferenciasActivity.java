@@ -8,18 +8,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 
-import java.lang.reflect.Array;
 import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -35,7 +32,6 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
     private boolean userSelect = false;
     private FloatingActionButton botonVoladorMagico;
 
-    int  rar;
     public class LocaleHelper {
         public void setLocale(Context context, String languageCode) {
             Locale locale = new Locale(languageCode);
@@ -87,11 +83,11 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
 
                 String newLang = currentLang;
 
-                if (selectedLanguage.equals("Castellano")) {
+                if (selectedLanguage.equals("Castellano") || selectedLanguage.equals("Castella") || selectedLanguage.equals("Spanish")) {
                     newLang = "es";
-                } else if (selectedLanguage.equals("Inglés")) {
+                } else if (selectedLanguage.equals("Inglés") || selectedLanguage.equals("Anglés") || selectedLanguage.equals("English")) {
                     newLang = "en";
-                } else if (selectedLanguage.equals("Valenciano")) {
+                } else if (selectedLanguage.equals("Valenciano") || selectedLanguage.equals("Valencia") ||  selectedLanguage.equals("Valencian")) {
                     newLang = "ca";
                 }
 
@@ -105,9 +101,17 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
         });
 
 
+        SharedPreferences preferences = getSharedPreferences("config", MODE_PRIVATE);
+        int temaGuardado = preferences.getInt("tema", 0);
+        bSpinner.setSelection(temaGuardado);
+
         bSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("tema", position);
+                editor.apply();
 
                 if (position == 0){
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -146,7 +150,7 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
 
     private void setSpinnerSelection() {
         String lang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "es");
-        int position = 0; // Default to English
+        int position = 0;
 
         if (lang.equals("es")) {
             position = 0;
@@ -174,7 +178,7 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
             setLocale(lang);
         }
     }
-
+    
     private void setLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);
