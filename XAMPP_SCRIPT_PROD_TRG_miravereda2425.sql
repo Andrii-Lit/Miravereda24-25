@@ -455,7 +455,7 @@ begin
     else
         signal sqlstate '45000' set message_text = 'Ingresa un valor diferente a 0.';
     endif;
-end
+end$$
 
 delimiter ;
 
