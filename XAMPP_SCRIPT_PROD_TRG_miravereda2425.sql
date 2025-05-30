@@ -372,7 +372,7 @@ after delete on capitulo
 for each row
 begin
     declare serie_id int;
-    select serie_id into serie_id from temporada where id = new.temporada_id;
+    select serie_id into serie_id from temporada where id = old.temporada_id;
     call actualizar_precio_serie(serie_id);
 end$$
 
