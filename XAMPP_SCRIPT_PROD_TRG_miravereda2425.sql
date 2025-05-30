@@ -65,7 +65,7 @@ begin
 
     if cant_lineas = 0 then
         signal sqlstate '45000' set message_text = 'El carrito está vacío. Añade algunos productos antes de comprar.';
-    elseif cant_lineas is null
+    elseif cant_lineas is null then
         signal sqlstate '45000' set message_text = 'Error interno, revisa el procedimiento.';
     end if;
 
