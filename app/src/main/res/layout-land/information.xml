@@ -7,153 +7,178 @@
     android:padding="16dp">
 
     <!-- Botón de volver -->
+
+    <!-- Poster -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingButtonReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="?attr/homeAsUpIndicator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
-    <!-- Poster -->
     <ImageView
         android:id="@+id/Poster"
         android:layout_width="200dp"
         android:layout_height="300dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="-24dp"
         android:background="#2C2929"
-        tools:srcCompat="@tools:sample/backgrounds/scenic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/floatingButtonReturn" />
+        app:layout_constraintTop_toBottomOf="@+id/Titulo"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <!-- Columna derecha -->
     <TextView
         android:id="@+id/Titulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Título de película"
-        android:textStyle="bold|italic"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Título de película"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@id/Poster"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintStart_toEndOf="@id/Poster"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/NotaMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informacionNotaMedia"
+        android:layout_marginTop="24dp"
+        android:text="Nota media:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/Titulo"
-        app:layout_constraintTop_toBottomOf="@id/Titulo"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="@+id/AutorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/AutorTextView" />
 
     <TextView
         android:id="@+id/NotaMediaNumero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:hint="0"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/NotaMedia"
         app:layout_constraintBaseline_toBaselineOf="@id/NotaMedia"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintEnd_toEndOf="@+id/NombreDirector"
+        app:layout_constraintStart_toEndOf="@id/NotaMedia" />
 
     <TextView
         android:id="@+id/Precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informacionPrecio"
+        android:layout_marginTop="16dp"
+        android:text="Precio:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/Titulo"
-        app:layout_constraintTop_toBottomOf="@id/NotaMedia"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/NotaMedia" />
 
     <TextView
         android:id="@+id/precioValor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:hint="0.0€"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/Precio"
         app:layout_constraintBaseline_toBaselineOf="@id/Precio"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintEnd_toEndOf="@+id/NotaMediaNumero"
+        app:layout_constraintStart_toEndOf="@id/Precio" />
+
+    <!-- Sinopsis -->
 
     <Button
         android:id="@+id/AddCarrito"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/informacionAñadirCarrito"
-        app:layout_constraintStart_toStartOf="@id/Titulo"
-        app:layout_constraintTop_toBottomOf="@id/Precio"
-        android:layout_marginTop="16dp" />
+        android:layout_width="127dp"
+        android:layout_height="32dp"
+        android:text="Añadir al carrito"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Precio"
+        app:layout_constraintEnd_toEndOf="@+id/Titulo"
+        app:layout_constraintTop_toTopOf="@+id/Precio" />
 
-    <!-- Sinopsis -->
+    <!-- Valoración abajo -->
+
     <TextView
         android:id="@+id/SinopsisTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informacionSinopsis"
-        app:layout_constraintTop_toBottomOf="@id/AddCarrito"
-        app:layout_constraintStart_toStartOf="@id/Titulo"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="24dp"
+        android:text="Sinopsis"
+        app:layout_constraintEnd_toEndOf="@+id/precioValor"
+        app:layout_constraintStart_toStartOf="@+id/Precio"
+        app:layout_constraintTop_toBottomOf="@+id/Precio" />
 
     <TextView
         android:id="@+id/Descripcion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Lorem ipsum dolor sit amet..."
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/SinopsisTextView"
-        app:layout_constraintStart_toStartOf="@id/Titulo"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/SinopsisTextView" />
 
     <TextView
         android:id="@+id/AutorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informacionDirector"
-        app:layout_constraintTop_toBottomOf="@id/Descripcion"
-        app:layout_constraintStart_toStartOf="@id/Descripcion"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp"
+        android:text="Director"
+        app:layout_constraintStart_toStartOf="@+id/Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/Anyo" />
 
-    <!-- Valoración abajo -->
     <TextView
         android:id="@+id/Nota1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/informacionNotaPelicula"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <EditText
-        android:id="@+id/notaCliente"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:hint="0.0"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toEndOf="@id/Nota1"
-        app:layout_constraintBaseline_toBaselineOf="@id/Nota1"
-        android:layout_marginStart="8dp" />
+        android:text="Que opinas:"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Poster"
+        app:layout_constraintStart_toStartOf="@+id/Descripcion" />
 
     <Button
         android:id="@+id/Valorar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/informacionValorar"
-        app:layout_constraintStart_toEndOf="@id/notaCliente"
-        app:layout_constraintBaseline_toBaselineOf="@id/Nota1"
-        android:layout_marginStart="8dp" />
+        android:layout_width="100dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="32dp"
+        android:text="Valorar"
+        app:layout_constraintBottom_toBottomOf="@+id/notaCliente"
+        app:layout_constraintStart_toEndOf="@+id/notaCliente"
+        app:layout_constraintTop_toTopOf="@+id/notaCliente" />
+
+    <EditText
+        android:id="@+id/notaCliente"
+        android:layout_width="76dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="32dp"
+        android:hint="0.0"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Nota1"
+        app:layout_constraintStart_toEndOf="@+id/Nota1"
+        app:layout_constraintTop_toTopOf="@+id/Nota1" />
 
     <TextView
         android:id="@+id/NombreDirector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
         android:hint="Nombre de Director"
-        app:layout_constraintStart_toEndOf="@id/Valorar"
-        app:layout_constraintBaseline_toBaselineOf="@id/Nota1"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/AutorTextView"
+        app:layout_constraintStart_toEndOf="@+id/AutorTextView"
+        app:layout_constraintTop_toTopOf="@+id/AutorTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/Anyo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/Titulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
