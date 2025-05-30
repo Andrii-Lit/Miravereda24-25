@@ -1,5 +1,6 @@
 package com.ieslavereda.es.miravereda.Controller;
 
+import com.ieslavereda.es.miravereda.Model.CarritoRequest;
 import com.ieslavereda.es.miravereda.Model.Contenido;
 import com.ieslavereda.es.miravereda.Service.ContenidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,21 +22,21 @@ public class ContenidoController {
     @Autowired
     private ContenidoService service;
 
-    @GetMapping("/contenido/{id}")
-    public ResponseEntity<?> getContenido(@PathVariable int id) {
-        try {
-            Contenido contenido = service.getContenido(id);
-            if (contenido == null) {
-                return new ResponseEntity<>("CONTENIDO NOT FOUND", HttpStatus.NOT_FOUND);
+        @GetMapping("/contenido/{id}")
+        public ResponseEntity<?> getContenido(@PathVariable int id) {
+            try {
+                Contenido contenido = service.getContenido(id);
+                if (contenido == null) {
+                    return new ResponseEntity<>("CONTENIDO NOT FOUND", HttpStatus.NOT_FOUND);
+                }
+                return new ResponseEntity<>(contenido, HttpStatus.OK);
+            } catch (SQLException e) {
+                Map<String,Object> response = new HashMap<>();
+                response.put("code", e.getErrorCode());
+                response.put("message", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>(contenido, HttpStatus.OK);
-        } catch (SQLException e) {
-            Map<String,Object> response = new HashMap<>();
-            response.put("code", e.getErrorCode());
-            response.put("message", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
     @GetMapping("/contenido/")
     public ResponseEntity<?> getAllContenidos() {
         try{
@@ -91,6 +94,40 @@ public class ContenidoController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/carrito/{id}")
+    public ResponseEntity<?> getAllCarrito(@PathVariable int id) {
+        try {
+            List<Contenido> carrito = service.getAllCarrito(id);
+            // Devuelve una lista vacía si no hay contenido en el carrito
+            if (carrito == null) {
+                carrito = new ArrayList<>();
+            }
+            return new ResponseEntity<>(carrito, HttpStatus.OK);
+        } catch (SQLException e) {
+            Map<String,Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+    @PostMapping("/carrito/")
+    public ResponseEntity<?> anyadirCarrito(@RequestBody CarritoRequest carritoRequest) {
+        try {
+            service.anyadirCarrito(carritoRequest.getClienteId(), carritoRequest.getContenidoId());
+            return new ResponseEntity<>("Contenido añadido correctamente", HttpStatus.OK);
+        } catch (SQLException e) {
+            Map<String,Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
 
 }

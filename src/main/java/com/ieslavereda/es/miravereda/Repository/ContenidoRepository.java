@@ -94,7 +94,7 @@ public class ContenidoRepository implements IContenidoRepository {
 
 
 
-            return contenido;
+            return contenidoActualizado;
         }
 
 
@@ -142,7 +142,52 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenidos;
     }
 
+    @Override
+    public void anyadirCarrito(int p_cliente_id, int p_contenido_id) throws SQLException {
+        String sql="{call anyadir_al_carrito(?,?)}";
+
+        try(Connection conn = MyDataSource.getMydataSource().getConnection()){
+            CallableStatement ps = conn.prepareCall(sql);
+            ps.setInt(1, p_cliente_id);
+            ps.setInt(2, p_contenido_id);
+            ps.execute();
+
+        }catch (SQLException e) {
+           throw new SQLException(e.getMessage());
+        }
+
+    }
 
 
+    public List<Contenido> getAllCarrito(int clienteId) {
+        String sql="{ call get_all_carrito(?)}";
+        List<Contenido> contenidos = new ArrayList<>();
+        try(Connection con=MyDataSource.getMydataSource().getConnection()){
+            CallableStatement ps = con.prepareCall(sql);
+            ps.setInt(1, clienteId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Contenido contenido = Contenido.builder()
+                        .id(rs.getInt("id"))
+                        .duracion(rs.getInt("duracion"))
+                        .titulo(rs.getString("titulo"))
+                        .descripcion(rs.getString("descripcion"))
+                        .genero(rs.getString("genero"))
+                        .nombre_dir(rs.getString("nombre_dir"))
+                        .actores_principales(rs.getString("actores_principales"))
+                        .poster_path(rs.getString("poster_path"))
+                        .fecha_estreno(rs.getDate("fecha_estreno"))
+                        .puntuacion_media(rs.getDouble("puntuacion_media"))
+                        .build();
+                contenidos.add(contenido);
+
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contenidos;
+    }
 }
 

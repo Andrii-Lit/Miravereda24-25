@@ -35,7 +35,12 @@ public class ContenidoService {
     }
 
 
-
+    public void anyadirCarrito(int clienteId, int contenidoId) throws SQLException {
+        repository.anyadirCarrito(clienteId, contenidoId);
+    }
+    public List<Contenido> getAllCarrito(int clienteId) throws SQLException {
+        return repository.getAllCarrito(clienteId);
+    }
 
 }
 
