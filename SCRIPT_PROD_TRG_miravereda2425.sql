@@ -495,6 +495,6 @@ begin
         update tarifa set porcentaje = (porcentaje + p_valor);
     else
         signal sqlstate '45000' set message_text = 'Ingresa un valor diferente a 0.';
-    endif;
+    end if;
 end
 delimiter ;
