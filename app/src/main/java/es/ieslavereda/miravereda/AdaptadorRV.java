@@ -1,4 +1,5 @@
 package es.ieslavereda.miravereda;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,24 +22,24 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     private LayoutInflater inflater;
     private View.OnClickListener onClickListener;
 
-    public AdaptadorRV(Context context, List<Contenido> contenidos, View.OnClickListener onClickListener){
-        this.contenidos= contenidos;
-        this.onClickListener=onClickListener;
-        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public AdaptadorRV(Context context, List<Contenido> contenidos, View.OnClickListener onClickListener) {
+        this.contenidos = contenidos;
+        this.onClickListener = onClickListener;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
 
     @NonNull
     @Override
-    public AdaptadorRV.ViewHolder onCreateViewHolder (@NonNull ViewGroup parent,int ViewType){
-        View view=inflater.inflate(R.layout.viewholder_layout,parent,false);
+    public AdaptadorRV.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int ViewType) {
+        View view = inflater.inflate(R.layout.viewholder_layout, parent, false);
         view.setOnClickListener(onClickListener);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdaptadorRV.ViewHolder holder, int position) {
-        Contenido contenido =contenidos.get(position);
+        Contenido contenido = contenidos.get(position);
         holder.titulo.setText(contenido.getTitulo());
         Picasso.get().load(contenido.getPoster_path()).into(holder.poster);
         holder.notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
@@ -59,7 +60,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
             super(itemView);
             poster = itemView.findViewById(R.id.Poster); // Nombre corregido
             titulo = itemView.findViewById(R.id.Titulo);
-            notaMediaValor=itemView.findViewById(R.id.NotaMediaNumero);
+            notaMediaValor = itemView.findViewById(R.id.NotaMediaNumero);
         }
     }
 

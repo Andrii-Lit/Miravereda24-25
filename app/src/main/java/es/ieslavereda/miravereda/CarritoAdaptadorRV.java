@@ -22,9 +22,9 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
     private LayoutInflater inflater;
     private List<Contenido> contenidos;
 
-    public CarritoAdaptadorRV(Context context, List<Contenido> contenidos){
+    public CarritoAdaptadorRV(Context context, List<Contenido> contenidos) {
         this.contenidos = contenidos;
-        inflater=(LayoutInflater)
+        inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,7 +48,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
                 // así pone "Precio", "Price" o Preu
         );
         holder.vh_carrito_costeTV.setText(""
-            //query que vea si el contenido_id está en pelicula, serie o corto y sacar el precio
+                //query que vea si el contenido_id está en pelicula, serie o corto y sacar el precio
                 //o directamente lo quito y no me como la cabeza
         );
 
@@ -59,12 +59,12 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         return contenidos.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView vh_carrito_portada;
         FloatingActionButton vh_carrito_borrarButton;
         TextView vh_carrito_tituloTV, vh_carrito_directorTV, vh_carrito_precioTV, vh_carrito_costeTV;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             vh_carrito_portada = itemView.findViewById(R.id.vh_carrito_portada);
             vh_carrito_tituloTV = itemView.findViewById(R.id.vh_carrito_tituloTV);

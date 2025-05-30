@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Contenido implements Serializable,Comparable<Contenido> {
+public class Contenido implements Serializable, Comparable<Contenido> {
     private int id, duracion;
     private String titulo, descripcion, genero, nombre_dir,
             actores_principales, poster_path;
@@ -16,7 +16,7 @@ public class Contenido implements Serializable,Comparable<Contenido> {
     private double puntuacion_media;
 
 
-    public Contenido(){
+    public Contenido() {
 
     }
 
@@ -83,7 +83,6 @@ public class Contenido implements Serializable,Comparable<Contenido> {
     public int getId() {
         return id;
     }
-
 
 
     @Override

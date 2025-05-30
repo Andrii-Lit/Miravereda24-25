@@ -1,47 +1,65 @@
 package es.ieslavereda.miravereda;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import es.ieslavereda.miravereda.API.Connector;
 import es.ieslavereda.miravereda.Base.BaseActivity;
+import es.ieslavereda.miravereda.Base.CallInterface;
+import es.ieslavereda.miravereda.Model.CarritoRequest;
 import es.ieslavereda.miravereda.Model.Contenido;
 
-public class DetalleContenidoActivity extends BaseActivity {
+public class DetalleContenidoActivity extends BaseActivity implements CallInterface<Void> {
+
+    private Contenido contenido;
     private ImageView poster;
-    private TextView descripcion,nombreautor,preciovalor,notaMediaValor,titulo,anyo;
+    private TextView descripcion, nombreautor, preciovalor, notaMediaValor, titulo, anyo;
     private EditText notaCliente;
-    private Button anyadirAlCarrito,valorar;
+    private Button anyadirAlCarrito, valorar;
     private FloatingActionButton volver;
+
+    private CarritoRequest carritoRequest;
+
+    private ActivityResultLauncher<Intent> carritoLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.information);
 
-        Bundle extra = getIntent().getExtras();
-        Contenido contenido=(Contenido) extra.getSerializable("contenido");
+        carritoLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Aquí puedes manejar resultado si quieres, o dejar vacío
+                }
+        );
 
-        poster =findViewById(R.id.Poster);
-        descripcion=findViewById(R.id.Descripcion);
-        nombreautor=findViewById(R.id.NombreDirector);
-        anyo=findViewById(R.id.Anyo);
-        preciovalor=findViewById(R.id.precioValor);
-        notaMediaValor=findViewById(R.id.NotaMediaNumero);
-        notaCliente=findViewById(R.id.notaCliente);
-        anyadirAlCarrito=findViewById(R.id.AddCarrito);
-        valorar=findViewById(R.id.Valorar);
-        volver=findViewById(R.id.floatingButtonReturn);
-        titulo=findViewById(R.id.Titulo);
-        nombreautor=findViewById(R.id.NombreDirector);
+        Bundle extra = getIntent().getExtras();
+        contenido = (Contenido) extra.getSerializable("contenido");
+
+        poster = findViewById(R.id.Poster);
+        descripcion = findViewById(R.id.Descripcion);
+        nombreautor = findViewById(R.id.NombreDirector);
+        anyo = findViewById(R.id.Anyo);
+        preciovalor = findViewById(R.id.precioValor);
+        notaMediaValor = findViewById(R.id.NotaMediaNumero);
+        notaCliente = findViewById(R.id.notaCliente);
+        anyadirAlCarrito = findViewById(R.id.AddCarrito);
+        valorar = findViewById(R.id.Valorar);
+        volver = findViewById(R.id.floatingButtonReturn);
+        titulo = findViewById(R.id.Titulo);
 
         Picasso.get().load(contenido.getPoster_path()).into(poster);
         titulo.setText(contenido.getTitulo());
@@ -50,24 +68,48 @@ public class DetalleContenidoActivity extends BaseActivity {
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
         nombreautor.setText(contenido.getNombre_dir());
 
+        volver.setOnClickListener(v -> finish());
 
-        volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        valorar.setOnClickListener(v -> {
+            // Tu lógica para valorar
         });
-        valorar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+        anyadirAlCarrito.setOnClickListener(v -> {
+            int clienteId = obtenerClienteId();
+            if (clienteId == -1) {
+                showToast("No se pudo obtener el ID del cliente");
+                return;
             }
+            carritoRequest = new CarritoRequest(clienteId, contenido.getId());
+            showProgress();
+            executeCall(this);
         });
-        anyadirAlCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
-            }
-        });
+    private int obtenerClienteId() {
+        SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
+        return prefs.getInt("clienteId", -1);
+    }
+
+    @Override
+    public Void doInBackground() throws Exception {
+        Connector.getConector().postVoid(carritoRequest, "carrito/");
+        return null;
+    }
+
+    @Override
+    public void doInUI(Void data) {
+        hideProgress();
+        Intent intent = new Intent(DetalleContenidoActivity.this, CarritoActivity.class);
+        carritoLauncher.launch(intent);
+        showToast("Contenido añadido al carrito");
+
+
+    }
+
+    @Override
+    public void doInError(Context context, Exception e) {
+        hideProgress();
+        showToast("Error al añadir contenido al carrito: " + e.getMessage());
     }
 }

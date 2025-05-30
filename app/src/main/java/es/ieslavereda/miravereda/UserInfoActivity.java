@@ -26,16 +26,16 @@ public class UserInfoActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_info);
 
-        tvEmail=findViewById(R.id.tvEmail);
-        tvPassword=findViewById(R.id.tvPassword);
-        fbtBack=findViewById(R.id.fbtBack);
-        Intent intent=getIntent();
+        tvEmail = findViewById(R.id.tvEmail);
+        tvPassword = findViewById(R.id.tvPassword);
+        fbtBack = findViewById(R.id.fbtBack);
+        Intent intent = getIntent();
 
-        String email=intent.getStringExtra("email");
-        String contrasenya=intent.getStringExtra("contrasenya");
+        String email = intent.getStringExtra("email");
+        String contrasenya = intent.getStringExtra("contrasenya");
         tvEmail.setText(email);
         tvPassword.setText(contrasenya);
-        fbtBack.setOnClickListener(v->{
+        fbtBack.setOnClickListener(v -> {
             finish();
         });
     }

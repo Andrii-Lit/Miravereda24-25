@@ -1,9 +1,11 @@
 package es.ieslavereda.miravereda.API;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import es.ieslavereda.miravereda.Base.Parameters;
+import es.ieslavereda.miravereda.Model.Cliente;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -14,6 +16,7 @@ public class Connector {
     private static Conversor conversor;
     private static CallMethods callMethodsObject;
 
+
     public static Connector getConector() {
         if (connector == null) {
             connector = new Connector();
@@ -22,6 +25,8 @@ public class Connector {
         }
         return connector;
     }
+
+
 
     public <T> List<T> getAsList(Class<T> clazz, String path) throws Exception {
         String url = Parameters.URL_API_BASE + path;
@@ -38,6 +43,13 @@ public class Connector {
             return conversor.fromJsonMap(jsonResponse, clazzK, clazzV);
         return null;
     }
+    public <T> void postVoid(T data, String path) throws Exception {
+        String url = Parameters.URL_API_BASE + path;
+        String jsonObject = conversor.toJson(data);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+        callMethodsObject.post(url, body);
+    }
+
 
 
     public <T> T get(Class<T> clazz, String path) throws Exception {
@@ -55,6 +67,16 @@ public class Connector {
         String jsonResponse = callMethodsObject.post(url, body);
         if (jsonResponse != null)
             return conversor.fromJson(jsonResponse, clazz);
+        return null;
+    }
+
+    public <T, T2> List<T> postAsList(Class<T> clazz, T2 data, String path) throws Exception {
+        String url = Parameters.URL_API_BASE + path;
+        String jsonObject = conversor.toJson(data);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
+        String jsonResponse = callMethodsObject.post(url, body);
+        if (jsonResponse != null)
+            return conversor.fromJsonList(jsonResponse, clazz);
         return null;
     }
 

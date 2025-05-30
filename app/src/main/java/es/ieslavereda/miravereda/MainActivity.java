@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(this, UserInfoActivity.class));
         });
     }
+
     private void login() {
         final String email = username.getText().toString();
         final String contrasenya = password.getText().toString();
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity {
         }
 
         final Cliente cliente = new Cliente(email, contrasenya);
+
 
         executeCall(new CallInterface<Cliente>() {
             @Override
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("email", clienteResponse.getEmail());
                     editor.putString("contrasenya", password.getText().toString());
+                    editor.putInt("clienteId",clienteResponse.getId());
                     editor.apply();
 
                     Log.d("PREFS", "Guardado email: " + clienteResponse.getEmail());

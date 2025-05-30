@@ -63,10 +63,10 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
         });
 
         botonVoladorMagico = findViewById(R.id.floatingButtonReturnPreferences);
-        bSpinner=findViewById(R.id.bSpinner);
+        bSpinner = findViewById(R.id.bSpinner);
         aSpinner = findViewById(R.id.aSpinner);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Spinner_items_idiomas, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Spinner_items_idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         aSpinner.setAdapter(adapter);
         setSpinnerSelection();
@@ -87,7 +87,7 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
                     newLang = "es";
                 } else if (selectedLanguage.equals("Inglés") || selectedLanguage.equals("Anglés") || selectedLanguage.equals("English")) {
                     newLang = "en";
-                } else if (selectedLanguage.equals("Valenciano") || selectedLanguage.equals("Valencia") ||  selectedLanguage.equals("Valencian")) {
+                } else if (selectedLanguage.equals("Valenciano") || selectedLanguage.equals("Valencia") || selectedLanguage.equals("Valencian")) {
                     newLang = "ca";
                 }
 
@@ -97,7 +97,8 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
@@ -113,11 +114,11 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
                 editor.putInt("tema", position);
                 editor.apply();
 
-                if (position == 0){
+                if (position == 0) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 } else if (position == 1) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else{
+                } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
@@ -134,7 +135,6 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
                 startActivity(intent);
             }
         });
-
 
 
     }
@@ -162,6 +162,7 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
 
         aSpinner.setSelection(position);
     }
+
     private void changeLanguage(String langCode) {
         SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("My_Lang", langCode);
@@ -172,13 +173,14 @@ public class PreferenciasActivity extends BaseActivity implements AdapterView.On
 
         recreate();
     }
+
     private void loadLocale() {
         String lang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "");
         if (!lang.equals("")) {
             setLocale(lang);
         }
     }
-    
+
     private void setLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);

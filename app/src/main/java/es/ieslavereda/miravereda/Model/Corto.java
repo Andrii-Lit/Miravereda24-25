@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Corto extends Contenido{
+public class Corto extends Contenido {
     private int tarifa_id;
     private boolean disponibilidad;
     private double precio_base;
@@ -18,13 +18,15 @@ public class Corto extends Contenido{
         this.precio_base = precio_base;
 
     }
+
     public double getPrecio_base() {
         return precio_base;
     }
 
-      public void setPrecio_base(double precio_base){
+    public void setPrecio_base(double precio_base) {
         this.precio_base = precio_base;
     }
+
     public int getTarifa_id() {
         return tarifa_id;
     }

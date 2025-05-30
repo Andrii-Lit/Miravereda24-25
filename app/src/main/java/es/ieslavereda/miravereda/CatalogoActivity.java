@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -49,23 +52,33 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Registrar el launcher para iniciar CarritoActivity y manejar resultado
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
 
-        // Leer datos de sesión
+                    }
+                }
+        );
         SharedPreferences prefs = getSharedPreferences("cliente", Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         String contrasenya = prefs.getString("contrasenya", null);
+        int cliente_id = prefs.getInt("clienteId", -1);
 
-        Log.d("PREFS", "Leído email: " + email);
-        Log.d("PREFS", "Leído contrasenya: " + contrasenya);
-
-        if (email != null && contrasenya != null) {
+        if (email != null && contrasenya != null && cliente_id != -1) {
             cliente = new Cliente(email, contrasenya);
+            cliente.setId(cliente_id);
         } else {
             Toast.makeText(this, R.string.toastSesionNoIniciada, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
         }
+
+
+        Log.d("PREFS", "Leído email: " + email);
+        Log.d("PREFS", "Leído contrasenya: " + contrasenya);
 
         ivLogo = findViewById(R.id.ivLogo);
         volver = findViewById(R.id.Volver);
@@ -79,6 +92,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         adaptadorRV = new AdaptadorRV(this, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         // Ejecuta la carga de datos en background
         executeCall(this);
@@ -96,10 +110,9 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public Collection<Contenido> doInBackground() throws Exception {
-
-        return (contenidos!=null)?
+        return (contenidos != null) ?
                 Connector.getConector().getAsList(Contenido.class, "contenido/")
-                :List.of();
+                : List.of();
     }
 
     @Override
