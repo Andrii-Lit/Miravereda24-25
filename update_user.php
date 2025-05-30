@@ -22,14 +22,14 @@ $row = mysqli_fetch_array($query);
                 <h1>Editar usuario</h1>
 
                 <input type="hidden" name="id" value="<?= $row ['id'] ?>">
-                <input type="test" name="name" value="<?= $row ['nombre'] ?>">
-                <input type="test" name="lastname" value="<?= $row ['apellidos'] ?>">
-                <input type="test" name="password" value="<?= $row ['contrasenya'] ?>">
-                <input type="test" name="domicile" value="<?= $row ['domicilio'] ?>">
-                <input type="test" name="postal_code" value="<?= $row ['cod_postal'] ?>">
-                <input type="test" name="email" value="<?= $row ['email'] ?>">
+                <input type="text" name="name" value="<?= $row ['nombre'] ?>">
+                <input type="text" name="lastname" value="<?= $row ['apellidos'] ?>">
+                <input type="text" name="password" value="<?= $row ['contrasenya'] ?>">
+                <input type="text" name="domicile" value="<?= $row ['domicilio'] ?>">
+                <input type="text" name="postal_code" value="<?= $row ['cod_postal'] ?>">
+                <input type="text" name="email" value="<?= $row ['email'] ?>">
                 <input type="date" name="date_of_birth" value="<?= $row ['fecha_nac']?>">
-                <input type="test" name="creditcard" value="<?= $row ['num_tarjeta'] ?>">
+                <input type="text" name="creditcard" value="<?= $row ['num_tarjeta'] ?>">
 
                 <input type="submit" value="Actualizar usuario">
 

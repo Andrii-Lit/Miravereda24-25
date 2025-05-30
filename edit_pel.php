@@ -1,4 +1,4 @@
-<?php
+<?php 
 include('connection.php');
 $con = connection();
 
@@ -11,12 +11,10 @@ $duracion = $_POST['duracion'];
 $actores = $_POST['actores_principales'];
 $estreno = $_POST['fecha_estreno'];
 $media = $_POST['puntuacion_media'];
-$desc = $_POST['descripcion'];
+$descripcion = $_POST['descripcion'];
 
-$sql = "INSERT INTO contenido (poster_path,titulo,genero,nombre_dir,duracion,actores_principales,fecha_estreno,puntuacion_media,descripcion,id) VALUES ('$poster','$titulo','$genero','$director','$duracion','$actores','$estreno','$media','$desc','$id')";
+$sql = "UPDATE contenido SET poster_path='$poster',titulo='$titulo',genero='$genero',nombre_dir='$director',duracion='$duracion', actores_principales='$actores', fecha_estreno='$estreno',puntuacion_media='$media',descripcion='$descripcion' WHERE id = '$id'";
 $query = mysqli_query($con, $sql);
-
-
 
 if($query){
     Header("Location: crudPel.php");

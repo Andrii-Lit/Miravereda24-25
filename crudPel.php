@@ -22,6 +22,7 @@ $query = mysqli_query($con, $sql);
             <form action="insert_pel.php" method="POST">
                 <h1>Añadir contenido</h1>
 
+                <input type="text" name="id" placeholder="ID del contenido">
                 <input type="text" name="poster" placeholder="URL del poster">
                 <input type="text" name="titulo" placeholder="Título">
                 <input type="text" name="genero" placeholder="Genero">
@@ -37,7 +38,7 @@ $query = mysqli_query($con, $sql);
             </form>
         <div>
         <div class="pel_crud">
-            <h2>Crud de Peliculas</h2>
+            <h2>Crud de Contenido</h2>
             <h3>MIRAVEREDA</h3>
             <table>
                 <thead>
@@ -68,8 +69,8 @@ $query = mysqli_query($con, $sql);
                             <th> <?= $row['fecha_estreno'] ?> </th>
                             <th> <?= $row['puntuacion_media'] ?> </th>
 
-                            <th><a href="update_user.php?id=<?=$row['id']?>">Editar</th>
-                            <th><a href="delete_user.php?id=<?=$row['id']?>">Eliminar</th>
+                            <th><a href="update_pel.php?id=<?=$row['id']?>">Editar</th>
+                            <th><a href="delete_pel.php?id=<?=$row['id']?>">Eliminar</th>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
