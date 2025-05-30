@@ -18,8 +18,7 @@
                 actores_principales, poster_path;
         private Date fecha_estreno;
         private double puntuacion_media;
-        @Builder.Default
-        private LocalDateTime changedTS=LocalDateTime.now();
+
 
         public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
                          int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
@@ -34,7 +33,7 @@
             this.fecha_estreno = fecha_estreno;
             this.puntuacion_media = puntuacion_media;
             this.poster_path = poster_path;
-            this.changedTS = LocalDateTime.now();
+
         }
 
     }

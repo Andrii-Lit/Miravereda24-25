@@ -11,7 +11,7 @@ import java.util.List;
 public class Serie extends Contenido {
     private List<Temporada> temporadas;
     private boolean disponibilidad;
-    private LocalDateTime changedTS;
+
 
     public Serie(int id, String titulo, String descripcion, String genero, String nombre_dir,
                  int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
@@ -20,7 +20,7 @@ public class Serie extends Contenido {
                 fecha_estreno, puntuacion_media, poster_path);
         this.disponibilidad = disponibilidad;
         this.temporadas = temporadas;
-        this.changedTS = LocalDateTime.now();
+
     }
 
     public boolean isDisponible() {

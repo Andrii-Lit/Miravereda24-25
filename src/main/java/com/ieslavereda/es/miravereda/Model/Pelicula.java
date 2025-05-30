@@ -13,7 +13,7 @@ public class Pelicula extends Contenido{
     private int tarifa_id;
     private Date disponible_hasta;
     private double precio_base;
-    private LocalDateTime changedTS;
+
     public Pelicula(int id, String titulo, String descripcion, String genero,
                     String nombre_dir, int duracion, String actores_principales,
                     Date fecha_estreno, double puntuacion_media, String poster_path,int tarifa_id,
@@ -22,7 +22,7 @@ public class Pelicula extends Contenido{
         this.tarifa_id = tarifa_id;
         this.disponible_hasta = disponible_hasta;
         this.precio_base = precio_base;
-        this.changedTS = LocalDateTime.now();
+
     }
 
 }

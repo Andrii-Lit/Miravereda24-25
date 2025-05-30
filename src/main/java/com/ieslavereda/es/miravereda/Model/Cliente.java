@@ -20,8 +20,7 @@ public class Cliente {
     private String email;
     private Date fecha_nac;
     private String num_tarjeta;
-    @Builder.Default
-    private LocalDateTime changedTs =LocalDateTime.now();
+
 
 
 

@@ -19,6 +19,6 @@ public class Corto extends Contenido {
                  double precio_base) {
         super(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path);
         this.precio_base = precio_base;
-        this.changedTS = LocalDateTime.now();
+
     }
 }

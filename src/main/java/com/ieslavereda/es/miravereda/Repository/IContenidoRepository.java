@@ -17,6 +17,8 @@ public interface IContenidoRepository {
     Contenido deleteContenido(int id) throws SQLException;
 
     List<Contenido> getAllContenidos() throws SQLException;
+    void anyadirCarrito(int p_cliente_id,int p_contenido_id) throws SQLException;
+
 
 
 }
