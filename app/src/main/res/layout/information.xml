@@ -9,8 +9,8 @@
         android:id="@+id/floatingButtonReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +20,8 @@
         android:id="@+id/Poster"
         android:layout_width="150dp"
         android:layout_height="250dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:background="#2C2929"
         app:layout_constraintStart_toStartOf="@+id/floatingButtonReturn"
         app:layout_constraintTop_toBottomOf="@+id/floatingButtonReturn"
@@ -30,10 +31,11 @@
         android:id="@+id/Titulo"
         android:layout_width="216dp"
         android:layout_height="66dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="-16dp"
         android:hint="Titulo de pelicula"
         android:textSize="24sp"
         android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Poster"
         app:layout_constraintTop_toTopOf="@+id/Poster" />
 
@@ -44,38 +46,39 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
         android:text="@string/informacionNotaPelicula"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/NotaMedia"
-        android:layout_width="124dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="93dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
         android:text="@string/informacionNotaMedia"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/Precio"
-        app:layout_constraintStart_toEndOf="@+id/Poster" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/NombreDirector"
+        app:layout_constraintTop_toBottomOf="@+id/NombreDirector" />
 
     <TextView
         android:id="@+id/Precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/informacionPrecio"
-        app:layout_constraintBottom_toTopOf="@+id/AddCarrito"
-        app:layout_constraintStart_toEndOf="@+id/Poster" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/NotaMedia"
+        app:layout_constraintTop_toBottomOf="@+id/NotaMedia" />
 
     <Button
         android:id="@+id/AddCarrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/informacionAñadirCarrito"
-        app:layout_constraintBottom_toBottomOf="@+id/Poster"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Poster" />
+        app:layout_constraintStart_toEndOf="@+id/Poster"
+        app:layout_constraintTop_toBottomOf="@+id/Precio" />
 
     <TextView
         android:id="@+id/SinopsisTextView"
@@ -83,39 +86,53 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/informacionSinopsis"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Poster" />
 
-    <TextView
-        android:id="@+id/Descripcion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis mauris vel elit rhoncus, sit amet tincidunt arcu maximus. Quisque tristique laoreet ante ac placerat. Etiam eu laoreet quam. Morbi placerat eget quam in ultrices. Etiam malesuada, dui ac varius sagittis, lectus ex sodales metus, at maximus massa tellus quis lacus. Phasellus iaculis, mauris aliquet sollicitudin pulvinar, justo lectus efficitur leo, in efficitur nunc justo id orci. Ut laoreet lorem sed lobortis aliquet. Curabitur eu sodales libero. Aliquam feugiat ligula non maximus dapibus. Nulla viverra, ipsum in sagittis pulvinar, eros purus ullamcorper arcu, non porta turpis tortor a velit. Nam porttitor eget odio in hendrerit. "
+    <ScrollView
+        android:layout_width="407dp"
+        android:layout_height="255dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SinopsisTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/SinopsisTextView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis mauris vel elit rhoncus, sit amet tincidunt arcu maximus. Quisque tristique laoreet ante ac placerat. Etiam eu laoreet quam. Morbi placerat eget quam in ultrices. Etiam malesuada, dui ac varius sagittis, lectus ex sodales metus, at maximus massa tellus quis lacus. Phasellus iaculis, mauris aliquet sollicitudin pulvinar, justo lectus efficitur leo, in efficitur nunc justo id orci. Ut laoreet lorem sed lobortis aliquet. Curabitur eu sodales libero. Aliquam feugiat ligula non maximus dapibus. Nulla viverra, ipsum in sagittis pulvinar, eros purus ullamcorper arcu, non porta turpis tortor a velit. Nam porttitor eget odio in hendrerit. "
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:id="@+id/AutorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:text="@string/informacionDirector"
-        app:layout_constraintStart_toStartOf="@+id/Descripcion"
-        app:layout_constraintTop_toBottomOf="@+id/Descripcion" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/Anyo" />
 
     <TextView
         android:id="@+id/NotaMediaNumero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:hint="0"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/NotaMedia"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/NotaMedia"
         app:layout_constraintTop_toTopOf="@+id/NotaMedia" />
 
@@ -123,10 +140,10 @@
         android:id="@+id/precioValor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:hint="0.0€"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/Precio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.254"
         app:layout_constraintStart_toEndOf="@+id/Precio"
         app:layout_constraintTop_toTopOf="@+id/Precio" />
 
@@ -134,10 +151,11 @@
         android:id="@+id/NombreDirector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:hint="Nombre de Director"
-        app:layout_constraintBottom_toBottomOf="@+id/AutorTextView"
-        app:layout_constraintStart_toEndOf="@+id/AutorTextView"
-        app:layout_constraintTop_toTopOf="@+id/AutorTextView" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/AutorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/AutorTextView" />
 
     <EditText
         android:id="@+id/notaCliente"
@@ -146,18 +164,18 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/Nota1"
         app:layout_constraintStart_toEndOf="@+id/Nota1" />
 
     <Button
         android:id="@+id/Valorar"
-        android:layout_width="93dp"
-        android:layout_height="37dp"
+        android:layout_width="105dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="32dp"
         android:text="@string/informacionValorar"
-        android:textSize="10sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/notaCliente"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/notaCliente"
         app:layout_constraintTop_toTopOf="@+id/notaCliente" />
 
@@ -165,13 +183,9 @@
         android:id="@+id/Anyo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:hint="año de salida"
-        app:layout_constraintBottom_toTopOf="@+id/NotaMedia"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Poster"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/Titulo"
         app:layout_constraintTop_toBottomOf="@+id/Titulo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
