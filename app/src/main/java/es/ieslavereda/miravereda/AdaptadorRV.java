@@ -27,6 +27,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+
     @NonNull
     @Override
     public AdaptadorRV.ViewHolder onCreateViewHolder (@NonNull ViewGroup parent,int ViewType){

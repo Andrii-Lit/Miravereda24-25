@@ -29,6 +29,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        SharedPreferences preferences = getSharedPreferences("config", MODE_PRIVATE);
+        int tema = preferences.getInt("tema", 0);
         setContentView(R.layout.activity_main);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -52,7 +54,7 @@ public class MainActivity extends BaseActivity {
         final String contrasenya = password.getText().toString();
 
         if (email.isEmpty() || contrasenya.isEmpty()) {
-            Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.tostadaRellenarCampos, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -72,7 +74,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void doInUI(Cliente clienteResponse) {
                 if (clienteResponse != null) {
-                    Toast.makeText(MainActivity.this, "Login correcto: " + clienteResponse.getEmail(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.tostadaLogin, Toast.LENGTH_SHORT).show();
                     SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("email", clienteResponse.getEmail());
@@ -88,7 +90,7 @@ public class MainActivity extends BaseActivity {
                     finish();
                 } else {
                     Log.d("LOGIN", "Login fallido: clienteResponse es null");
-                    Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.tostadaCredencialesIncorrectas, Toast.LENGTH_LONG).show();
                 }
             }
         });

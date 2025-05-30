@@ -61,7 +61,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         if (email != null && contrasenya != null) {
             cliente = new Cliente(email, contrasenya);
         } else {
-            Toast.makeText(this, "No hay sesión iniciada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastSesionNoIniciada, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
@@ -91,7 +91,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Contenido contenido = contenidos.get(pos);
         Intent intent = new Intent(this, DetalleContenidoActivity.class);
         intent.putExtra("contenido", contenido);
-        Toast.makeText(this, "Clic en: " + contenido.getTitulo(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
@@ -116,6 +115,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();
-        Toast.makeText(context, "Error cargando contenidos: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, R.string.toastErrorCargandoContenidos, Toast.LENGTH_LONG).show();
     }
 }
