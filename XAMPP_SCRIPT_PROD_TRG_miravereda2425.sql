@@ -293,7 +293,7 @@ create trigger trigger_pelicula_precio
 before insert on pelicula
 for each row
 begin
-    declare porcentaje decimal(5,4);
+    declare porcentaje decimal(5,2);
 
     select t.porcentaje into porcentaje
     from contenido c 
@@ -312,7 +312,7 @@ drop procedure if exists actualizar_precio_serie$$
 create procedure actualizar_precio_serie(in p_serie_id int)
 begin
     declare precio_total decimal(10,2);
-	declare porcentaje decimal(5,4);
+	declare porcentaje decimal(5,2);
 	
 	-- El precio_total es la suma de los capitulos
     select sum(precio) into precio_total
