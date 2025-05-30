@@ -40,12 +40,12 @@ begin
     declare iva decimal(10,2);
     declare total_con_iva decimal(10,2);
     declare cant_lineas int;
-    declare carrito_id int;
+    declare carrito_activo_id int;
 
     -- Recogemos el CARRITO_id activo
-    select id, total into carrito_id, carrito_total
+    select id, total into carrito_activo_id, carrito_total
     from carrito 
-    where cliente_id = p_cliente_id and activo = true;
+    where cliente_id = p_cliente_id and activo = true limit 1;
 
     -- Recogemos el total del CARRITO activo
     -- (ya se obtuvo junto al carrito_id)
@@ -63,10 +63,12 @@ begin
     -- para no comprar un carrito vacío
     select count(*) into cant_lineas 
     from lin_fac 
-    where carrito_id = carrito_id;
+    where carrito_id = carrito_activo_id;
 
     if cant_lineas = 0 then
         signal sqlstate '45000' set message_text = 'El carrito está vacío. Añade algunos productos antes de comprar.';
+    elseif cant_lineas is null
+        signal sqlstate '45000' set message_text = 'Error interno, revisa el procedimiento.';
     end if;
 
     -- Hace INSERT en FACTURA el cliente_id, total sin y con el IVA
@@ -87,7 +89,7 @@ delimiter ;
 #---------------------------------------------------------------------
 delimiter $$
 drop procedure if exists votar$$
-create procedure votar(in p_cliente_id, p_contenido_id, p_valor)
+create procedure votar(in p_cliente_id int, in p_contenido_id int, in p_valor int)
 begin
 	insert into valoracion (cliente_id, contenido_id, valor)
 	values(p_cliente_id, p_contenido_id, p_valor)
