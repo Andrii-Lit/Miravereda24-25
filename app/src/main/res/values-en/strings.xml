@@ -28,6 +28,8 @@
 
     <!-- View Holder Peliculas -->
     <string name="viewholderNotaMedia">Average Grade: </string>
+    <!-- View Holder Carrito -->
+    <string name="viewholderPrecio">Price: </string>
 
     <!-- Informacion pelicula -->
     <string name="informacionNotaPelicula">Rating: </string>

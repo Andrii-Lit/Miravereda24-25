@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import es.ieslavereda.miravereda.Base.ImageDownloader;
 import es.ieslavereda.miravereda.Model.Contenido;
 
 
@@ -40,17 +41,8 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         Contenido contenido = contenidos.get(position);
         holder.vh_carrito_tituloTV.setText(contenido.getTitulo());
         holder.vh_carrito_directorTV.setText(contenido.getNombre_dir());
-        Picasso.get()
-                .load(contenido.getPoster_path())
-                .into(holder.vh_carrito_portada);
-        holder.vh_carrito_precioTV.setText(""
-                //cambiaremos según el idioma en el SharedPreferences
-                // así pone "Precio", "Price" o Preu
-        );
-        holder.vh_carrito_costeTV.setText(""
-                //query que vea si el contenido_id está en pelicula, serie o corto y sacar el precio
-                //o directamente lo quito y no me como la cabeza
-        );
+        ImageDownloader.downloadImage(contenido.getPoster_path(), holder.vh_carrito_portada);
+        holder.vh_carrito_costeTV.setText(String.valueOf(contenido.getPrecio()));
 
     }
 

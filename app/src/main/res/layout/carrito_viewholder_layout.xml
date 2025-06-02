@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Precio: "
+        android:text="@string/viewholderPrecio"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/vh_carrito_directorTV"
         app:layout_constraintTop_toBottomOf="@+id/vh_carrito_tituloTV" />
@@ -69,6 +69,7 @@
         android:id="@+id/vh_carrito_costeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="10.99"
         android:textStyle="bold"

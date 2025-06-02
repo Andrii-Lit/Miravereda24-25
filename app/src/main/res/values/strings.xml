@@ -28,6 +28,8 @@
 
     <!-- View Holder Peliculas -->
     <string name="viewholderNotaMedia">Nota Media: </string>
+    <!-- View Holder Carrito -->
+    <string name="viewholderPrecio">Precio: </string>
 
     <!-- Informacion pelicula -->
     <string name="informacionNotaPelicula">Nota: </string>
