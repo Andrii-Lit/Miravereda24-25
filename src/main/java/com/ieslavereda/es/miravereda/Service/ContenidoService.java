@@ -42,5 +42,11 @@ public class ContenidoService {
         return repository.getAllCarrito(clienteId);
     }
 
+
+    public void comprar(int clienteId) throws SQLException {
+        repository.comprar(clienteId);
+    }
+
+
 }
 

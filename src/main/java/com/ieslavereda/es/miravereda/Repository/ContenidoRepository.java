@@ -159,6 +159,20 @@ public class ContenidoRepository implements IContenidoRepository {
     }
 
 
+        public void comprar(int clienteId) throws SQLException {
+            String sql = "{CALL comprar(?)}";
+
+            try (Connection connection = MyDataSource.getMydataSource().getConnection();
+                 CallableStatement stmt = connection.prepareCall(sql)) {
+
+                stmt.setInt(1, clienteId);
+                stmt.execute();
+            }
+        }
+
+
+
+
     public List<Contenido> getAllCarrito(int clienteId) {
         String sql="{ call get_all_carrito(?)}";
         List<Contenido> contenidos = new ArrayList<>();
