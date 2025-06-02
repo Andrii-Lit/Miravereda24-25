@@ -13,27 +13,13 @@ public class Contenido implements Serializable, Comparable<Contenido> {
     private String titulo, descripcion, genero, nombre_dir,
             actores_principales, poster_path;
     private LocalDate fecha_estreno;
-    private double puntuacion_media, precio;
+    private double puntuacion_media;
 
 
     public Contenido() {
 
     }
-    public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
-                     int duracion, String actores_principales, LocalDate fecha_estreno, double puntuacion_media,
-                     String poster_path, double precio) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.genero = genero;
-        this.nombre_dir = nombre_dir;
-        this.duracion = duracion;
-        this.actores_principales = actores_principales;
-        this.fecha_estreno = fecha_estreno;
-        this.puntuacion_media = puntuacion_media;
-        this.poster_path = poster_path;
-        this.precio = precio;
-    }
+
     public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
                      int duracion, String actores_principales, LocalDate fecha_estreno, double puntuacion_media,
                      String poster_path) {
@@ -47,6 +33,7 @@ public class Contenido implements Serializable, Comparable<Contenido> {
         this.fecha_estreno = fecha_estreno;
         this.puntuacion_media = puntuacion_media;
         this.poster_path = poster_path;
+
     }
 
 
@@ -96,9 +83,7 @@ public class Contenido implements Serializable, Comparable<Contenido> {
     public int getId() {
         return id;
     }
-    public double getPrecio(){
-        return precio;
-    }
+
 
     @Override
     public int compareTo(Contenido contenido) {

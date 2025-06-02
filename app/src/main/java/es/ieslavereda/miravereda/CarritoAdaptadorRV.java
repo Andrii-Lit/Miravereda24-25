@@ -42,7 +42,6 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         holder.vh_carrito_tituloTV.setText(contenido.getTitulo());
         holder.vh_carrito_directorTV.setText(contenido.getNombre_dir());
         ImageDownloader.downloadImage(contenido.getPoster_path(), holder.vh_carrito_portada);
-        holder.vh_carrito_costeTV.setText(String.valueOf(contenido.getPrecio()));
 
     }
 

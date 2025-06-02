@@ -49,6 +49,12 @@ public class Connector {
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsonObject);
         callMethodsObject.post(url, body);
     }
+    public void postVoid(String path) throws Exception {
+        String url = Parameters.URL_API_BASE + path;
+        RequestBody emptyBody = RequestBody.create(null, new byte[0]);
+        callMethodsObject.post(url, emptyBody);
+    }
+
 
 
 
