@@ -18,18 +18,20 @@ public class ContenidoRepository implements IContenidoRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                contenido = Contenido.builder()
-                        .id(rs.getInt("id"))
-                        .duracion(rs.getInt("duracion"))
-                        .titulo(rs.getString("titulo"))
-                        .descripcion(rs.getString("descripcion"))
-                        .genero(rs.getString("genero"))
-                        .nombre_dir(rs.getString("nombre_dir"))
-                        .actores_principales(rs.getString("actores_principales"))
-                        .poster_path(rs.getString("poster_path"))
-                        .fecha_estreno(rs.getDate("fecha_estreno"))
-                        .puntuacion_media(rs.getDouble("puntuacion_media"))
-                        .build();
+                contenido = new Contenido(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("descripcion"),
+                        rs.getString("genero"),
+                        rs.getString("nombre_dir"),
+                        rs.getInt("duracion"),
+                        rs.getString("actores_principales"),
+                        rs.getDate("fecha_estreno"),
+                        rs.getDouble("puntuacion_media"),
+                        rs.getString("poster_path"),
+                        rs.getDouble("precio")
+
+                );
             }
 
         } catch (SQLException e) {
@@ -120,18 +122,19 @@ public class ContenidoRepository implements IContenidoRepository {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Contenido contenido = Contenido.builder()
-                        .id(rs.getInt("id"))
-                        .duracion(rs.getInt("duracion"))
-                        .titulo(rs.getString("titulo"))
-                        .descripcion(rs.getString("descripcion"))
-                        .genero(rs.getString("genero"))
-                        .nombre_dir(rs.getString("nombre_dir"))
-                        .actores_principales(rs.getString("actores_principales"))
-                        .poster_path(rs.getString("poster_path"))
-                        .fecha_estreno(rs.getDate("fecha_estreno"))
-                        .puntuacion_media(rs.getDouble("puntuacion_media"))
-                        .build();
+                Contenido contenido = new Contenido(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("descripcion"),
+                        rs.getString("genero"),
+                        rs.getString("nombre_dir"),
+                        rs.getInt("duracion"),
+                        rs.getString("actores_principales"),
+                        rs.getDate("fecha_estreno"),
+                        rs.getDouble("puntuacion_media"),
+                        rs.getString("poster_path"),
+                        rs.getDouble("precio")
+                );
                 contenidos.add(contenido);
 
             }
