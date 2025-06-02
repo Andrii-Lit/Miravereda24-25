@@ -6,6 +6,7 @@
         <domain includeSubdomains="true">10.249.157.10</domain>
         <domain includeSubdomains="true">10.249.158.3</domain>
         <domain includeSubdomains="true">10.249.154.26</domain>
+        <domain includeSubdomains="true">10.249.159.10</domain>
 
     </domain-config>
 </network-security-config>
