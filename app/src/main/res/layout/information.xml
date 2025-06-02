@@ -160,7 +160,7 @@
     <EditText
         android:id="@+id/notaCliente"
         android:layout_width="119dp"
-        android:layout_height="23dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="numberDecimal"

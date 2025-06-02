@@ -41,6 +41,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         Contenido contenido = contenidos.get(position);
         holder.vh_carrito_tituloTV.setText(contenido.getTitulo());
         holder.vh_carrito_directorTV.setText(contenido.getNombre_dir());
+        holder.vh_carrito_costeTV.setText(String.valueOf(contenido.getPrecio()));
         ImageDownloader.downloadImage(contenido.getPoster_path(), holder.vh_carrito_portada);
 
     }
@@ -53,14 +54,13 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView vh_carrito_portada;
         FloatingActionButton vh_carrito_borrarButton;
-        TextView vh_carrito_tituloTV, vh_carrito_directorTV, vh_carrito_precioTV, vh_carrito_costeTV;
+        TextView vh_carrito_tituloTV, vh_carrito_directorTV, vh_carrito_costeTV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             vh_carrito_portada = itemView.findViewById(R.id.vh_carrito_portada);
             vh_carrito_tituloTV = itemView.findViewById(R.id.vh_carrito_tituloTV);
             vh_carrito_directorTV = itemView.findViewById(R.id.vh_carrito_directorTV);
-            vh_carrito_precioTV = itemView.findViewById(R.id.vh_carrito_precioTV);
             vh_carrito_costeTV = itemView.findViewById(R.id.vh_carrito_costeTV);
             vh_carrito_borrarButton = itemView.findViewById(R.id.vh_carrito_borrarButton);
 

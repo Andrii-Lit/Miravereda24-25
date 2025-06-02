@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-06-02T08:02:19.883908991Z">
+        <DropdownSelection timestamp="2025-06-02T10:53:02.715687265Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/crimadmor/.android/avd/Pixel_3.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=ba3cf4890405" />
             </handle>
           </Target>
         </DropdownSelection>

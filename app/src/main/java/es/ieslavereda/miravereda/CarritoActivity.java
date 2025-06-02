@@ -30,9 +30,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     private Button carrito_comprarButton;
     private RecyclerView carrito_recyclerView;
     private CarritoAdaptadorRV carritorvAdapter;
-    private TextView carrito_totalTV, carrito_precioTV;
+    private TextView carrito_precioTV;
     private Cliente cliente;
     private int clienteId = -1;
+    private double total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,12 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         carrito_backButton = findViewById(R.id.carrito_backButton);
         carrito_comprarButton = findViewById(R.id.carrito_comprarButton);
         carrito_recyclerView = findViewById(R.id.carrito_recyclerView);
-        carrito_totalTV = findViewById(R.id.carrito_totalTV);
         carrito_precioTV = findViewById(R.id.carrito_precioTV);
 
+        for (Contenido contenido : contenidos_anyadidos){
+            total += contenido.getPrecio();
+        }
+        carrito_precioTV.setText(String.valueOf(total));
         // Leer clienteId desde SharedPreferences
         SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
         clienteId = prefs.getInt("clienteId", -1);
@@ -117,9 +121,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         contenidos_anyadidos.clear();
         if (data != null) {
             contenidos_anyadidos.addAll(data);
-
-
-        carritorvAdapter.notifyDataSetChanged();
+            carritorvAdapter.notifyDataSetChanged();
 
     } else {
             showToast("No se pudieron cargar los contenidos del carrito.");
