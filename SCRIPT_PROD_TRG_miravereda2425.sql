@@ -76,7 +76,7 @@ begin
     values (p_cliente_id, carrito_total, total_con_iva);
 
     -- Desactiva el CARRITO
-    update carrito set activo = false where id = carrito_id;
+    update carrito set activo = false where id = carrito_activo_id;
 
     -- Al final crea un nuevo CARRITO
     insert into carrito(cliente_id) values (p_cliente_id);
