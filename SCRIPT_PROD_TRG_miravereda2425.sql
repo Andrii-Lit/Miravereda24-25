@@ -27,12 +27,10 @@ begin
 	else set resultado = false;
 	end if;
 end$$
-delimiter ;
 
 #------------------------------------------------------------
 #-- PROCEDIMIENTO al que llamará el botón COMPRAR en CARRITO
 #------------------------------------------------------------
-delimiter $$
 drop procedure if exists comprar$$
 create procedure comprar(IN p_cliente_id int)
 begin
@@ -81,13 +79,11 @@ begin
     -- Al final crea un nuevo CARRITO
     insert into carrito(cliente_id) values (p_cliente_id);
 end$$
-delimiter ;
 
 
 #---------------------------------------------------------------------
 #-- PROCEDIMIENTO para el botón de VOTAR para insertar una VALORACION
 #---------------------------------------------------------------------
-delimiter $$
 drop procedure if exists votar$$
 create procedure votar(in p_cliente_id int, in p_contenido_id int, in p_valor int)
 begin
@@ -96,13 +92,11 @@ begin
 	on duplicate key update valor = p_valor;
 	-- on duplicate actualiza el valor en caso de votar otra vez
 end$$
-delimiter ;
 
 #--------------------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO al que llamará el botón de AÑADIR AL CARRITO en la vista detallada del contenido
 #-- le pasamos el cliente_id porque buscará luego el carrito activo del cliente
 #--------------------------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists anyadir_al_carrito$$
 create procedure anyadir_al_carrito(in p_cliente_id int, in p_contenido_id int)
 begin
@@ -144,12 +138,10 @@ begin
 	-- Actualizamos el precio del carrito
 	call actualizar_precio_carrito(p_cliente_id);
 end$$
-delimiter ;
 
 #----------------------------------------------------------------------------------
 #-- PROCEDIMIENTO al que llamará el botón para QUITAR UN PRODUCTO del CARRITO
 #----------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists quitar_producto$$
 create procedure quitar_producto(in p_cliente_id int, in p_contenido_id int)
 begin
@@ -172,7 +164,6 @@ begin
     -- Actualizamos el total del carrito
     call actualizar_precio_carrito(p_cliente_id);
 end$$
-delimiter ;
 
 
 #----------------------------------------------------------------------------------
@@ -184,33 +175,28 @@ delimiter ;
 #-- De momento no añadimos la opción de cambiar la información del cliente
 #-- Los que tienen el cliente_id como clave ajena tienen on delete cascade
 #----------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trigger_cliente_carrito$$
 create trigger trigger_cliente_carrito
 after insert on cliente for each row
 begin
 	insert into carrito(cliente_id) values (new.id);
 end$$
-delimiter ;
 
 #-------------------------------------------------
 #-- PROCEDIMIENTO para obtener CLIENTE por email
 #-- Hecho por Iván
 #-------------------------------------------------
-delimiter $$ 
 drop procedure if exists get_cliente_por_email$$
 create procedure get_cliente_por_email(in p_email VARCHAR(100))
 begin
     select * from cliente where email = p_email;
 END$$
-DELIMITER ;
 
 #-------------------------------------------------------------------------------------------
 #-- TABLA VALORACION 
 #-------------------------------------------------------------------------------------------
 #-- TRIGGER al hacer INSERT en VALORACION para que la nota no sea mayor a 10 ni menor que 0
 #-------------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trigger_valoracion_insert$$
 
 create trigger trigger_valoracion_insert
@@ -220,12 +206,10 @@ begin
 	elseif new.valor < 0 then set new.valor = 0;
 	end if;
 end$$
-delimiter ;
 #-------------------------------------------------------------------
 #-- PROCEDIMIENTO para actualizar la PUNTUACION_MEDIA de CONTENIDO 
 #-- Se llamará desde TRIGGER_ACTUALIZAR_NOTA
 #-------------------------------------------------------------------
-delimiter $$
 drop procedure if exists actualizar_nota$$
 create procedure actualizar_nota(IN p_contenido_id int)
 begin
@@ -242,18 +226,15 @@ begin
 	
 	update contenido set puntuacion_media = media where id = p_contenido_id;
 end$$
-delimiter ;
 #----------------------------------------------------------------------
 #-- TRIGGER que actualiza la nota al hacer INSERT en VALORACION
 #----------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trigger_actualizar_nota$$
 create trigger trigger_actualizar_nota
 after insert on valoracion for each row
 begin
 	call actualizar_nota(new.contenido_id);
 end$$
-delimiter ;
 
 #-----------------------------------------------------------------------------------------
 #-- TABLA CARRITO 
@@ -261,7 +242,6 @@ delimiter ;
 #-- PROCEDIMIENTO que actualiza el precio del carrito activo según las líneas de factura
 #-- le pasamos el cliente_id para identificar el carrito activo
 #-----------------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists actualizar_precio_carrito$$
 create procedure actualizar_precio_carrito(in p_cliente_id int)
 begin
@@ -287,11 +267,9 @@ begin
 	update carrito set total = precio_total where id = carrito_activo_id;
 
 end$$
-delimiter;
 #-----------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO para obtener todos los productos del carrito
 #-----------------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists get_all_carrito$$
 create procedure get_all_carrito(in p_cliente_id int)
 begin
@@ -305,7 +283,6 @@ begin
     join lin_fac l on l.contenido_id = c.id
     where l.carrito_id = carrito_id;
 end$$
-delimiter ;
 
 #-----------------------------------------------------------------------------------------
 #-- TABLAS DE CONTENIDO
@@ -313,7 +290,6 @@ delimiter ;
 #-- PROCEDIMIENTO para actualizar el precio en SERIE al insertar en CAPITULO
 #-- se llamará desde los TRIGGERS en CAPITULO
 #-----------------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists actualizar_precio_serie$$
 create procedure actualizar_precio_serie(in p_serie_id int)
 begin
@@ -339,7 +315,6 @@ begin
 	where contenido_id = p_serie_id;
 
 end$$
-delimiter ;
 
 #----------------------------------------------------------------------------------------
 #-- TRIGGERS que actualizan el precio de SERIE al hacer INSERT/UPDATE/DELETE en CAPITULO
@@ -350,7 +325,6 @@ delimiter ;
 #----------------------------------------------------------------------------------------
 #-- INSERT
 #----------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trigger_actualizar_precio_serie_after_insert_capitulo$$
 create trigger trigger_actualizar_precio_serie_after_insert_capitulo
 after insert on capitulo
@@ -360,11 +334,9 @@ begin
     select serie_id into serie_id from temporada where id = new.temporada_id;
     call actualizar_precio_serie(serie_id);
 end$$
-delimiter ;
 #----------------------------------------------------------------------------------------
 #-- UPDATE
 #----------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trigger_actualizar_precio_serie_after_update_capitulo$$
 create trigger trigger_actualizar_precio_serie_after_update_capitulo
 after update on capitulo
@@ -374,8 +346,6 @@ begin
     select serie_id into serie_id from temporada where id = new.temporada_id;
     call actualizar_precio_serie(serie_id);
 end$$
-delimiter ;
-delimiter $$
 #----------------------------------------------------------------------------------------
 #-- DELETE
 #----------------------------------------------------------------------------------------
@@ -388,78 +358,65 @@ begin
     select serie_id into serie_id from temporada where id = old.temporada_id;
     call actualizar_precio_serie(serie_id);
 end$$
-delimiter ;
 
 #----------------------------------------------------------------------------------------------
 #-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
 #----------------------------------------------------------------------------------------------
 #-- PELICULA
 #----------------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trg_set_tipo_precio_pelicula$$
 create trigger trg_set_tipo_precio_pelicula
 after insert on pelicula for each row
 begin
     update contenido set tipo = 'pelicula' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
-
+	call set_precio_contenido(new.contenido_id, 'pelicula');
 end$$
-delimiter ;
 #----------------------------------------------------------------------------------------------
 #-- SERIE
 #----------------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trg_set_tipo_precio_serie$$
 create trigger trg_set_tipo_precio_serie
 after insert on serie for each row
 begin
     update contenido set tipo = 'serie' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
+	call set_precio_contenido(new.contenido_id, 'serie');
 end$$
-delimiter ;
 #----------------------------------------------------------------------------------------------
 #-- CORTO
 #----------------------------------------------------------------------------------------------
-delimiter $$
 drop trigger if exists trg_set_tipo_precio_corto$$
 create trigger trg_set_tipo_precio_corto
 after insert on corto for each row
 begin
     update contenido set tipo = 'corto' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
+	call set_precio_contenido(new.contenido_id, 'corto');
 end$$
-delimiter ; 
+
 #----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que setea el precio calculado de PELICULA/SERIE/CAPITULO en CONTENIDO
+#-- PROCEDIMIENTO que según el tipo de CONTENIDO setea el precio calculado
 #----------------------------------------------------------------------------------------------
-delimiter $$  
 drop procedure if exists set_precio_contenido$$
-create procedure set_precio_contenido(in p_contenido_id int)  
+create procedure set_precio_contenido(
+    in p_contenido_id int,
+    in p_tipo varchar(10)
+)
 begin  
-    declare tipocontenido varchar(10);  
     declare preciofinal decimal(10,2);  
 
-    -- Recogemos el tipo de contenido  
-    select tipo into tipocontenido from contenido where id =  p_contenido_id;  
-
-	-- Según el tipo de CONTENIDO recogemos el precio ya calculado
-    if tipocontenido = 'pelicula' then  
+    if p_tipo = 'pelicula' then  
         select p.precio into preciofinal from pelicula p where p.contenido_id =  p_contenido_id;  
 
-    elseif tipocontenido = 'corto' then  
+    elseif p_tipo = 'corto' then  
         select c.precio into preciofinal from corto c where c.contenido_id =  p_contenido_id;  
 
-    elseif tipocontenido = 'serie' then  
+    elseif p_tipo = 'serie' then  
         select s.precio into preciofinal from serie s where s.contenido_id =  p_contenido_id;  
     else  
         set preciofinal = 0.0;  
     end if;  
 
-    -- seteamos el precio de CONTENIDO con el de PELICULA/SERIE/CORTO
     update contenido set precio = preciofinal where id = p_contenido_id;  
-end$$  
-delimiter ;
-
+end$$
 
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
@@ -467,7 +424,6 @@ delimiter ;
 #-- PROCEDIMIENTO que modifica TODAS las TARIFAS de golpe
 #-- Se le pasará el valor por el que sumar o restar el porcentaje (positivo o negativo) 
 #----------------------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists alter_all_tarifas$$
 create procedure alter_all_tarifas(in p_valor decimal(5,2))
 begin
@@ -477,4 +433,5 @@ begin
         signal sqlstate '45000' set message_text = 'Ingresa un valor diferente a 0.';
     end if;
 end
+
 delimiter ;
