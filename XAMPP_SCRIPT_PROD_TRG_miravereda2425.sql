@@ -142,7 +142,6 @@ end$$
 #----------------------------------------------------------------------------------
 #-- PROCEDIMIENTO al que llamará el botón para QUITAR UN PRODUCTO del CARRITO
 #----------------------------------------------------------------------------------
-delimiter $$
 drop procedure if exists quitar_producto$$
 create procedure quitar_producto(in p_cliente_id int, in p_contenido_id int)
 begin
@@ -288,58 +287,6 @@ end$$
 #-----------------------------------------------------------------------------------------
 #-- TABLAS DE CONTENIDO
 #-----------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO para actualizar el precio de CONTENIDO
-#-- Se llamará desde los TRIGGERS de PELICULA y CORTO
-#-----------------------------------------------------------------------------------------
-drop procedure if exists actualizar_precio_contenido$$
-create procedure actualizar_precio_contenido(in p_contenido_id int, in p_precio decimal(10,2))
-begin
-    update contenido set precio = p_precio where id = p_contenido_id;
-end$$
-
-#----------------------------------------------------------------------------------------
-#-- TRIGGERS que actualizan el precio de PELICULA
-#----------------------------------------------------------------------------------------
-#-- INSERT
-#----------------------------------------------------------------------------------------
-drop trigger if exists trg_pelicula_insert_actualizar_precio$$
-create trigger trg_pelicula_insert_actualizar_precio
-after insert on pelicula for each row
-begin
-    call actualizar_precio_contenido(new.contenido_id, new.precio);
-end$$
-#----------------------------------------------------------------------------------------
-#-- UPDATE
-#----------------------------------------------------------------------------------------
-drop trigger if exists trg_pelicula_update_actualizar_precio$$
-create trigger trg_pelicula_update_actualizar_precio
-after update on pelicula for each row
-begin
-    call actualizar_precio_contenido(new.contenido_id, new.precio);
-end$$
-
-#----------------------------------------------------------------------------------------
-#-- TRIGGERS que actualizan el precio de CORTO
-#----------------------------------------------------------------------------------------
-#-- INSERT
-#----------------------------------------------------------------------------------------
-drop trigger if exists trg_corto_insert_actualizar_precio$$
-create trigger trg_corto_insert_actualizar_precio
-after insert on corto for each row
-begin
-    call actualizar_precio_contenido(new.contenido_id, new.precio);
-end$$
-#----------------------------------------------------------------------------------------
-#-- UPDATE
-#----------------------------------------------------------------------------------------
-drop trigger if exists trg_corto_update_actualizar_precio$$
-create trigger trg_corto_update_actualizar_precio
-after update on corto for each row
-begin
-    call actualizar_precio_contenido(new.contenido_id, new.precio);
-end$$
-
-#-----------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO para actualizar el precio en SERIE al insertar en CAPITULO
 #-- se llamará desde los TRIGGERS en CAPITULO
 #-----------------------------------------------------------------------------------------
@@ -413,6 +360,39 @@ begin
 end$$
 
 #----------------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
+#----------------------------------------------------------------------------------------------
+#-- PELICULA
+#----------------------------------------------------------------------------------------------
+drop trigger if exists trg_set_tipo_precio_pelicula$$
+create trigger trg_set_tipo_precio_pelicula
+after insert on pelicula for each row
+begin
+    update contenido set tipo = 'pelicula' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
+
+end$$
+#----------------------------------------------------------------------------------------------
+#-- SERIE
+#----------------------------------------------------------------------------------------------
+drop trigger if exists trg_set_tipo_precio_serie$$
+create trigger trg_set_tipo_precio_serie
+after insert on serie for each row
+begin
+    update contenido set tipo = 'serie' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
+end$$
+#----------------------------------------------------------------------------------------------
+#-- CORTO
+#----------------------------------------------------------------------------------------------
+drop trigger if exists trg_set_tipo_precio_corto$$
+create trigger trg_set_tipo_precio_corto
+after insert on corto for each row
+begin
+    update contenido set tipo = 'corto' where id = new.contenido_id;
+	call set_precio_contenido(new.contenido_id);
+end$$
+#----------------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO que setea el precio calculado de PELICULA/SERIE/CAPITULO en CONTENIDO
 #----------------------------------------------------------------------------------------------
 drop procedure if exists set_precio_contenido$$
@@ -441,41 +421,6 @@ begin
     update contenido set precio = preciofinal where id = p_contenido_id;  
 end$$  
 
-
-#----------------------------------------------------------------------------------------------
-#-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
-#----------------------------------------------------------------------------------------------
-#-- PELICULA
-#----------------------------------------------------------------------------------------------
-drop trigger if exists trg_set_tipo_precio_pelicula$$
-create trigger trg_set_tipo_precio_pelicula
-after insert on pelicula for each row
-begin
-    update contenido set tipo = 'pelicula' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
-
-end$$
-#----------------------------------------------------------------------------------------------
-#-- SERIE
-#----------------------------------------------------------------------------------------------
-drop trigger if exists trg_set_tipo_precio_serie$$
-create trigger trg_set_tipo_precio_serie
-after insert on serie for each row
-begin
-    update contenido set tipo = 'serie' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
-end$$
-#----------------------------------------------------------------------------------------------
-#-- CORTO
-#----------------------------------------------------------------------------------------------
-delimiter $$
-drop trigger if exists trg_set_tipo_precio_corto$$
-create trigger trg_set_tipo_precio_corto
-after insert on corto for each row
-begin
-    update contenido set tipo = 'corto' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id);
-end$$
 
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
