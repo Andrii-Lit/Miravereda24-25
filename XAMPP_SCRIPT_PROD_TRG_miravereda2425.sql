@@ -142,6 +142,7 @@ end$$
 #----------------------------------------------------------------------------------
 #-- PROCEDIMIENTO al que llamará el botón para QUITAR UN PRODUCTO del CARRITO
 #----------------------------------------------------------------------------------
+delimiter $$
 drop procedure if exists quitar_producto$$
 create procedure quitar_producto(in p_cliente_id int, in p_contenido_id int)
 begin
@@ -283,30 +284,64 @@ begin
     join lin_fac l on l.contenido_id = c.id
     where l.carrito_id = carrito_id;
 end$$
+
 #-----------------------------------------------------------------------------------------
 #-- TABLAS DE CONTENIDO
 #-----------------------------------------------------------------------------------------
-#-- TRIGGER para definir el precio en PELICULA
+#-- PROCEDIMIENTO para actualizar el precio de CONTENIDO
+#-- Se llamará desde los TRIGGERS de PELICULA y CORTO
 #-----------------------------------------------------------------------------------------
-drop trigger if exists trigger_pelicula_precio$$
-create trigger trigger_pelicula_precio
-before insert on pelicula
-for each row
+drop procedure if exists actualizar_precio_contenido$$
+create procedure actualizar_precio_contenido(in p_contenido_id int, in p_precio decimal(10,2))
 begin
-    declare porcentaje decimal(5,2);
+    update contenido set precio = p_precio where id = p_contenido_id;
+end$$
 
-    select t.porcentaje into porcentaje
-    from contenido c 
-    join pelicula p on p.contenido_id = c.id
-    join tarifa t on p.tarifa_id = t.id
-    where c.id = new.contenido_id;
+#----------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el precio de PELICULA
+#----------------------------------------------------------------------------------------
+#-- INSERT
+#----------------------------------------------------------------------------------------
+drop trigger if exists trg_pelicula_insert_actualizar_precio$$
+create trigger trg_pelicula_insert_actualizar_precio
+after insert on pelicula for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+#----------------------------------------------------------------------------------------
+#-- UPDATE
+#----------------------------------------------------------------------------------------
+drop trigger if exists trg_pelicula_update_actualizar_precio$$
+create trigger trg_pelicula_update_actualizar_precio
+after update on pelicula for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
 
-    set new.precio = new.precio_base + (new.precio_base * porcentaje);
+#----------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el precio de CORTO
+#----------------------------------------------------------------------------------------
+#-- INSERT
+#----------------------------------------------------------------------------------------
+drop trigger if exists trg_corto_insert_actualizar_precio$$
+create trigger trg_corto_insert_actualizar_precio
+after insert on corto for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+#----------------------------------------------------------------------------------------
+#-- UPDATE
+#----------------------------------------------------------------------------------------
+drop trigger if exists trg_corto_update_actualizar_precio$$
+create trigger trg_corto_update_actualizar_precio
+after update on corto for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
 end$$
 
 #-----------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO para actualizar el precio en SERIE al insertar en CAPITULO
-#-- se llamará desde un TRIGGER INSERT en CAPITULO
+#-- se llamará desde los TRIGGERS en CAPITULO
 #-----------------------------------------------------------------------------------------
 drop procedure if exists actualizar_precio_serie$$
 create procedure actualizar_precio_serie(in p_serie_id int)
@@ -433,6 +468,7 @@ end$$
 #----------------------------------------------------------------------------------------------
 #-- CORTO
 #----------------------------------------------------------------------------------------------
+delimiter $$
 drop trigger if exists trg_set_tipo_precio_corto$$
 create trigger trg_set_tipo_precio_corto
 after insert on corto for each row
@@ -455,7 +491,6 @@ begin
     else
         signal sqlstate '45000' set message_text = 'Ingresa un valor diferente a 0.';
     end if;
-end$$
+end
 
 delimiter ;
-

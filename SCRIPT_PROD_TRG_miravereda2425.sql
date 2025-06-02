@@ -306,32 +306,74 @@ begin
     where l.carrito_id = carrito_id;
 end$$
 delimiter ;
+
 #-----------------------------------------------------------------------------------------
 #-- TABLAS DE CONTENIDO
 #-----------------------------------------------------------------------------------------
-#-- TRIGGER para definir el precio en PELICULA
+#-- PROCEDIMIENTO para actualizar el precio de CONTENIDO
+#-- Se llamará desde los TRIGGERS de PELICULA y CORTO
 #-----------------------------------------------------------------------------------------
 delimiter $$
-drop trigger if exists trigger_pelicula_precio$$
-create trigger trigger_pelicula_precio
-before insert on pelicula
-for each row
+drop procedure if exists actualizar_precio_contenido$$
+create procedure actualizar_precio_contenido(in p_contenido_id int, in p_precio decimal(10,2))
 begin
-    declare porcentaje decimal(5,2);
-
-    select t.porcentaje into porcentaje
-    from contenido c 
-    join pelicula p on p.contenido_id = c.id
-    join tarifa t on p.tarifa_id = t.id
-    where c.id = new.contenido_id;
-
-    set new.precio = new.precio_base + (new.precio_base * porcentaje);
+    update contenido set precio = p_precio where id = p_contenido_id;
 end$$
 delimiter ;
 
+#----------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el precio de PELICULA
+#----------------------------------------------------------------------------------------
+#-- INSERT
+#----------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_pelicula_insert_actualizar_precio$$
+create trigger trg_pelicula_insert_actualizar_precio
+after insert on pelicula for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+delimiter;
+#----------------------------------------------------------------------------------------
+#-- UPDATE
+#----------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_pelicula_update_actualizar_precio$$
+create trigger trg_pelicula_update_actualizar_precio
+after update on pelicula for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+delimiter;
+
+#----------------------------------------------------------------------------------------
+#-- TRIGGERS que actualizan el precio de CORTO
+#----------------------------------------------------------------------------------------
+#-- INSERT
+#----------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_corto_insert_actualizar_precio$$
+create trigger trg_corto_insert_actualizar_precio
+after insert on corto for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+delimiter;
+#----------------------------------------------------------------------------------------
+#-- UPDATE
+#----------------------------------------------------------------------------------------
+delimiter $$
+drop trigger if exists trg_corto_update_actualizar_precio$$
+create trigger trg_corto_update_actualizar_precio
+after update on corto for each row
+begin
+    call actualizar_precio_contenido(new.contenido_id, new.precio);
+end$$
+delimiter;
+
 #-----------------------------------------------------------------------------------------
 #-- PROCEDIMIENTO para actualizar el precio en SERIE al insertar en CAPITULO
-#-- se llamará desde un TRIGGER INSERT en CAPITULO
+#-- se llamará desde los TRIGGERS en CAPITULO
 #-----------------------------------------------------------------------------------------
 delimiter $$
 drop procedure if exists actualizar_precio_serie$$
@@ -480,7 +522,7 @@ begin
     update contenido set tipo = 'corto' where id = new.contenido_id;
 	call set_precio_contenido(new.contenido_id);
 end$$
-
+delimiter ; 
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
 #----------------------------------------------------------------------------------------------
