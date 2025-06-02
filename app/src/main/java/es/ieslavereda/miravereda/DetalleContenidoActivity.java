@@ -15,6 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import es.ieslavereda.miravereda.API.Connector;
 import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Base.CallInterface;
@@ -71,7 +74,50 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         volver.setOnClickListener(v -> finish());
 
         valorar.setOnClickListener(v -> {
-            // Tu lógica para valorar
+            int clienteId = obtenerClienteId();
+            if (clienteId == -1) {
+                showToast("No se pudo obtener el ID del cliente");
+                return;
+            }
+            String notaStr = notaCliente.getText().toString();
+            if (notaStr.isEmpty()) {
+                showToast("Debes introducir una nota");
+                return;
+            }
+            int valor;
+            try {
+                valor = Integer.parseInt(notaStr);
+            } catch (NumberFormatException e) {
+                showToast("La nota debe ser un número");
+                return;
+            }
+
+            Map<String, Object> valoracionRequest = new HashMap<>();
+            valoracionRequest.put("clienteId", clienteId);
+            valoracionRequest.put("contenidoId", contenido.getId());
+            valoracionRequest.put("valor", valor);
+
+            showProgress();
+            executeCall(new CallInterface<Void>() {
+                @Override
+                public Void doInBackground() throws Exception {
+                    Connector.getConector().postVoid(valoracionRequest, "votar");
+                    return null;
+                }
+
+                @Override
+                public void doInUI(Void data) {
+                    hideProgress();
+                    showToast("¡Valoración enviada correctamente!");
+
+                }
+
+                @Override
+                public void doInError(Context context, Exception e) {
+                    hideProgress();
+                    showToast("Error al valorar: " + e.getMessage());
+                }
+            });
         });
 
         anyadirAlCarrito.setOnClickListener(v -> {
@@ -103,8 +149,6 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         Intent intent = new Intent(DetalleContenidoActivity.this, CarritoActivity.class);
         carritoLauncher.launch(intent);
         showToast("Contenido añadido al carrito");
-
-
     }
 
     @Override
