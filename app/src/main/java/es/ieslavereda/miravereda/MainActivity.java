@@ -27,10 +27,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         SharedPreferences preferences = getSharedPreferences("config", MODE_PRIVATE);
         int tema = preferences.getInt("tema", 0);
+        setTheme(tema);
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_main);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
