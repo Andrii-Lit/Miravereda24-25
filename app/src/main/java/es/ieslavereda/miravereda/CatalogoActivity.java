@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.graphics.Insets;
@@ -41,6 +40,11 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     private Cliente cliente;
     private AdaptadorRV adaptadorRV;
 
+    // Para saber si se debe actualizar al volver del carrito
+    private boolean debeActualizar = false;
+
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +56,17 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         // Registrar el launcher para iniciar CarritoActivity y manejar resultado
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+        activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-
+                        debeActualizar = true;
                     }
                 }
         );
+
         SharedPreferences prefs = getSharedPreferences("cliente", Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         String contrasenya = prefs.getString("contrasenya", null);
@@ -76,7 +82,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-
         Log.d("PREFS", "Leído email: " + email);
         Log.d("PREFS", "Leído contrasenya: " + contrasenya);
 
@@ -86,17 +91,29 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         recyclerView = findViewById(R.id.recycled);
 
         volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
-        carrito.setOnClickListener(view -> startActivity(new Intent(this, CarritoActivity.class)));
+        carrito.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CarritoActivity.class);
+            activityResultLauncher.launch(intent);
+        });
 
         // Inicializa adaptador vacío, lo actualizaremos al recibir datos
         adaptadorRV = new AdaptadorRV(this, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         // Ejecuta la carga de datos en background
         executeCall(this);
         showProgress();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (debeActualizar) {
+            executeCall(this);
+            showProgress();
+            debeActualizar = false;
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,9 +20,9 @@ import java.util.List;
 import es.ieslavereda.miravereda.API.Connector;
 import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Base.CallInterface;
-import es.ieslavereda.miravereda.CarritoAdaptadorRV;
 import es.ieslavereda.miravereda.Model.Cliente;
 import es.ieslavereda.miravereda.Model.Contenido;
+import es.ieslavereda.miravereda.Model.OnCarritoDeleteListener;
 
 public class CarritoActivity extends BaseActivity implements CallInterface<List<Contenido>> {
 
@@ -33,7 +34,6 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     private TextView carrito_precioTV;
     private Cliente cliente;
     private int clienteId = -1;
-    private double total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,6 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         carrito_recyclerView = findViewById(R.id.carrito_recyclerView);
         carrito_precioTV = findViewById(R.id.carrito_precioTV);
 
-        for (Contenido contenido : contenidos_anyadidos){
-            total += contenido.getPrecio();
-        }
-        carrito_precioTV.setText(String.valueOf(total));
         // Leer clienteId desde SharedPreferences
         SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
         clienteId = prefs.getInt("clienteId", -1);
@@ -67,8 +63,33 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         // Configurar botón volver
         carrito_backButton.setOnClickListener(v -> finish());
 
-        // Configurar RecyclerView y adaptador
-        carritorvAdapter = new CarritoAdaptadorRV(this, contenidos_anyadidos);
+        // Configurar RecyclerView y adaptador con Listener
+        carritorvAdapter = new CarritoAdaptadorRV(this, contenidos_anyadidos, carrito_precioTV, new OnCarritoDeleteListener() {
+            @Override
+            public void onDelete(Contenido contenido, int position) {
+                showProgress();
+                executeCall(new CallInterface<Void>() {
+                    @Override
+                    public Void doInBackground() throws Exception {
+                        Connector.getConector().deleteVoid("carrito/" + clienteId + "/" + contenido.getId());
+                        return null;
+                    }
+                    @Override
+                    public void doInUI(Void data) {
+                        contenidos_anyadidos.remove(position);
+                        carritorvAdapter.notifyItemRemoved(position);
+                        carritorvAdapter.actualizarTotal();
+                        hideProgress();
+                        Toast.makeText(CarritoActivity.this, "Contenido eliminado del carrito", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void doInError(Context context, Exception e) {
+                        hideProgress();
+                        Toast.makeText(CarritoActivity.this, "Error al eliminar: " + (e.getMessage() != null ? e.getMessage() : "Error desconocido"), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
         carrito_recyclerView.setAdapter(carritorvAdapter);
         carrito_recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -90,11 +111,9 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 public void doInUI(Void data) {
                     hideProgress();
                     showToast("Compra realizada con éxito");
-
                     // Recargar el carrito para reflejar los cambios reales desde el backend
                     executeCall(CarritoActivity.this);
                 }
-
 
                 @Override
                 public void doInError(Context context, Exception e) {
@@ -106,12 +125,22 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        // onResume se llama cada vez que la Activity vuelve a primer plano.
+        showProgress();
+        executeCall(this);
+    }
+
+    @Override
     public List<Contenido> doInBackground() throws Exception {
         try {
-            return Connector.getConector().getAsList(Contenido.class, "carrito/" + clienteId);
+            List<Contenido> data = Connector.getConector().getAsList(Contenido.class, "carrito/" + clienteId);
+            Log.d("Carrito", "Respuesta del backend: " + data);
+            return data;
         } catch (Exception e) {
             Log.e("Carrito", "Error al cargar lista contenido", e);
-            return null;
+            throw e;
         }
     }
 
@@ -119,12 +148,19 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     public void doInUI(List<Contenido> data) {
         hideProgress();
         contenidos_anyadidos.clear();
-        if (data != null) {
-            contenidos_anyadidos.addAll(data);
+        if (data != null && !data.isEmpty()) {
+            for (Contenido c : data) {
+                if (c != null) contenidos_anyadidos.add(c);
+            }
             carritorvAdapter.notifyDataSetChanged();
-
-    } else {
+            carritorvAdapter.actualizarTotal();
+        } else if (data != null && data.isEmpty()) {
+            carritorvAdapter.notifyDataSetChanged();
+            carritorvAdapter.actualizarTotal();
+            showToast("El carrito está vacío.");
+        } else {
             showToast("No se pudieron cargar los contenidos del carrito.");
+            carritorvAdapter.actualizarTotal();
         }
     }
 
@@ -132,5 +168,6 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     public void doInError(Context context, Exception e) {
         hideProgress();
         showToast("Error cargando carrito: " + e.getMessage());
+        carritorvAdapter.actualizarTotal();
     }
 }

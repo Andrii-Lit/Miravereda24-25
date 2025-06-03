@@ -146,9 +146,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     @Override
     public void doInUI(Void data) {
         hideProgress();
-        Intent intent = new Intent(DetalleContenidoActivity.this, CarritoActivity.class);
-        carritoLauncher.launch(intent);
         showToast("Contenido añadido al carrito");
+        finish();
     }
 
     @Override

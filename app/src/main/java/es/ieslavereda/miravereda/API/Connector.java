@@ -54,6 +54,12 @@ public class Connector {
         RequestBody emptyBody = RequestBody.create(null, new byte[0]);
         callMethodsObject.post(url, emptyBody);
     }
+   
+    public void deleteVoid(String path) throws Exception {
+        String url = Parameters.URL_API_BASE + path;
+        callMethodsObject.delete(url);
+    }
+    
 
 
 
