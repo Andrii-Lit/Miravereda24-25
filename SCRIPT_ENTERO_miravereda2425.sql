@@ -586,139 +586,103 @@ begin
     call actualizar_precio_serie(serie_id);
 end$$
 
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que actualiza el precio de pelicula para aplicarle la tarifa
-#----------------------------------------------------------------------------------------------
-drop procedure if exists actualizar_precio_pelicula$$
-create procedure actualizar_precio_pelicula(in p_pelicula_id int)
-begin
-    declare porcentaje decimal(5,2);
-    declare base decimal(10,2);
-
-    select precio_base, t.porcentaje into base, porcentaje
-    from pelicula p
-    join tarifa t on p.tarifa_id = t.id
-    where p.contenido_id = p_pelicula_id;
-
-    update pelicula
-    set precio = base * (1 + porcentaje)
-    where contenido_id = p_pelicula_id;
-end$$
-
-#-- AFTER INSERT
-drop trigger if exists trigger_precio_pelicula_insert$$
-create trigger trigger_precio_pelicula_insert
-after insert on pelicula
-for each row
-begin
-    call actualizar_precio_pelicula(new.contenido_id);
-end$$
-
-#-- AFTER UPDATE
-drop trigger if exists trigger_precio_pelicula_update$$
-create trigger trigger_precio_pelicula_update
-after update on pelicula
-for each row
-begin
-    call actualizar_precio_pelicula(new.contenido_id);
-end$$
-
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que actualiza el precio de corto para aplicarle la tarifa
-#----------------------------------------------------------------------------------------------
-drop procedure if exists actualizar_precio_corto$$
-create procedure actualizar_precio_corto(in p_corto_id int)
-begin
-    declare porcentaje decimal(5,2);
-    declare base decimal(10,2);
-
-    select precio_base, t.porcentaje into base, porcentaje
-    from corto c
-    join tarifa t on c.tarifa_id = t.id
-    where c.contenido_id = p_corto_id;
-
-    update corto
-    set precio = base * (1 + porcentaje)
-    where contenido_id = p_corto_id;
-end$$
-
-##-- AFTER INSERT
-drop trigger if exists trigger_precio_corto_insert$$
-create trigger trigger_precio_corto_insert
-after insert on corto
-for each row
-begin
-    call actualizar_precio_corto(new.contenido_id);
-end$$
-
-#-- AFTER UPDATE
-drop trigger if exists trigger_precio_corto_update$$
-create trigger trigger_precio_corto_update
-after update on corto
-for each row
-begin
-    call actualizar_precio_corto(new.contenido_id);
-end$$
-
 
 #----------------------------------------------------------------------------------------------
 #-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
 #----------------------------------------------------------------------------------------------
 #-- PELICULA
 #----------------------------------------------------------------------------------------------
-drop trigger if exists trg_set_tipo_precio_pelicula$$
-create trigger trg_set_tipo_precio_pelicula
+create trigger trg_set_tipo_y_precio_pelicula
 after insert on pelicula for each row
 begin
-    update contenido set tipo = 'pelicula' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'pelicula');
+    declare porcentaje decimal(5,2);
+    declare base decimal(10,2);
+    declare precio_final decimal(10,2);
+
+    select p.precio_base, t.porcentaje into base, porcentaje
+    from pelicula p join tarifa t on p.tarifa_id = t.id
+    where p.contenido_id = new.contenido_id;
+
+    set precio_final = base * (1 + porcentaje);
+
+    update pelicula set precio = precio_final where contenido_id = new.contenido_id;
+
+    update contenido set tipo = 'pelicula', precio = precio_final where id = new.contenido_id;
 end$$
+
 #----------------------------------------------------------------------------------------------
 #-- SERIE
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_serie$$
 create trigger trg_set_tipo_precio_serie
-after insert on serie for each row
+after insert on serie
+for each row
 begin
-    update contenido set tipo = 'serie' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'serie');
+    declare porcentaje decimal(5,2);
+    declare precio_base decimal(10,2);
+    declare precio_total decimal(10,2);
+
+    -- Obtener el porcentaje de la tarifa
+    select t.porcentaje into porcentaje
+    from tarifa t
+    where t.id = new.tarifa_id;
+
+    -- Calcular el precio_base (inicialmente 0 al insertar la serie sin capítulos)
+    set precio_base = 0;
+
+    -- Calcular el precio total aplicando tarifa
+    set precio_total = precio_base * (1 + porcentaje);
+
+    -- Actualizar la tabla 'serie' con precios
+    update serie
+    set precio_base = precio_base,
+        precio = precio_total
+    where contenido_id = new.contenido_id;
+
+    -- Actualizar la tabla 'contenido'
+    update contenido
+    set tipo = 'serie',
+        precio = precio_total
+    where id = new.contenido_id;
 end$$
+
 #----------------------------------------------------------------------------------------------
 #-- CORTO
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_corto$$
 create trigger trg_set_tipo_precio_corto
-after insert on corto for each row
+after insert on corto
+for each row
 begin
-    update contenido set tipo = 'corto' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'corto');
+    declare porcentaje decimal(5,2);
+    declare precio_base decimal(10,2);
+    declare precio_total decimal(10,2);
+
+    -- Obtener el porcentaje de la tarifa
+    select t.porcentaje into porcentaje
+    from tarifa t
+    where t.id = new.tarifa_id;
+
+    -- Obtener el precio_base del corto
+    select c.precio_base into precio_base
+    from corto c
+    where c.contenido_id = new.contenido_id;
+
+    -- Calcular precio con tarifa
+    set precio_total = precio_base * (1 + porcentaje);
+
+    -- Actualizar la tabla 'corto' con el precio final
+    update corto
+    set precio = precio_total
+    where contenido_id = new.contenido_id;
+
+    -- Actualizar 'contenido' con tipo y precio
+    update contenido
+    set tipo = 'corto',
+        precio = precio_total
+    where id = new.contenido_id;
 end$$
 
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que según el tipo de CONTENIDO setea el precio calculado
-#----------------------------------------------------------------------------------------------
-drop procedure if exists set_precio_contenido$$
-create procedure set_precio_contenido(
-    in p_contenido_id int,
-    in p_tipo varchar(10)
-)
-begin  
-    declare preciofinal decimal(10,2);  
-
-    if p_tipo = 'pelicula' then  
-        select p.precio into preciofinal from pelicula p where p.contenido_id =  p_contenido_id;  
-
-    elseif p_tipo = 'corto' then  
-        select c.precio into preciofinal from corto c where c.contenido_id =  p_contenido_id;  
-
-    elseif p_tipo = 'serie' then  
-        select s.precio into preciofinal from serie s where s.contenido_id =  p_contenido_id;  
-    else  
-        set preciofinal = 0.0;  
-    end if;  
-
-    update contenido set precio = preciofinal where id = p_contenido_id;  
-end$$
 
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
@@ -745,15 +709,25 @@ delimiter ;
 -- Inserción de una serie
 insert into contenido(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path)
 values
-(1001, 
- 'Breaking Bad', 
+-- id
+(1001,
+-- titulo 
+ 'Breaking Bad',
+ -- descripcion 
  'Tras cumplir 50 años, Walter White (Bryan Cranston), un profesor de química de un instituto de Albuquerque, Nuevo México, se entera de que tiene un cáncer de pulmón incurable. Casado con Skyler (Anna Gunn) y con un hijo discapacitado (RJ Mitte), la brutal noticia lo impulsa a dar un drástico cambio a su vida: decide, con la ayuda de un antiguo alumno (Aaron Paul), fabricar anfetaminas y ponerlas a la venta. Lo que pretende es liberar a su familia de problemas económicos cuando se produzca el fatal desenlace.', 
+ -- genero
  'Drama', 
- 'Vince Gilligan', 
+ -- nombre_dir
+ 'Vince Gilligan',
+ -- duracion generica 
  45, 
- 'Bryan Cranston, Aaron Paul', 
+ -- actores principales
+ 'Bryan Cranston, Aaron Paul',
+ -- fecha estreno 
  '2008-09-15', 
+ -- puntuacion media
  8.7, 
+ -- poster path
  'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpicfiles.alphacoders.com%2F422%2Fthumb-1920-422251.jpg&f=1&nofb=1&ipt=8fb2389bbe6fbacb1da3511e95cc76d698d836cf8499113bb2d5b1e16f2cf662'
 );
 
@@ -798,11 +772,82 @@ values
 
 
 -- Inserción de varias películas
-insert into contenido(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path)
+insert into contenido
+    (id, 
+    titulo, 
+    descripcion, 
+    genero, 
+    nombre_dir, 
+    duracion, 
+    actores_principales, 
+    fecha_estreno, 
+    puntuacion_media, 
+    poster_path)
 values
-(3001, 'Cadena Perpetua', 'The Shawshank Redemption es una película dramática escrita y dirigida por el estadounidense Frank Darabont, y producida por los estudios Castle Rock Entertainment, cuyo estreno se produjo en 1994. Su trama está basada en Rita Hayworth y la redención de Shawshank, una novela corta de Stephen King, y abarca una mirada optimista de la vida relatando la historia del banquero Andy, quien es condenado a cadena perpetua en la Penitenciaría Estatal de Shawshank, a pesar de haberse declarado inocente.', 'Drama', 'Miguel Ángel', 110, 'Elena Ríos, David Martín', '2023-05-05', 8.1, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LpafPZQdQKzgnkBaHBbOJwHaJ6%26pid%3DApi&f=1&ipt=17b9db332fe62c58fe907ed9b5ca2a4e2f59781f89fa111f350d4ff234f97b1e&ipo=images'),
-(3002, 'Shutter Island', 'En el verano de 1954, los agentes judiciales Teddy Daniels (DiCaprio) y Chuck Aule (Ruffalo) son destinados a una remota isla del puerto de Boston para investigar la desaparición de una peligrosa asesina (Mortimer) que estaba recluida en el hospital psiquiátrico Ashecliffe, un centro penitenciario para criminales perturbados dirigido por el siniestro doctor John Cawley (Kingsley). Pronto descubrirán que el centro guarda muchos secretos y que la isla esconde algo más peligroso que los pacientes. Thriller psicológico basado en la novela homónima de Dennis Lehane (autor de "Mystic River" y "Gone Baby Gone"). (FILMAFFINITY)', 'Thriller', 'Sonia López', 105, 'Carlos Ruiz, Marta Díaz', '2023-08-01', 7.2, 'https://pics.filmaffinity.com/shutter_island-982808260-large.jpg'),
-(3003, 'El viaje de Chihiro', 'Chihiro es una niña de diez años que viaja en coche con sus padres. Después de atravesar un túnel, llegan a un mundo fantástico, en el que no hay lugar para los seres humanos, sólo para los dioses de primera y segunda clase. Cuando descubre que sus padres han sido convertidos en cerdos, Chihiro se siente muy sola y asustada. (FILMAFFINITY)', 'Animación', 'Pablo Gómez', 90, 'Voces: Ana Martínez, Luis Gómez', '2023-09-01', 7.9, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvignette.wikia.nocookie.net%2Fdoblaje%2Fimages%2Ff%2Ffc%2FEL_VIAJE_DE_CHIHIRO.jpg%2Frevision%2Flatest%3Fcb%3D20170506234618%26path-prefix%3Des&f=1&nofb=1&ipt=35584f7d9b75353a9be8a57427215252259a31cb90e1669b0828ef0b922668c5');
+    -- id
+    (3001,
+    -- titulo 
+    'Cadena Perpetua',
+    -- descripcion 
+    'The Shawshank Redemption es una película dramática escrita y dirigida por el estadounidense Frank Darabont, y producida por los estudios Castle Rock Entertainment, cuyo estreno se produjo en 1994. Su trama está basada en Rita Hayworth y la redención de Shawshank, una novela corta de Stephen King, y abarca una mirada optimista de la vida relatando la historia del banquero Andy, quien es condenado a cadena perpetua en la Penitenciaría Estatal de Shawshank, a pesar de haberse declarado inocente.', 
+    -- genero
+    'Drama', 
+    -- nombre_dir
+    'Miguel Ángel',
+    -- duracion (en minutos) 
+    110, 
+    -- actores principales
+    'Tim Robbins, Morgan Freeman',
+    -- fecha estreno
+     '1994-09-05', 
+    -- puntuacion media generica
+     8.1, 
+    -- poster path
+     'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LpafPZQdQKzgnkBaHBbOJwHaJ6%26pid%3DApi&f=1&ipt=17b9db332fe62c58fe907ed9b5ca2a4e2f59781f89fa111f350d4ff234f97b1e&ipo=images'),
+    
+    
+    -- id
+    (3002,
+    -- titulo  
+    'Shutter Island', 
+    -- descripcion
+    'En el verano de 1954, los agentes judiciales Teddy Daniels (DiCaprio) y Chuck Aule (Ruffalo) son destinados a una remota isla del puerto de Boston para investigar la desaparición de una peligrosa asesina (Mortimer) que estaba recluida en el hospital psiquiátrico Ashecliffe, un centro penitenciario para criminales perturbados dirigido por el siniestro doctor John Cawley (Kingsley). Pronto descubrirán que el centro guarda muchos secretos y que la isla esconde algo más peligroso que los pacientes. Thriller psicológico basado en la novela homónima de Dennis Lehane (autor de "Mystic River" y "Gone Baby Gone"). (FILMAFFINITY)', 
+    -- genero
+    'Thriller', 
+    -- nombre_dir
+    'Sonia López',
+    -- duracion (en minutos)  
+    105, 
+    -- actores principales
+    'Carlos Ruiz, Marta Díaz', 
+    -- fecha estreno
+    '2023-08-01', 
+    -- puntuacion media generica
+    7.2, 
+    -- poster path
+    'https://pics.filmaffinity.com/shutter_island-982808260-large.jpg'),
+    
+    -- id
+    (3003,
+    -- titulo 
+    'El viaje de Chihiro',
+    -- descripcion 
+    'Chihiro es una niña de diez años que viaja en coche con sus padres. Después de atravesar un túnel, llegan a un mundo fantástico, en el que no hay lugar para los seres humanos, sólo para los dioses de primera y segunda clase. Cuando descubre que sus padres han sido convertidos en cerdos, Chihiro se siente muy sola y asustada. (FILMAFFINITY)', 
+    -- genero
+    'Animación',
+    -- nombre_dir 
+    'Pablo Gómez',
+    -- duracion 
+    90, 
+    -- actores principales
+    'Voces: Ana Martínez, Luis Gómez',
+    -- fecha estreno 
+    '2023-09-01', 
+    -- puntuacion media
+    7.9, 
+    -- poster path
+    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvignette.wikia.nocookie.net%2Fdoblaje%2Fimages%2Ff%2Ffc%2FEL_VIAJE_DE_CHIHIRO.jpg%2Frevision%2Flatest%3Fcb%3D20170506234618%26path-prefix%3Des&f=1&nofb=1&ipt=35584f7d9b75353a9be8a57427215252259a31cb90e1669b0828ef0b922668c5');
+
 
 insert into pelicula(contenido_id, tarifa_id, disponible_hasta, precio_base) values
 (3001, 1, '2025-12-31', 5.00),
