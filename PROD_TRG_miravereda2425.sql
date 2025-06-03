@@ -285,7 +285,7 @@ begin
 	declare porcentaje decimal(5,2);
 	
 	-- El precio_total es la suma de los capitulos
-     select ifnull(sum(c.precio), 0) into precio_total
+     select ifnull(sum(c.precio_base), 0) into precio_total
     from capitulo c
     join temporada t on c.temporada_id = t.id
     where t.serie_id = p_serie_id;

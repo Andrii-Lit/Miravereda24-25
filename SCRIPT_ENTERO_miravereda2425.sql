@@ -136,7 +136,6 @@ create table capitulo(
     id int auto_increment primary key,
     temporada_id int,
     titulo varchar(255),
-    precio decimal(10,2),
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (temporada_id) references temporada(id) on delete cascade
@@ -331,11 +330,7 @@ create procedure anyadir_al_carrito(in p_cliente_id int, in p_contenido_id int)
 begin
 	declare carrito_activo_id int;
 	declare contenido_precio decimal(10,2);
-	declare tipo_contenido varchar(50);
 
-	-- Recogemos el tipo de contenido
-	select tipo into tipo_contenido from contenido where id = p_contenido_id;
-	
 	-- Recogemos el id del carrito activo del cliente
 	select id into carrito_activo_id from carrito
 	where cliente_id = p_cliente_id and activo = true;
@@ -347,16 +342,8 @@ begin
 		where cliente_id = p_cliente_id and activo = true;
 	end if;
 
-	-- Recogemos el precio según el tipo de contenido
-	if tipo_contenido = 'pelicula' then
-        select precio into contenido_precio from pelicula where contenido_id = p_contenido_id;
-    elseif tipo_contenido = 'serie' then
-        select precio into contenido_precio from serie where contenido_id = p_contenido_id;
-    elseif tipo_contenido = 'corto' then
-        select precio into contenido_precio from corto where contenido_id = p_contenido_id;
-    else
-        set contenido_precio = 0.00;
-	end if;
+	-- Recogemos el precio del contenido
+	select precio into contenido_precio from contenido where id = p_contenido_id;
 
 	-- Añadimos la LIN_FAC (el producto al carrito)
 	-- Si añadimos el mismo producto actualiza el precio
@@ -526,7 +513,7 @@ begin
 	declare porcentaje decimal(5,2);
 	
 	-- El precio_total es la suma de los capitulos
-     select ifnull(sum(c.precio), 0) into precio_total
+     select ifnull(sum(c.precio_base), 0) into precio_total
     from capitulo c
     join temporada t on c.temporada_id = t.id
     where t.serie_id = p_serie_id;
@@ -612,6 +599,7 @@ begin
     set new.precio = precio_final;
 end$$
 
+
 #----------------------------------------------------------------------------------------------
 #-- SERIE
 #----------------------------------------------------------------------------------------------
@@ -644,6 +632,42 @@ begin
 
 end$$
 
+#----------------------------------------------------------------------------------------------
+#-- TRIGGERS para actualizar precio y tipo en CONTENIDO al insertar en PELICULA, SERIE o CORTO
+#----------------------------------------------------------------------------------------------
+
+-- PELICULA
+drop trigger if exists trg_update_contenido_after_insert_pelicula$$
+create trigger trg_update_contenido_after_insert_pelicula
+after insert on pelicula
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'pelicula'
+    where id = new.contenido_id;
+end$$
+
+-- SERIE
+drop trigger if exists trg_update_contenido_after_insert_serie$$
+create trigger trg_update_contenido_after_insert_serie
+after insert on serie
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'serie'
+    where id = new.contenido_id;
+end$$
+
+-- CORTO
+drop trigger if exists trg_update_contenido_after_insert_corto$$
+create trigger trg_update_contenido_after_insert_corto
+after insert on corto
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'corto'
+    where id = new.contenido_id;
+end$$
 
 #----------------------------------------------------------------------------------------------
 #-- CORTO
@@ -668,6 +692,7 @@ begin
     set new.precio = precio_total;
 end$$
 
+
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
 #----------------------------------------------------------------------------------------------
@@ -685,7 +710,6 @@ begin
 end
 
 delimiter ;
-
 #-----------------------------------------------------------------------------------------------
 #-- SCRIPT para INSERTAR CONTENIDO de muestra
 #-- Se han insertado valoraciones_medias genéricas, se recalcularán al hacer una votación nueva 
@@ -722,7 +746,7 @@ values
 insert into temporada (serie_id, numero)
 values (1001, 1);
 
-insert into capitulo (temporada_id, titulo, precio)
+insert into capitulo (temporada_id, titulo, precio_base)
 values
 (1, 'Piloto', 2.50),
 (1, 'El gato está en la bolsa', 2.50),
