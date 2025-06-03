@@ -43,7 +43,6 @@ if($num_rows > 0){
         $html .= '<td>'.$row['num_tarjeta'].'</td>';
         $html .= '<td><a href="update_user.php?id=' . $row['id'] . '">Editar</a></td>';
         $html .= '<td><a href="delete_user.php?id=' . $row['id'] . '">Eliminar</a></td>';
-        $html .= '<td></td>';
         $html .= '</tr>';
     }
 } else {

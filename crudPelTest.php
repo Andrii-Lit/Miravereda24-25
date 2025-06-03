@@ -21,6 +21,12 @@
                 <input type="date" name="fecha_estreno" placeholder="Estreno">
                 <input type="text" name="puntuacion_media" placeholder="Puntuación media">
                 <input type="text" name="descripcion" placeholder="Ligera descripción">
+                <select name="tipo" required>
+                    <option value="Película">Película</option>
+                    <option value="Corto">Corto</option>
+                    <option value="Serie">Serie</option>
+                </select>
+                <input type="text" name="precio" placeholder="Precio">
 
                 <input type="submit" value="Añadir contenido">
 
@@ -44,6 +50,8 @@
                 <th>ACTORES PRINCIPALES</th>
                 <th>ESTRENO</th>
                 <th>PUNTUACIÓN MEDIA</th>
+                <th>TIPO</th>
+                <th>PRECIO</th>
                 <th></th>
                 <th></th>
             </thead>

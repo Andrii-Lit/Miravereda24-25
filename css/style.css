@@ -1,37 +1,251 @@
- *{
-	 padding:0;
-	 margin:0;
-	 }
-
-html {
-    text-align: center;
-}
-
-img {
-    width: 10vw;
-}
-
-a{
-    text-decoration:none;
-}
-
-.user_crud table{
-    border: 1px solid #ccc;
-    border-collapse: collapse;
+/* Reset básico */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body y texto general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centra todo horizontalmente */
+    min-height: 100vh;
+}
+
+/* Contenedor general para formularios y tablas */
+.container {
     width: 100%;
-    table-layout: fixed;
+    max-width: 900px; /* Limita el ancho máximo */
+    margin-bottom: 40px;
 }
 
-table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 4px;
+/* Formularios */
+form {
+    background: rgba(30, 30, 30, 0.85);
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%; /* Ocupa el ancho del contenedor */
+    box-shadow: 0 0 15px rgb(0 255 251 / 0.5);
+    margin-bottom: 40px;
 }
 
-table th{
-    padding: 16px;
+form h1, form h2 {
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: rgb(0, 255, 251);
     text-align: center;
-    font-size: .85em;
+}
+
+/* Inputs y select */
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    background-color: #222;
+    color: #eee;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+input[type="date"]::placeholder,
+input[type="email"]::placeholder,
+select {
+    color: #999;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+select:focus {
+    outline: none;
+    background-color: #333;
+    box-shadow: 0 0 8px rgb(0 255 251);
+}
+
+/* Botones de submit */
+input[type="submit"],
+button[type="submit"] {
+    width: 100%;
+    padding: 12px 0;
+    background-color: rgb(0, 192, 58);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    background-color: rgb(74, 254, 155);
+}
+
+/* Etiquetas */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #ccc;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgb(0 255 251 / 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #111;
+    table-layout: fixed; /* Para que las columnas no cambien mucho */
+}
+
+thead {
+    background-color: rgb(0, 255, 251);
+    color: black;
+}
+
+thead th {
+    padding: 12px;
+    font-weight: 700;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #222;
+    color: #eee;
+    word-wrap: break-word;
+    vertical-align: middle;
+}
+
+/* Para imágenes en tablas */
+tbody td img {
+    max-height: 60px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto; /* Centra la imagen dentro de la celda */
+}
+
+/* Enlaces dentro de tabla (editar, eliminar) */
+tbody td a {
+    color: rgb(0, 192, 58);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+tbody td a:hover {
+    color: rgb(74, 254, 155);
+}
+
+/* Centrar el texto en celdas de acciones para botones */
+tbody td:nth-last-child(-n+2) {
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tbody tr {
+        margin-bottom: 20px;
+        background-color: #222;
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 0 15px rgb(0 255 251 / 0.3);
+    }
+
+    tbody td {
+        border: none;
+        padding: 10px 5px;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+        color: #eee;
+        font-size: 0.9rem;
+        word-wrap: break-word;
+    }
+
+    tbody td::before {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: 700;
+        color: rgb(0, 255, 251);
+        content: attr(data-label);
+    }
+
+    tbody td img {
+        max-height: 40px;
+        margin: 0 auto;
+    }
+
+    /* Título centrado */
+    body h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: rgb(0, 255, 251);
+    }
+
+    /* Botones de navegación */
+    .nav-buttons {
+        display: flex;
+        flex-direction: column; /* Uno debajo del otro */
+        align-items: center;
+        gap: 15px;
+    }
+
+    .nav-buttons a {
+        display: inline-block;
+        background-color: rgb(0, 192, 58);
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: 220px;
+        text-align: center;
+    }
+
+    .nav-buttons a:hover {
+        background-color: rgb(74, 254, 155);
+    }
 }

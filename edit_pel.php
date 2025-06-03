@@ -12,12 +12,14 @@ $actores = $_POST['actores_principales'];
 $estreno = $_POST['fecha_estreno'];
 $media = $_POST['puntuacion_media'];
 $descripcion = $_POST['descripcion'];
+$tipo = $_POST['tipo'];
+$precio = $_POST['precio'];
 
-$sql = "UPDATE contenido SET poster_path='$poster',titulo='$titulo',genero='$genero',nombre_dir='$director',duracion='$duracion', actores_principales='$actores', fecha_estreno='$estreno',puntuacion_media='$media',descripcion='$descripcion' WHERE id = '$id'";
+$sql = "UPDATE contenido SET poster_path='$poster',titulo='$titulo',genero='$genero',nombre_dir='$director',duracion='$duracion', actores_principales='$actores', fecha_estreno='$estreno',puntuacion_media='$media',descripcion='$descripcion',tipo='$tipo',precio='$precio' WHERE id = '$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
-    Header("Location: crudPel.php");
+    Header("Location: crudPelTest.php");
 };
 
 ?>

@@ -9,6 +9,6 @@ $sql = "DELETE FROM contenido WHERE id='$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
-    Header("Location: crudPel.php");
+    Header("Location: crudPelTest.php");
 };
 ?>

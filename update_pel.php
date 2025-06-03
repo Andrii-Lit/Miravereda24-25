@@ -15,6 +15,7 @@ $row = mysqli_fetch_array($query);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MIRAVEREDA</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <div>
@@ -31,6 +32,8 @@ $row = mysqli_fetch_array($query);
                 <input type="date" name="fecha_estreno" value="<?= $row ['fecha_estreno'] ?>">
                 <input type="text" name="puntuacion_media" value="<?= $row ['puntuacion_media'] ?>">
                 <input type="text" name="descripcion" value="<?= $row ['descripcion'] ?>">
+                <input type="text" name="tipo" value="<?= $row ['tipo'] ?>">
+                <input type="text" name="precio" value="<?= $row ['precio'] ?>">
 
                 <input type="submit" value="Actualizar contenido">
 
