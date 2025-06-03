@@ -30,6 +30,7 @@
         <activity android:name=".CarritoActivity" />
         <activity android:name=".DetalleContenidoActivity" />
         <activity android:name=".PreferenciasActivity" />
+        <activity android:name=".CrearActivity" />
     </application>
 
 </manifest>
