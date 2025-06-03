@@ -19,6 +19,18 @@ public class Cliente implements Serializable {
     private String email;
     private LocalDate fecha_nac;
     private String num_tarjeta;
+    public Cliente(String contrasenya, String nombre, String apellidos, String domicilio, String cod_postal, String email, LocalDate fecha_nac, String num_tarjeta) {
+        this.contrasenya = contrasenya;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.domicilio = domicilio;
+        this.cod_postal = cod_postal;
+        this.email = email;
+        this.fecha_nac = fecha_nac;
+        this.num_tarjeta = num_tarjeta;
+    }
+
+
 
 
     // Constructor vacío obligatorio para Gson
