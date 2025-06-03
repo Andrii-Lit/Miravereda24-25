@@ -404,6 +404,42 @@ begin
 
 end$$
 
+#----------------------------------------------------------------------------------------------
+#-- TRIGGERS para actualizar precio y tipo en CONTENIDO al insertar en PELICULA, SERIE o CORTO
+#----------------------------------------------------------------------------------------------
+
+-- PELICULA
+drop trigger if exists trg_update_contenido_after_insert_pelicula$$
+create trigger trg_update_contenido_after_insert_pelicula
+after insert on pelicula
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'pelicula'
+    where id = new.contenido_id;
+end$$
+
+-- SERIE
+drop trigger if exists trg_update_contenido_after_insert_serie$$
+create trigger trg_update_contenido_after_insert_serie
+after insert on serie
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'serie'
+    where id = new.contenido_id;
+end$$
+
+-- CORTO
+drop trigger if exists trg_update_contenido_after_insert_corto$$
+create trigger trg_update_contenido_after_insert_corto
+after insert on corto
+for each row
+begin
+    update contenido 
+    set precio = new.precio, tipo = 'corto'
+    where id = new.contenido_id;
+end$$
 
 #----------------------------------------------------------------------------------------------
 #-- CORTO
