@@ -158,10 +158,28 @@ public class ContenidoController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
-
-
-
+    @DeleteMapping("/carrito/{clienteId}/{contenidoId}")
+    public ResponseEntity<?> quitarProducto(@PathVariable int clienteId, @PathVariable int contenidoId) {
+        try {
+            service.quitarProducto(clienteId, contenidoId);
+            return ResponseEntity.ok("Producto eliminado del carrito");
+        } catch (SQLException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", "Datos incorrectos o error interno");
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+
+
+
+
+
+
+

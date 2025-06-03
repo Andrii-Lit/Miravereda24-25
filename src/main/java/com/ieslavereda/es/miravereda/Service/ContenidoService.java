@@ -50,8 +50,13 @@ public class ContenidoService {
     public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
         repository.votar(clienteId, contenidoId, valor);
     }
-
-
+    public void quitarProducto(int clienteId, int contenidoId) throws SQLException {
+        repository.quitarProducto(clienteId, contenidoId);
+    }
 
 }
+
+
+
+
 

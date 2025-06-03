@@ -218,5 +218,14 @@ public class ContenidoRepository implements IContenidoRepository {
         }
         return contenidos;
     }
+    public void quitarProducto(int clienteId, int contenidoId) throws SQLException {
+        String sql="{call quitar_producto(?, ?)}";
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             CallableStatement stmt = conn.prepareCall(sql)) {
+            stmt.setInt(1, clienteId);
+            stmt.setInt(2, contenidoId);
+            stmt.execute();
+        }
+    }
 }
 
