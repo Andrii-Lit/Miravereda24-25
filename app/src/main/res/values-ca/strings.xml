@@ -47,4 +47,13 @@
     <string name="tostadaErrorRed">Error de xarxa, per favor intente més tard.</string>
     <string name="toastSesionNoIniciada">No hi ha sessió iniciada</string>
     <string name="toastErrorCargandoContenidos">Error carregant continguts</string>
+    <string name="toastEliminarCarrito">Contingut eliminat del carret</string>
+    <string name="toastErrorEliminar">Error en eliminar: </string>
+    <string name="toastErrorDesconocido">Error desconegut</string>
+    <string name="toastErrorID">No es va trobar l\'ANEU del client. Per favor inicia sessió.</string>
+    <string name="toastCompraExito">Compra realitzada amb èxit</string>
+    <string name="toastErrorCompra">Error en la compra</string>
+    <string name="toastCarritoVacio">El carret està buit.</string>
+    <string name="toastErrorCargar">No es van poder carregar els continguts del carret.</string>
+    <string name="toastErrorCargarCarrito">Error carregant carret: </string>
 </resources>

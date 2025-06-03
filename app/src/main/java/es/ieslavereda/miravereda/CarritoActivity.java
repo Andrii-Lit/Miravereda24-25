@@ -51,7 +51,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
-            showToast("No se encontró el ID del cliente. Por favor inicia sesión.");
+            showToast(String.valueOf(R.string.toastErrorID));
             finish();
             return;
         }
@@ -80,12 +80,12 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                         carritorvAdapter.notifyItemRemoved(position);
                         carritorvAdapter.actualizarTotal();
                         hideProgress();
-                        Toast.makeText(CarritoActivity.this, "Contenido eliminado del carrito", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CarritoActivity.this, R.string.toastEliminarCarrito, Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void doInError(Context context, Exception e) {
                         hideProgress();
-                        Toast.makeText(CarritoActivity.this, "Error al eliminar: " + (e.getMessage() != null ? e.getMessage() : "Error desconocido"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(CarritoActivity.this, R.string.toastErrorEliminar + (e.getMessage() != null ? e.getMessage() : R.string.toastErrorDesconocido), Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -110,7 +110,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
-                    showToast("Compra realizada con éxito");
+                    showToast(String.valueOf(R.string.toastCompraExito));
                     // Recargar el carrito para reflejar los cambios reales desde el backend
                     executeCall(CarritoActivity.this);
                 }
@@ -118,7 +118,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
-                    showToast("Error en la compra: " + e.getMessage());
+                    showToast(String.valueOf(R.string.toastErrorCompra));
                 }
             });
         });
@@ -157,9 +157,9 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         } else if (data != null && data.isEmpty()) {
             carritorvAdapter.notifyDataSetChanged();
             carritorvAdapter.actualizarTotal();
-            showToast("El carrito está vacío.");
+            showToast(String.valueOf(R.string.toastCarritoVacio));
         } else {
-            showToast("No se pudieron cargar los contenidos del carrito.");
+            showToast(String.valueOf(R.string.toastErrorCargar));
             carritorvAdapter.actualizarTotal();
         }
     }
@@ -167,7 +167,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();
-        showToast("Error cargando carrito: " + e.getMessage());
+        showToast(String.valueOf(R.string.toastErrorCargarCarrito));
         carritorvAdapter.actualizarTotal();
     }
 }

@@ -47,5 +47,14 @@
     <string name="tostadaErrorRed">Error de red, por favor intente más tarde.</string>
     <string name="toastSesionNoIniciada">No hay sesión iniciada</string>
     <string name="toastErrorCargandoContenidos">Error cargando contenidos</string>
+    <string name="toastEliminarCarrito">Contenido eliminado del carrito</string>
+    <string name="toastErrorEliminar">Error al eliminar: </string>
+    <string name="toastErrorDesconocido">Error desconocido</string>
+    <string name="toastErrorID">No se encontró el ID del cliente. Por favor inicia sesión.</string>
+    <string name="toastCompraExito">Compra realizada con éxito</string>
+    <string name="toastErrorCompra">Error en la compra</string>
+    <string name="toastCarritoVacio">El carrito está vacío.</string>
+    <string name="toastErrorCargar">No se pudieron cargar los contenidos del carrito.</string>
+    <string name="toastErrorCargarCarrito">Error cargando carrito: </string>
 </resources>
 

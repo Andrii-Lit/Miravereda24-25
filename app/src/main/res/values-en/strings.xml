@@ -47,5 +47,14 @@
     <string name="tostadaErrorRed">Network error, please try again later.</string>
     <string name="toastSesionNoIniciada">No session started</string>
     <string name="toastErrorCargandoContenidos">Error loading content</string>
+    <string name="toastEliminarCarrito">Content removed from cart</string>
+    <string name="toastErrorEliminar">Error deleting: </string>
+    <string name="toastErrorDesconocido">Unknown error</string>
+    <string name="toastErrorID">Customer ID not found. Please log in.</string>
+    <string name="toastCompraExito">Purchase made successfully</string>
+    <string name="toastErrorCompra">Purchase error</string>
+    <string name="toastCarritoVacio">The cart is empty.</string>
+    <string name="toastErrorCargar">The contents of the shopping cart could not be loaded.</string>
+    <string name="toastErrorCargarCarrito">Error loading cart: </string>
 </resources>
 
