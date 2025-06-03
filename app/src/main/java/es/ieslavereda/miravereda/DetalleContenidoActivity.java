@@ -45,7 +45,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         carritoLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    // Aquí puedes manejar resultado si quieres, o dejar vacío
+
                 }
         );
 
@@ -84,9 +84,9 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 showToast("Debes introducir una nota");
                 return;
             }
-            int valor;
+            float valor;
             try {
-                valor = Integer.parseInt(notaStr);
+                valor = Float.parseFloat(notaStr);
             } catch (NumberFormatException e) {
                 showToast("La nota debe ser un número");
                 return;
@@ -109,7 +109,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 public void doInUI(Void data) {
                     hideProgress();
                     showToast("¡Valoración enviada correctamente!");
-
+                    recargarContenido(); // <-- ACTUALIZA LA NOTA MEDIA TRAS VOTAR
                 }
 
                 @Override
@@ -135,6 +135,32 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     private int obtenerClienteId() {
         SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
         return prefs.getInt("clienteId", -1);
+    }
+
+
+    private void recargarContenido() {
+        showProgress();
+        executeCall(new CallInterface<Contenido>() {
+            @Override
+            public Contenido doInBackground() throws Exception {
+                return Connector.getConector().get(Contenido.class, "contenido/" + contenido.getId());
+            }
+
+            @Override
+            public void doInUI(Contenido nuevoContenido) {
+                hideProgress();
+                if (nuevoContenido != null) {
+                    contenido = nuevoContenido;
+                    notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
+                }
+            }
+
+            @Override
+            public void doInError(Context context, Exception e) {
+                hideProgress();
+                showToast("Error al actualizar la nota media: " + e.getMessage());
+            }
+        });
     }
 
     @Override

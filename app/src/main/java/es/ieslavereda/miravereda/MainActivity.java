@@ -3,7 +3,6 @@ package es.ieslavereda.miravereda;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,15 +64,14 @@ public class MainActivity extends BaseActivity {
 
         final Cliente cliente = new Cliente(email, contrasenya);
 
-
         executeCall(new CallInterface<Cliente>() {
             @Override
             public Cliente doInBackground() throws Exception {
+
                 try {
                     return connector.post(Cliente.class, cliente, "login/");
                 } catch (Exception e) {
-                    Log.e("LOGIN", "Error during login", e);
-                    throw new Exception("Error de red, por favor intente más tarde.");
+                    throw new Exception("Error al iniciar sesion");
                 }
             }
 
@@ -88,15 +86,10 @@ public class MainActivity extends BaseActivity {
                     editor.putInt("clienteId",clienteResponse.getId());
                     editor.apply();
 
-                    Log.d("PREFS", "Guardado email: " + clienteResponse.getEmail());
-                    Log.d("PREFS", "Guardado contrasenya: " + password.getText().toString());
-
-                    Log.d("LOGIN", "Attempting to start CatalogoActivity");
                     Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d("LOGIN", "Login fallido: clienteResponse es null");
                     Toast.makeText(MainActivity.this, R.string.tostadaCredencialesIncorrectas, Toast.LENGTH_LONG).show();
                 }
             }
