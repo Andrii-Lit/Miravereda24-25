@@ -357,139 +357,103 @@ begin
     call actualizar_precio_serie(serie_id);
 end$$
 
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que actualiza el precio de pelicula para aplicarle la tarifa
-#----------------------------------------------------------------------------------------------
-drop procedure if exists actualizar_precio_pelicula$$
-create procedure actualizar_precio_pelicula(in p_pelicula_id int)
-begin
-    declare porcentaje decimal(5,2);
-    declare base decimal(10,2);
-
-    select precio_base, t.porcentaje into base, porcentaje
-    from pelicula p
-    join tarifa t on p.tarifa_id = t.id
-    where p.contenido_id = p_pelicula_id;
-
-    update pelicula
-    set precio = base * (1 + porcentaje)
-    where contenido_id = p_pelicula_id;
-end$$
-
-#-- AFTER INSERT
-drop trigger if exists trigger_precio_pelicula_insert$$
-create trigger trigger_precio_pelicula_insert
-after insert on pelicula
-for each row
-begin
-    call actualizar_precio_pelicula(new.contenido_id);
-end$$
-
-#-- AFTER UPDATE
-drop trigger if exists trigger_precio_pelicula_update$$
-create trigger trigger_precio_pelicula_update
-after update on pelicula
-for each row
-begin
-    call actualizar_precio_pelicula(new.contenido_id);
-end$$
-
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que actualiza el precio de corto para aplicarle la tarifa
-#----------------------------------------------------------------------------------------------
-drop procedure if exists actualizar_precio_corto$$
-create procedure actualizar_precio_corto(in p_corto_id int)
-begin
-    declare porcentaje decimal(5,2);
-    declare base decimal(10,2);
-
-    select precio_base, t.porcentaje into base, porcentaje
-    from corto c
-    join tarifa t on c.tarifa_id = t.id
-    where c.contenido_id = p_corto_id;
-
-    update corto
-    set precio = base * (1 + porcentaje)
-    where contenido_id = p_corto_id;
-end$$
-
-##-- AFTER INSERT
-drop trigger if exists trigger_precio_corto_insert$$
-create trigger trigger_precio_corto_insert
-after insert on corto
-for each row
-begin
-    call actualizar_precio_corto(new.contenido_id);
-end$$
-
-#-- AFTER UPDATE
-drop trigger if exists trigger_precio_corto_update$$
-create trigger trigger_precio_corto_update
-after update on corto
-for each row
-begin
-    call actualizar_precio_corto(new.contenido_id);
-end$$
-
 
 #----------------------------------------------------------------------------------------------
 #-- TRIGGERS que actualizan el tipo y precio de CONTENIDO al insertar en los campos derivantes 
 #----------------------------------------------------------------------------------------------
 #-- PELICULA
 #----------------------------------------------------------------------------------------------
-drop trigger if exists trg_set_tipo_precio_pelicula$$
-create trigger trg_set_tipo_precio_pelicula
+create trigger trg_set_tipo_y_precio_pelicula
 after insert on pelicula for each row
 begin
-    update contenido set tipo = 'pelicula' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'pelicula');
+    declare porcentaje decimal(5,2);
+    declare base decimal(10,2);
+    declare precio_final decimal(10,2);
+
+    select p.precio_base, t.porcentaje into base, porcentaje
+    from pelicula p join tarifa t on p.tarifa_id = t.id
+    where p.contenido_id = new.contenido_id;
+
+    set precio_final = base * (1 + porcentaje);
+
+    update pelicula set precio = precio_final where contenido_id = new.contenido_id;
+
+    update contenido set tipo = 'pelicula', precio = precio_final where id = new.contenido_id;
 end$$
+
 #----------------------------------------------------------------------------------------------
 #-- SERIE
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_serie$$
 create trigger trg_set_tipo_precio_serie
-after insert on serie for each row
+after insert on serie
+for each row
 begin
-    update contenido set tipo = 'serie' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'serie');
+    declare porcentaje decimal(5,2);
+    declare precio_base decimal(10,2);
+    declare precio_total decimal(10,2);
+
+    -- Obtener el porcentaje de la tarifa
+    select t.porcentaje into porcentaje
+    from tarifa t
+    where t.id = new.tarifa_id;
+
+    -- Calcular el precio_base (inicialmente 0 al insertar la serie sin capítulos)
+    set precio_base = 0;
+
+    -- Calcular el precio total aplicando tarifa
+    set precio_total = precio_base * (1 + porcentaje);
+
+    -- Actualizar la tabla 'serie' con precios
+    update serie
+    set precio_base = precio_base,
+        precio = precio_total
+    where contenido_id = new.contenido_id;
+
+    -- Actualizar la tabla 'contenido'
+    update contenido
+    set tipo = 'serie',
+        precio = precio_total
+    where id = new.contenido_id;
 end$$
+
 #----------------------------------------------------------------------------------------------
 #-- CORTO
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_corto$$
 create trigger trg_set_tipo_precio_corto
-after insert on corto for each row
+after insert on corto
+for each row
 begin
-    update contenido set tipo = 'corto' where id = new.contenido_id;
-	call set_precio_contenido(new.contenido_id, 'corto');
+    declare porcentaje decimal(5,2);
+    declare precio_base decimal(10,2);
+    declare precio_total decimal(10,2);
+
+    -- Obtener el porcentaje de la tarifa
+    select t.porcentaje into porcentaje
+    from tarifa t
+    where t.id = new.tarifa_id;
+
+    -- Obtener el precio_base del corto
+    select c.precio_base into precio_base
+    from corto c
+    where c.contenido_id = new.contenido_id;
+
+    -- Calcular precio con tarifa
+    set precio_total = precio_base * (1 + porcentaje);
+
+    -- Actualizar la tabla 'corto' con el precio final
+    update corto
+    set precio = precio_total
+    where contenido_id = new.contenido_id;
+
+    -- Actualizar 'contenido' con tipo y precio
+    update contenido
+    set tipo = 'corto',
+        precio = precio_total
+    where id = new.contenido_id;
 end$$
 
-#----------------------------------------------------------------------------------------------
-#-- PROCEDIMIENTO que según el tipo de CONTENIDO setea el precio calculado
-#----------------------------------------------------------------------------------------------
-drop procedure if exists set_precio_contenido$$
-create procedure set_precio_contenido(
-    in p_contenido_id int,
-    in p_tipo varchar(10)
-)
-begin  
-    declare preciofinal decimal(10,2);  
-
-    if p_tipo = 'pelicula' then  
-        select p.precio into preciofinal from pelicula p where p.contenido_id =  p_contenido_id;  
-
-    elseif p_tipo = 'corto' then  
-        select c.precio into preciofinal from corto c where c.contenido_id =  p_contenido_id;  
-
-    elseif p_tipo = 'serie' then  
-        select s.precio into preciofinal from serie s where s.contenido_id =  p_contenido_id;  
-    else  
-        set preciofinal = 0.0;  
-    end if;  
-
-    update contenido set precio = preciofinal where id = p_contenido_id;  
-end$$
 
 #----------------------------------------------------------------------------------------------
 #-- TABLA TARIFA
