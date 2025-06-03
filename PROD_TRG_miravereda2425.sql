@@ -363,30 +363,33 @@ end$$
 #----------------------------------------------------------------------------------------------
 #-- PELICULA
 #----------------------------------------------------------------------------------------------
+drop trigger if exists trg_set_tipo_y_precio_pelicula$$
 create trigger trg_set_tipo_y_precio_pelicula
-after insert on pelicula for each row
+before insert on pelicula
+for each row
 begin
     declare porcentaje decimal(5,2);
-    declare base decimal(10,2);
     declare precio_final decimal(10,2);
 
-    select p.precio_base, t.porcentaje into base, porcentaje
-    from pelicula p join tarifa t on p.tarifa_id = t.id
-    where p.contenido_id = new.contenido_id;
+    -- Obtener porcentaje de tarifa
+    select t.porcentaje into porcentaje
+    from tarifa t
+    where t.id = new.tarifa_id;
 
-    set precio_final = base * (1 + porcentaje);
+    -- Calcular precio final (new.precio_base ya debería venir con el valor)
+    set precio_final = new.precio_base * (1 + porcentaje);
 
-    update pelicula set precio = precio_final where contenido_id = new.contenido_id;
-
-    update contenido set tipo = 'pelicula', precio = precio_final where id = new.contenido_id;
+    -- Asignar el precio calculado directamente a new.precio
+    set new.precio = precio_final;
 end$$
+
 
 #----------------------------------------------------------------------------------------------
 #-- SERIE
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_serie$$
 create trigger trg_set_tipo_precio_serie
-after insert on serie
+before insert on serie
 for each row
 begin
     declare porcentaje decimal(5,2);
@@ -398,35 +401,31 @@ begin
     from tarifa t
     where t.id = new.tarifa_id;
 
-    -- Calcular el precio_base (inicialmente 0 al insertar la serie sin capítulos)
+    -- Al insertar una serie nueva sin capítulos, el precio_base es 0
     set precio_base = 0;
 
     -- Calcular el precio total aplicando tarifa
     set precio_total = precio_base * (1 + porcentaje);
 
-    -- Actualizar la tabla 'serie' con precios
-    update serie
-    set precio_base = precio_base,
-        precio = precio_total
-    where contenido_id = new.contenido_id;
+    -- En lugar de hacer UPDATE a la tabla, asignamos directamente a los campos de NEW
+    set new.precio_base = precio_base;
+    set new.precio = precio_total;
 
-    -- Actualizar la tabla 'contenido'
-    update contenido
-    set tipo = 'serie',
-        precio = precio_total
-    where id = new.contenido_id;
+    -- Para actualizar la tabla contenido, esto no puede hacerse directamente en el BEFORE INSERT del trigger de serie
+    -- Lo mejor es usar un AFTER INSERT separado para actualizar contenido o manejarlo en la lógica de aplicación
+
 end$$
+
 
 #----------------------------------------------------------------------------------------------
 #-- CORTO
 #----------------------------------------------------------------------------------------------
 drop trigger if exists trg_set_tipo_precio_corto$$
 create trigger trg_set_tipo_precio_corto
-after insert on corto
+before insert on corto
 for each row
 begin
     declare porcentaje decimal(5,2);
-    declare precio_base decimal(10,2);
     declare precio_total decimal(10,2);
 
     -- Obtener el porcentaje de la tarifa
@@ -434,24 +433,11 @@ begin
     from tarifa t
     where t.id = new.tarifa_id;
 
-    -- Obtener el precio_base del corto
-    select c.precio_base into precio_base
-    from corto c
-    where c.contenido_id = new.contenido_id;
+    -- Calcular precio con tarifa (precio_base ya viene en new.precio_base)
+    set precio_total = new.precio_base * (1 + porcentaje);
 
-    -- Calcular precio con tarifa
-    set precio_total = precio_base * (1 + porcentaje);
-
-    -- Actualizar la tabla 'corto' con el precio final
-    update corto
-    set precio = precio_total
-    where contenido_id = new.contenido_id;
-
-    -- Actualizar 'contenido' con tipo y precio
-    update contenido
-    set tipo = 'corto',
-        precio = precio_total
-    where id = new.contenido_id;
+    -- En lugar de hacer UPDATE a corto, asignamos directamente el valor a NEW
+    set new.precio = precio_total;
 end$$
 
 
