@@ -93,7 +93,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
 
     public void actualizarTotal() {
         if (totalTextView != null) {
-            totalTextView.setText("Total: €" + calcularTotal());
+            totalTextView.setText(calcularTotal()+" €");
         }
     }
 
