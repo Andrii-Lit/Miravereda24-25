@@ -102,11 +102,7 @@ create procedure anyadir_al_carrito(in p_cliente_id int, in p_contenido_id int)
 begin
 	declare carrito_activo_id int;
 	declare contenido_precio decimal(10,2);
-	declare tipo_contenido varchar(50);
 
-	-- Recogemos el tipo de contenido
-	select tipo into tipo_contenido from contenido where id = p_contenido_id;
-	
 	-- Recogemos el id del carrito activo del cliente
 	select id into carrito_activo_id from carrito
 	where cliente_id = p_cliente_id and activo = true;
@@ -118,16 +114,8 @@ begin
 		where cliente_id = p_cliente_id and activo = true;
 	end if;
 
-	-- Recogemos el precio según el tipo de contenido
-	if tipo_contenido = 'pelicula' then
-        select precio into contenido_precio from pelicula where contenido_id = p_contenido_id;
-    elseif tipo_contenido = 'serie' then
-        select precio into contenido_precio from serie where contenido_id = p_contenido_id;
-    elseif tipo_contenido = 'corto' then
-        select precio into contenido_precio from corto where contenido_id = p_contenido_id;
-    else
-        set contenido_precio = 0.00;
-	end if;
+	-- Recogemos el precio del contenido
+	select precio into contenido_precio from contenido where id = p_contenido_id;
 
 	-- Añadimos la LIN_FAC (el producto al carrito)
 	-- Si añadimos el mismo producto actualiza el precio

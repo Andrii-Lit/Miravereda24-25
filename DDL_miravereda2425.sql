@@ -136,7 +136,6 @@ create table capitulo(
     id int auto_increment primary key,
     temporada_id int,
     titulo varchar(255),
-    precio decimal(10,2),
     precio_base decimal(10,2) default 0.00,
     changedTS timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     foreign key (temporada_id) references temporada(id) on delete cascade

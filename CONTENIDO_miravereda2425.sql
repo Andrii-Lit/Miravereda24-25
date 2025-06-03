@@ -34,7 +34,7 @@ values
 insert into temporada (serie_id, numero)
 values (1001, 1);
 
-insert into capitulo (temporada_id, titulo, precio)
+insert into capitulo (temporada_id, titulo, precio_base)
 values
 (1, 'Piloto', 2.50),
 (1, 'El gato está en la bolsa', 2.50),
