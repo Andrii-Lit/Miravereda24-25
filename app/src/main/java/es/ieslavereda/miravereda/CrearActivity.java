@@ -1,5 +1,6 @@
 package es.ieslavereda.miravereda;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -41,13 +42,10 @@ public class CrearActivity extends BaseActivity {
 
         crear_backBTN = findViewById(R.id.crear_backBTN);
         crear_BTN = findViewById(R.id.crear_BTN);
-        crear_BTN.setOnClickListener((View view)->{
-            crearCuenta();
-            setResult(RESULT_OK);
-            finish();
-        });
+        crear_BTN.setOnClickListener((View view)->{crearCuenta();});
         crear_backBTN.setOnClickListener((View view)->{
-            setResult(RESULT_CANCELED);
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELED, intent);
             finish();
         });
 
@@ -72,7 +70,9 @@ public class CrearActivity extends BaseActivity {
 
             @Override
             public void doInUI(Cliente data) {
-
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
