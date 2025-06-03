@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity {
     private TextInputEditText username;
     private TextInputEditText password;
     private Button btIniciarSesion;
-    private ImageView ivPreference;
+    private ImageView ivPreference,ivLogo;
     private TextView tvCrearCuenta, tvContrasenya;
 
     @Override
@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity {
         ivPreference = findViewById(R.id.ivPreference);
         tvCrearCuenta = findViewById(R.id.tvCrearCuenta);
         tvContrasenya = findViewById(R.id.tvContrasenya);
+        ivLogo=findViewById(R.id.ivLogo);
+        ivLogo.setImageResource(R.mipmap.logo_miravereda_foreground);
 
         btIniciarSesion.setOnClickListener(v -> login());
 

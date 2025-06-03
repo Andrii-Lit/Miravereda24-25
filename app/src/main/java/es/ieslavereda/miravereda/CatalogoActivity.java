@@ -89,6 +89,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         volver = findViewById(R.id.Volver);
         carrito = findViewById(R.id.Carrito);
         recyclerView = findViewById(R.id.recycled);
+        ivLogo.setImageResource(R.mipmap.logo_miravereda_foreground);
 
         volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
         carrito.setOnClickListener(view -> {
