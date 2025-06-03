@@ -73,14 +73,6 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         return contenidos.size();
     }
 
-    public void removeItem(int position) {
-        if (position >= 0 && position < contenidos.size()) {
-            contenidos.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, contenidos.size());
-        }
-    }
-
     private double calcularTotal() {
         double total = 0;
         for (Contenido contenido : contenidos) {
