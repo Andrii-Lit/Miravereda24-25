@@ -137,6 +137,27 @@ public class ContenidoController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/votar")
+    public ResponseEntity<?> votar(@RequestBody Map<String, Object> request) {
+        try {
+            int clienteId = ((Number) request.get("clienteId")).intValue();
+            int contenidoId = ((Number) request.get("contenidoId")).intValue();
+            int valor = ((Number) request.get("valor")).intValue();
+
+            service.votar(clienteId, contenidoId, valor);
+            return ResponseEntity.ok("Votación registrada correctamente");
+        } catch (SQLException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", "Datos de entrada incorrectos o incompletos");
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 

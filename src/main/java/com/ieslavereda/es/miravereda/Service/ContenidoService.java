@@ -47,6 +47,11 @@ public class ContenidoService {
         repository.comprar(clienteId);
     }
 
+    public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
+        repository.votar(clienteId, contenidoId, valor);
+    }
+
+
 
 }
 

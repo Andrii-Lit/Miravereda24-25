@@ -172,6 +172,17 @@ public class ContenidoRepository implements IContenidoRepository {
                 stmt.execute();
             }
         }
+    public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
+        String sql = "{call votar(?, ?, ?)}";
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, clienteId);
+            cs.setInt(2, contenidoId);
+            cs.setInt(3, valor);
+            cs.execute();
+        }
+    }
+
 
 
 
@@ -196,6 +207,7 @@ public class ContenidoRepository implements IContenidoRepository {
                         .poster_path(rs.getString("poster_path"))
                         .fecha_estreno(rs.getDate("fecha_estreno"))
                         .puntuacion_media(rs.getDouble("puntuacion_media"))
+                        .precio(rs.getDouble("precio"))
                         .build();
                 contenidos.add(contenido);
 
