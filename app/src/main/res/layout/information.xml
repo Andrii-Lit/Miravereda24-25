@@ -52,8 +52,8 @@
 
     <TextView
         android:id="@+id/NotaMedia"
-        android:layout_width="93dp"
-        android:layout_height="25dp"
+        android:layout_width="114dp"
+        android:layout_height="22dp"
         android:layout_marginTop="10dp"
         android:text="@string/informacionNotaMedia"
         android:textSize="16sp"
@@ -129,7 +129,6 @@
         android:id="@+id/NotaMediaNumero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:hint="0"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/NotaMedia"
