@@ -9,6 +9,6 @@ $sql = "DELETE FROM cliente WHERE id='$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
-    Header("Location: crudUsu.php");
+    Header("Location: crudUsuTest.php");
 };
 ?>

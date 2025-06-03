@@ -16,7 +16,7 @@ $sql = "UPDATE cliente SET nombre='$name',apellidos='$lastname',contrasenya='$pa
 $query = mysqli_query($con, $sql);
 
 if($query){
-    Header("Location: crudUsu.php");
+    Header("Location: crudUsuTest.php");
 };
 
 ?>

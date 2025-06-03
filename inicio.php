@@ -12,9 +12,9 @@
 <body>
     <h1>HOME</h1>
 
-    <button href="crudUsu.php">CRUD USUARIOS</button>
-    <button>CRUD PELÍCULAS</button>
-
+    <a href="crudUsuTest.php">CRUD USUARIOS</a>
+    <a href="crudPelTest.php">CRUD CONTENIDO</a>
+    
     <a href="cerrarSesion.php">Cerrar Sesion</a>
 </body>
 </html>
