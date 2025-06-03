@@ -70,7 +70,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         descripcion.setText(contenido.getDescripcion());
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
         nombreautor.setText(contenido.getNombre_dir());
-        preciovalor.setText(String.valueOf(contenido.getPrecio()));
+        preciovalor.setText(String.valueOf(contenido.getPrecio())+" €");
         volver.setOnClickListener(v -> finish());
 
         valorar.setOnClickListener(v -> {
