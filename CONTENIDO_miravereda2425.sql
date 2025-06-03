@@ -1,3 +1,7 @@
+#-----------------------------------------------------------------------------------------------
+#-- SCRIPT para INSERTAR CONTENIDO de muestra
+#-- Se han insertado valoraciones_medias genéricas, se recalcularán al hacer una votación nueva 
+#-----------------------------------------------------------------------------------------------
 -- Inserción de una serie
 insert into contenido(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path)
 values
@@ -13,9 +17,25 @@ values
  'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpicfiles.alphacoders.com%2F422%2Fthumb-1920-422251.jpg&f=1&nofb=1&ipt=8fb2389bbe6fbacb1da3511e95cc76d698d836cf8499113bb2d5b1e16f2cf662'
 );
 
-insert into serie(contenido_id, tarifa_id, disponibilidad, precio_base) 
+insert into serie(contenido_id, tarifa_id, disponibilidad) 
 values 
-(1001, 2, true, 10.00);
+(1001, 2, true);
+
+insert into temporada (serie_id, numero)
+values (1001, 1);
+
+insert into capitulo (temporada_id, titulo, precio)
+values
+(1, 'Piloto', 2.50),
+(1, 'El gato está en la bolsa', 2.50),
+(1, 'Y el saco en el río', 2.50),
+(1, 'Cancer Man', 2.50),
+(1, 'Gray Matter', 2.50),
+(1, 'Crazy Handful of Nothin', 2.50),
+(1, 'A No-Rough-Stuff-Type Deal', 2.50);
+
+
+
 
 -- Inserción de un corto
 insert into contenido(id, titulo, descripcion, genero, nombre_dir, duracion, actores_principales, fecha_estreno, puntuacion_media, poster_path)
