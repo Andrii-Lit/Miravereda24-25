@@ -145,7 +145,6 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
             public Contenido doInBackground() throws Exception {
                 return Connector.getConector().get(Contenido.class, "contenido/" + contenido.getId());
             }
-
             @Override
             public void doInUI(Contenido nuevoContenido) {
                 hideProgress();
@@ -158,7 +157,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
             @Override
             public void doInError(Context context, Exception e) {
                 hideProgress();
-                showToast(String.valueOf(R.string.toastErrorActNotaMedia));
+                showToast("Error al actualizar la nota media: " + e.getMessage());
             }
         });
     }
