@@ -81,8 +81,8 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        Log.d("PREFS", "Leído email: " + email);
-        Log.d("PREFS", "Leído contrasenya: " + contrasenya);
+        Log.d("PREFS", R.string.toastEmailLeido + email);
+        Log.d("PREFS", R.string.toastContrasenyaLeido + contrasenya);
 
         volver = findViewById(R.id.Volver);
         carrito = findViewById(R.id.Carrito);
@@ -119,7 +119,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         int pos = recyclerView.getChildLayoutPosition(v);
         Contenido contenido = contenidos.get(pos);
         Intent intent = new Intent(this, DetalleContenidoActivity.class);
-        intent.putExtra("contenido", contenido);
+        intent.putExtra(String.valueOf(R.string.toastContenido), contenido);
         startActivity(intent);
     }
 

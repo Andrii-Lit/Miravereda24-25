@@ -74,5 +74,7 @@
     <string name="toastComprar">comprar/</string>
     <string name="toastcarrito">Carret</string>
     <string name="toastErrorCarga">Error en carregar llista contingut</string>
-    <string name="toastEmailLeido">Llegit email: </string>
+    <string name="toastEmailLeido">Email llegit</string>
+    <string name="toastContrasenyaLeido">Contrasenya leida</string>
+    <string name="toastContenido">Contingut</string>
 </resources>
