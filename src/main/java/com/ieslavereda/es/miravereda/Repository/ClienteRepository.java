@@ -10,8 +10,12 @@ import java.util.List;
 @Repository
 public class ClienteRepository implements IClienteRepository {
 
-
-
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente getCliente(int id) throws SQLException {
         String sql = "SELECT * FROM cliente WHERE id = ?";
@@ -38,6 +42,12 @@ public class ClienteRepository implements IClienteRepository {
 
     }
 
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente addCliente(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO cliente (contrasenya, nombre, apellidos, domicilio, cod_postal, email, fecha_nac, num_tarjeta) " +
@@ -76,7 +86,12 @@ public class ClienteRepository implements IClienteRepository {
         }
     }
 
-
+    /**
+     *
+     * @param cliente
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente updateCliente(Cliente cliente) throws SQLException {
         Cliente cliente1=getCliente(cliente.getId());
@@ -108,6 +123,12 @@ public class ClienteRepository implements IClienteRepository {
         return cliente1;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente deleteCliente(int id) throws SQLException {
         Cliente cliente=getCliente(id);
@@ -120,6 +141,11 @@ public class ClienteRepository implements IClienteRepository {
         return cliente;
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Cliente> getAllClientes() throws SQLException {
         String sql = "SELECT * FROM cliente";
@@ -150,24 +176,38 @@ public class ClienteRepository implements IClienteRepository {
         return clientes;
     }
 
+    /**
+     *
+     * @param email
+     * @param contrasenya
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente login(String email, String contrasenya) throws SQLException {
-            String sql="{call iniciar_sesion(?,?,?)}";
-            try(Connection con=MyDataSource.getMydataSource().getConnection()){
-               CallableStatement cs=con.prepareCall(sql);
-               cs.registerOutParameter(1,Types.BOOLEAN);
-               cs.setString(2,email);
-               cs.setString(3,contrasenya);
-               cs.execute();
-             boolean loginOk=cs.getBoolean(1);
-             if(!loginOk){
+        String sql="{call iniciar_sesion(?,?,?)}";
+        try(Connection con=MyDataSource.getMydataSource().getConnection()){
+            CallableStatement cs=con.prepareCall(sql);
+            cs.registerOutParameter(1,Types.BOOLEAN);
+            cs.setString(2,email);
+            cs.setString(3,contrasenya);
+            cs.execute();
+            boolean loginOk=cs.getBoolean(1);
+            if(!loginOk){
                  return null;
-             }
-             return getClientePorEmail(email);
             }
+            return getClientePorEmail(email);
+        }
 
 
     }
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws SQLException
+     */
     private Cliente getClientePorEmail(String email) throws SQLException {
         String sqlGetCliente = "{CALL get_cliente_por_email(?)}";
 

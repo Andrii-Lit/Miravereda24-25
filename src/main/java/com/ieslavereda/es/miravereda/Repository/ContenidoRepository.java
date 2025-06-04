@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class ContenidoRepository implements IContenidoRepository {
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Contenido getContenido(int id) throws SQLException {
         Contenido contenido = null;
@@ -40,7 +46,12 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenido;
     }
 
-
+    /**
+     *
+     * @param contenido
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Contenido addContenido(Contenido contenido) throws SQLException {
         String sql = "INSERT INTO contenido (id, duracion, titulo, descripcion, genero, nombre_dir, actores_principales, poster_path, fecha_estreno, puntuacion_media) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -68,42 +79,51 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
-
+    /**
+     *
+     * @param contenido
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Contenido updateContenido(Contenido contenido) throws SQLException {
-            String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?,actores_principales = ?, poster_path = ?,fecha_estreno = ?, puntuacion_media = ? where id = ?";
-            Contenido contenidoActualizado = null;
+        String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?,actores_principales = ?, poster_path = ?,fecha_estreno = ?, puntuacion_media = ? where id = ?";
+        Contenido contenidoActualizado = null;
 
-            try (Connection conn = MyDataSource.getMydataSource().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ps.setInt(1, contenido.getDuracion());
-                ps.setString(2, contenido.getTitulo());
-                ps.setString(3, contenido.getDescripcion());
-                ps.setString(4, contenido.getGenero());
-                ps.setString(5, contenido.getNombre_dir());
-                ps.setString(6, contenido.getActores_principales());
-                ps.setString(7, contenido.getPoster_path());
-                ps.setDate(8, contenido.getFecha_estreno());
-                ps.setDouble(9, contenido.getPuntuacion_media());
-                ps.setInt(10, contenido.getId());
+            ps.setInt(1, contenido.getDuracion());
+            ps.setString(2, contenido.getTitulo());
+            ps.setString(3, contenido.getDescripcion());
+            ps.setString(4, contenido.getGenero());
+            ps.setString(5, contenido.getNombre_dir());
+            ps.setString(6, contenido.getActores_principales());
+            ps.setString(7, contenido.getPoster_path());
+            ps.setDate(8, contenido.getFecha_estreno());
+            ps.setDouble(9, contenido.getPuntuacion_media());
+            ps.setInt(10, contenido.getId());
 
-                ps.executeUpdate();
-
-
-                    contenidoActualizado = contenido;
-                }
+            ps.executeUpdate();
 
 
-
-            return contenidoActualizado;
+            contenidoActualizado = contenido;
         }
 
 
 
+        return contenidoActualizado;
+    }
 
-        @Override
-    public Contenido deleteContenido(int id) throws SQLException {
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
+    @Override
+        public Contenido deleteContenido(int id) throws SQLException {
         Contenido contenido=getContenido(id);
         String sql = "DELETE FROM contenido WHERE id = ?";
         try (Connection conn = MyDataSource.getMydataSource().getConnection()){
@@ -114,6 +134,11 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenido;
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public List<Contenido> getAllContenidos() throws SQLException {
         String sql = "SELECT * FROM contenido";
@@ -145,6 +170,12 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenidos;
     }
 
+    /**
+     *
+     * @param p_cliente_id
+     * @param p_contenido_id
+     * @throws SQLException
+     */
     @Override
     public void anyadirCarrito(int p_cliente_id, int p_contenido_id) throws SQLException {
         String sql="{call anyadir_al_carrito(?,?)}";
@@ -161,18 +192,30 @@ public class ContenidoRepository implements IContenidoRepository {
 
     }
 
+    /**
+     *
+     * @param clienteId
+     * @throws SQLException
+     */
+    public void comprar(int clienteId) throws SQLException {
+        String sql = "{CALL comprar(?)}";
 
-        public void comprar(int clienteId) throws SQLException {
-            String sql = "{CALL comprar(?)}";
-
-            try (Connection connection = MyDataSource.getMydataSource().getConnection();
-                 CallableStatement stmt = connection.prepareCall(sql)) {
+        try (Connection connection = MyDataSource.getMydataSource().getConnection();
+             CallableStatement stmt = connection.prepareCall(sql)) {
 
                 stmt.setInt(1, clienteId);
                 stmt.execute();
             }
         }
-    public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
+
+        /**
+        *
+        * @param clienteId
+        * @param contenidoId
+        * @param valor
+        * @throws SQLException
+        */
+        public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
         String sql = "{call votar(?, ?, ?)}";
         try (Connection con = MyDataSource.getMydataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {
@@ -184,9 +227,11 @@ public class ContenidoRepository implements IContenidoRepository {
     }
 
 
-
-
-
+    /**
+     *
+     * @param clienteId
+     * @return
+     */
     public List<Contenido> getAllCarrito(int clienteId) {
         String sql="{ call get_all_carrito(?)}";
         List<Contenido> contenidos = new ArrayList<>();
@@ -218,6 +263,13 @@ public class ContenidoRepository implements IContenidoRepository {
         }
         return contenidos;
     }
+
+    /**
+     *
+     * @param clienteId
+     * @param contenidoId
+     * @throws SQLException
+     */
     public void quitarProducto(int clienteId, int contenidoId) throws SQLException {
         String sql="{call quitar_producto(?, ?)}";
         try (Connection conn = MyDataSource.getMydataSource().getConnection();

@@ -7,7 +7,11 @@ import lombok.Getter;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+/**
+ * @author Andrii,Cristobal,Dario,Leonardo
+ * @version 1.0
+ *
+ */
 @Getter
 @Builder
 public class Cliente {

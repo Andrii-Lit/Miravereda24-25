@@ -12,7 +12,13 @@ public class Capitulo {
     private double precio_base;
     private Temporada temporada;
 
-
+    /**
+     *
+     * @param id
+     * @param titulo
+     * @param precio
+     * @param temporada
+     */
     public Capitulo(int id, String titulo, double precio, Temporada temporada) {
         this.id = id;
         this.titulo = titulo;

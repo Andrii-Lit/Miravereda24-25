@@ -14,6 +14,22 @@ public class Pelicula extends Contenido{
     private Date disponible_hasta;
     private double precio_base;
 
+    /**
+     *
+     * @param id
+     * @param titulo
+     * @param descripcion
+     * @param genero
+     * @param nombre_dir
+     * @param duracion
+     * @param actores_principales
+     * @param fecha_estreno
+     * @param puntuacion_media
+     * @param poster_path
+     * @param tarifa_id
+     * @param disponible_hasta
+     * @param precio_base
+     */
     public Pelicula(int id, String titulo, String descripcion, String genero,
                     String nombre_dir, int duracion, String actores_principales,
                     Date fecha_estreno, double puntuacion_media, String poster_path,int tarifa_id,

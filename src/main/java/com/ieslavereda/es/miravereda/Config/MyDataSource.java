@@ -5,8 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+/**
+ * @author Andrii,Cristobal,Dario,Leonardo
+ * @version 1.0
+ *
+ */
 @Configuration
 public class MyDataSource {
+    //
     @Bean("MyDataSource")
     public static DataSource getMydataSource(){
         try{

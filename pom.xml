@@ -85,6 +85,31 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version> <!-- o la última versión disponible -->
+                <configuration>
+                    <!-- Carpeta de salida (en target/docs/javadoc por ejemplo) -->
+                    <reportOutputDirectory>${project.build.directory}/docs/javadoc</reportOutputDirectory>
+                    <!-- Versión de Java que utiliza tu proyecto -->
+                    <source>${java.version}</source>
+                    <encoding>UTF-8</encoding>
+                    <!-- Enlace a la Javadoc de Java SE 17 -->
+                    <links>
+                        <link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
+                    </links>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-javadoc</id>
+                        <goals>
+                            <goal>javadoc</goal>
+                            <!-- Con esto también se podría generar el javadoc-jar si hicieras <goal>jar</goal> -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

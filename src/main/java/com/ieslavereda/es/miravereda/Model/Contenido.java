@@ -19,6 +19,20 @@
         private Date fecha_estreno;
         private double puntuacion_media, precio;
 
+        /**
+         *
+         * @param id
+         * @param titulo
+         * @param descripcion
+         * @param genero
+         * @param nombre_dir
+         * @param duracion
+         * @param actores_principales
+         * @param fecha_estreno
+         * @param puntuacion_media
+         * @param poster_path
+         * @param precio
+         */
         public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
                          int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
                          String poster_path, double precio) {
@@ -36,6 +50,19 @@
 
         }
 
+        /**
+         *
+         * @param id
+         * @param titulo
+         * @param descripcion
+         * @param genero
+         * @param nombre_dir
+         * @param duracion
+         * @param actores_principales
+         * @param fecha_estreno
+         * @param puntuacion_media
+         * @param poster_path
+         */
         public Contenido(int id, String titulo, String descripcion, String genero, String nombre_dir,
                          int duracion, String actores_principales, Date fecha_estreno, double puntuacion_media,
                          String poster_path) {

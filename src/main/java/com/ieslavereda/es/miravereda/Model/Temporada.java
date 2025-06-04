@@ -14,7 +14,12 @@ public class Temporada {
     private Serie serie;
     private List<Capitulo> capitulos;
 
-
+    /**
+     *
+     * @param id
+     * @param numero
+     * @param serie
+     */
     public Temporada(int id, int numero, Serie serie) {
         this.id = id;
         this.numero = numero;
@@ -23,10 +28,18 @@ public class Temporada {
 
     }
 
+    /**
+     *
+     * @param capitulo
+     */
     public void addCapitulo(Capitulo capitulo) {
         capitulos.add(capitulo);
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrecioTotal() {
         double total = 0.0;
         for (Capitulo c : capitulos) {

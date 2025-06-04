@@ -13,6 +13,20 @@ public class Corto extends Contenido {
     private double precio_base;
     private LocalDateTime changedTS;
 
+    /**
+     *
+     * @param id
+     * @param titulo
+     * @param descripcion
+     * @param genero
+     * @param nombre_dir
+     * @param duracion
+     * @param actores_principales
+     * @param fecha_estreno
+     * @param puntuacion_media
+     * @param poster_path
+     * @param precio_base
+     */
     public Corto(int id, String titulo, String descripcion, String genero,
                  String nombre_dir, int duracion, String actores_principales,
                  Date fecha_estreno, double puntuacion_media, String poster_path,
