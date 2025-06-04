@@ -56,12 +56,10 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null && data.getBooleanExtra("actualizado", false)) {
-                            executeCall(this);
-                            showProgress();
-                        }
+                    if (result.getResultCode() == RESULT_OK || result.getResultCode() == RESULT_CANCELED) {
+                        executeCall(this);
+                        showProgress();
+
                     }
                 }
         );
@@ -88,7 +86,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         carrito = findViewById(R.id.Carrito);
         recyclerView = findViewById(R.id.recycled);
 
-        volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
+        volver.setOnClickListener(view -> finish());
         carrito.setOnClickListener(view -> {
             Intent intent = new Intent(this, CarritoActivity.class);
             startActivity(intent);
