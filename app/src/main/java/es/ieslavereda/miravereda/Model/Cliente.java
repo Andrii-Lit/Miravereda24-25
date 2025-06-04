@@ -42,7 +42,7 @@ public class Cliente implements Serializable {
         this.num_tarjeta = num_tarjeta;
     }
 
-    // Constructor vacío obligatorio para Gson
+
     public Cliente() {
 
     }
