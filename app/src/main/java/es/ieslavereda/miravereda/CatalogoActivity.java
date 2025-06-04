@@ -52,7 +52,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             return insets;
         });
 
-        // El launcher ahora gestiona el resultado del detalle (no solo del carrito)
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -100,12 +99,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         showProgress();
     }
 
-    // NO RECARGUES EN onResume
-    // @Override
-    // protected void onResume() {
-    //     super.onResume();
-    //     // Nada aquí
-    // }
 
     @Override
     public void onClick(View v) {
