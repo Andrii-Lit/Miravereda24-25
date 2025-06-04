@@ -22,7 +22,7 @@ values
  -- fecha estreno 
  '2008-09-15', 
  -- puntuacion media
- 8.7, 
+ 9.0, 
  -- poster path
  'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpicfiles.alphacoders.com%2F422%2Fthumb-1920-422251.jpg&f=1&nofb=1&ipt=8fb2389bbe6fbacb1da3511e95cc76d698d836cf8499113bb2d5b1e16f2cf662'
 );
@@ -58,7 +58,7 @@ values
  7,
  'Shane Prigmore, Kari Wahlgren',
  '2012-11-02',
- 8.2,
+ 9.0,
  'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fi2.wp.com%2Fwww.heyuguys.com%2Fimages%2F2012%2F07%2FPaperman-poster.jpg&f=1&nofb=1&ipt=272ca1f030c5f227c3357317c56ad4601b8f86d29af6cc41281db6b909a9490f'
 );
 
@@ -97,7 +97,7 @@ values
     -- fecha estreno
      '1994-09-05', 
     -- puntuacion media generica
-     8.1, 
+     9.0, 
     -- poster path
      'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LpafPZQdQKzgnkBaHBbOJwHaJ6%26pid%3DApi&f=1&ipt=17b9db332fe62c58fe907ed9b5ca2a4e2f59781f89fa111f350d4ff234f97b1e&ipo=images'),
     
@@ -119,7 +119,7 @@ values
     -- fecha estreno
     '2023-08-01', 
     -- puntuacion media generica
-    7.2, 
+    9.0, 
     -- poster path
     'https://pics.filmaffinity.com/shutter_island-982808260-large.jpg'),
     
@@ -140,7 +140,7 @@ values
     -- fecha estreno 
     '2023-09-01', 
     -- puntuacion media
-    7.9, 
+    9.0, 
     -- poster path
     'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvignette.wikia.nocookie.net%2Fdoblaje%2Fimages%2Ff%2Ffc%2FEL_VIAJE_DE_CHIHIRO.jpg%2Frevision%2Flatest%3Fcb%3D20170506234618%26path-prefix%3Des&f=1&nofb=1&ipt=35584f7d9b75353a9be8a57427215252259a31cb90e1669b0828ef0b922668c5');
 
