@@ -76,19 +76,19 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         valorar.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
             if (clienteId == -1) {
-                showToast(String.valueOf(R.string.toastErrorObtenerID));
+                showToast(getString(R.string.toastErrorObtenerID));
                 return;
             }
             String notaStr = notaCliente.getText().toString();
             if (notaStr.isEmpty()) {
-                showToast(String.valueOf(R.string.toastIntroducirNota));
+                showToast(getString(R.string.toastIntroducirNota));
                 return;
             }
             float valor;
             try {
                 valor = Float.parseFloat(notaStr);
             } catch (NumberFormatException e) {
-                showToast(String.valueOf(R.string.toastNotaNumero));
+                showToast(getString(R.string.toastNotaNumero));
                 return;
             }
 
@@ -108,7 +108,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
-                    showToast(String.valueOf(R.string.toastValoracionenviada));
+                    showToast(getString(R.string.toastValoracionenviada));
                     recargarContenido(); // <-- ACTUALIZA LA NOTA MEDIA TRAS VOTAR
                 }
 
@@ -123,7 +123,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         anyadirAlCarrito.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
             if (clienteId == -1) {
-                showToast(String.valueOf(R.string.toastErrorObtenerID));
+                showToast(getString(R.string.toastErrorObtenerID));
                 return;
             }
             carritoRequest = new CarritoRequest(clienteId, contenido.getId());
@@ -158,7 +158,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
             @Override
             public void doInError(Context context, Exception e) {
                 hideProgress();
-                showToast(String.valueOf(R.string.toastErrorActNotaMedia));
+                showToast(getString(R.string.toastErrorActNotaMedia));
             }
         });
     }
