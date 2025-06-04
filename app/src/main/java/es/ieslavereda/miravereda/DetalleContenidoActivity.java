@@ -171,7 +171,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     @Override
     public void doInUI(Void data) {
         hideProgress();
-        showToast(String.valueOf(R.string.toastContenidoAñadidoCarrito));
+        showToast(getString(R.string.toastContenidoAñadidoCarrito));
         finish();
     }
 
