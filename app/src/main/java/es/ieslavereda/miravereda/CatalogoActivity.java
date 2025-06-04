@@ -46,7 +46,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         EdgeToEdge.enable(this);
         setContentView(R.layout.catalogo_layout);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.tvUsername), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.ConstraintLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
