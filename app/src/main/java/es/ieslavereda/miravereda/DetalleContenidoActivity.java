@@ -9,9 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -35,19 +32,13 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
 
     private CarritoRequest carritoRequest;
 
-    private ActivityResultLauncher<Intent> carritoLauncher;
+    // Controla si se ha votado para devolver el resultado al catálogo
+    private boolean actualizado = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.information);
-
-        carritoLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-
-                }
-        );
 
         Bundle extra = getIntent().getExtras();
         contenido = (Contenido) extra.getSerializable("contenido");
@@ -70,7 +61,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         descripcion.setText(contenido.getDescripcion());
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
         nombreautor.setText(contenido.getNombre_dir());
-        preciovalor.setText(String.valueOf(contenido.getPrecio())+" €");
+        preciovalor.setText(contenido.getPrecio() + " €");
+
         volver.setOnClickListener(v -> finish());
 
         valorar.setOnClickListener(v -> {
@@ -109,7 +101,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 public void doInUI(Void data) {
                     hideProgress();
                     showToast(getString(R.string.toastValoracionenviada));
-                    recargarContenido(); // <-- ACTUALIZA LA NOTA MEDIA TRAS VOTAR
+                    // 1. Refresca la info del detalle (nota media actualizada)
+                    recargarContenidoYEsperar();
                 }
 
                 @Override
@@ -137,8 +130,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         return prefs.getInt("clienteId", -1);
     }
 
-
-    private void recargarContenido() {
+    // Tras votar, refresca detalle y al salir avisa al catálogo para recargar
+    private void recargarContenidoYEsperar() {
         showProgress();
         executeCall(new CallInterface<Contenido>() {
             @Override
@@ -152,6 +145,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                     contenido = nuevoContenido;
                     notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
                 }
+                // Marca que se ha actualizado para devolver resultado al catálogo
+                actualizado = true;
             }
 
             @Override
@@ -179,5 +174,16 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     public void doInError(Context context, Exception e) {
         hideProgress();
         showToast("Error al añadir contenido al carrito: " + e.getMessage());
+    }
+
+    @Override
+    public void finish() {
+        // Solo devuelve setResult si se ha actualizado (tras votar)
+        if (actualizado) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("actualizado", true);
+            setResult(RESULT_OK, resultIntent);
+        }
+        super.finish();
     }
 }
