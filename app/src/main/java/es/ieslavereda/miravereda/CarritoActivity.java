@@ -71,7 +71,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 executeCall(new CallInterface<Void>() {
                     @Override
                     public Void doInBackground() throws Exception {
-                        Connector.getConector().deleteVoid(R.string.toastCarrito + clienteId + "/" + contenido.getId());
+                        Connector.getConector().deleteVoid("carrito/" + clienteId + "/" + contenido.getId());
                         return null;
                     }
 
@@ -110,7 +110,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
             executeCall(new CallInterface<Void>() {
                 @Override
                 public Void doInBackground() throws Exception {
-                    Connector.getConector().postVoid(String.valueOf(R.string.toastComprar + clienteId));
+                    Connector.getConector().postVoid("comprar/" + clienteId);
                     return null;
                 }
 
@@ -143,10 +143,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     public List<Contenido> doInBackground() throws Exception {
         try {
             List<Contenido> data = Connector.getConector().getAsList(Contenido.class, "carrito/" + clienteId);
-            Log.d(String.valueOf(R.string.toastcarrito), "Respuesta del backend: " + data);
+            Log.d("Carrito", "Respuesta del backend: " + data);
             return data;
         } catch (Exception e) {
-            Log.e(String.valueOf(R.string.toastcarrito), String.valueOf(R.string.toastErrorCarga), e);
+            Log.e("carrito/", String.valueOf(R.string.toastErrorCarga), e);
             throw e;
         }
     }

@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import es.ieslavereda.miravereda.Base.BaseActivity;
 
-public class PreferenciasActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class   PreferenciasActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner bSpinner, aSpinner;
     private boolean userSelect = false;
