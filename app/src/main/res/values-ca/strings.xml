@@ -19,7 +19,7 @@
     <string name="loginPlaceHolderCliente">Introduïx client</string>
     <string name="loginPlaceHolderContrasena">Introduïx la teua contrasenya</string>
     <string name="loginTextOlvidadoContra">¿Has oblidat la contrasenya?</string>
-    <string name="loginTextIniciarSesion">Iniciar Sessió</string>
+    <string name="loginTextIniciarSesion">INICIAR SESSIÓ</string>
     <string name="loginTextCrearCuenta">No tens compte? Crea el teu compte</string>
 
     <!-- Carrito -->
@@ -27,13 +27,13 @@
     <string name="carritoTotal">TOTAL: </string>
 
     <!-- View Holder Peliculas -->
-    <string name="viewholderNotaMedia">Nota Mitjana: </string>
+    <string name="viewholderNotaMedia">"Nota mitjana: "</string>
     <!-- View Holder Carrito -->
     <string name="viewholderPrecio">Preu: </string>
 
     <!-- Informacion pelicula -->
     <string name="informacionNotaPelicula">Nota: </string>
-    <string name="informacionNotaMedia">Nota Mitjana: </string>
+    <string name="informacionNotaMedia">"Nota mitjana: "</string>
     <string name="informacionPrecio">Preu: </string>
     <string name="informacionAñadirCarrito">Afegir al carret</string>
     <string name="informacionSinopsis">Sinopsi</string>
@@ -52,10 +52,10 @@
 
     <!-- Tostadas -->
     <string name="tostadaRellenarCampos">Per favor, farcida tots els camps</string>
-    <string name="tostadaLogin">Login correcte</string>
+    <string name="tostadaLogin">Sessió iniciada correctament</string>
     <string name="tostadaCredencialesIncorrectas">Credencials incorrectes</string>
     <string name="tostadaErrorRed">Error de xarxa, per favor intente més tard.</string>
-    <string name="toastSesionNoIniciada">No hi ha sessió iniciada</string>
+    <string name="toastSesionNoIniciada">No hi ha una sessió iniciada</string>
     <string name="toastErrorCargandoContenidos">Error carregant continguts</string>
     <string name="toastEliminarCarrito">Contingut eliminat del carret</string>
     <string name="toastErrorEliminar">Error en eliminar: </string>

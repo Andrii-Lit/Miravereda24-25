@@ -19,7 +19,7 @@
     <string name="loginPlaceHolderCliente">Insert client</string>
     <string name="loginPlaceHolderContrasena">Enter your password</string>
     <string name="loginTextOlvidadoContra">¿Did you forget your password?</string>
-    <string name="loginTextIniciarSesion">Login</string>
+    <string name="loginTextIniciarSesion">LOG IN</string>
     <string name="loginTextCrearCuenta">Don\'t have an account? Create your account</string>
 
     <!-- Carrito -->
@@ -27,13 +27,13 @@
     <string name="carritoTotal">TOTAL: </string>
 
     <!-- View Holder Peliculas -->
-    <string name="viewholderNotaMedia">Average Grade: </string>
+    <string name="viewholderNotaMedia">"Average rating: "</string>
     <!-- View Holder Carrito -->
     <string name="viewholderPrecio">Price: </string>
 
     <!-- Informacion pelicula -->
     <string name="informacionNotaPelicula">Rating: </string>
-    <string name="informacionNotaMedia">Average Grade: </string>
+    <string name="informacionNotaMedia">"Average rating: "</string>
     <string name="informacionPrecio">Price: </string>
     <string name="informacionAñadirCarrito">Add to cart</string>
     <string name="informacionSinopsis">Synopsis</string>
@@ -43,9 +43,9 @@
     <!-- Activity crear -->
     <string name="crearNombre">Name</string>
     <string name="crearApellidos">Surnames</string>
-    <string name="crearCodigoPostal">Zip code</string>
+    <string name="crearCodigoPostal">Postal code</string>
     <string name="crearDomicilio">Home address</string>
-    <string name="crearNumeroTarjeta">Card num</string>
+    <string name="crearNumeroTarjeta">Card number</string>
     <string name="crearCorreo">Email</string>
     <string name="crearContrasenya">Password</string>
     <string name="crearCuenta">CREATE ACCOUNT</string>
@@ -55,7 +55,7 @@
     <string name="tostadaLogin">Successful login</string>
     <string name="tostadaCredencialesIncorrectas">Incorrect credentials</string>
     <string name="tostadaErrorRed">Network error, please try again later.</string>
-    <string name="toastSesionNoIniciada">No session started</string>
+    <string name="toastSesionNoIniciada">Not logged in</string>
     <string name="toastErrorCargandoContenidos">Error loading content</string>
     <string name="toastEliminarCarrito">Content removed from cart</string>
     <string name="toastErrorEliminar">Error deleting: </string>

@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserInfoActivity" />
+        <activity android:name=".ResetActivity" />
         <activity android:name=".CatalogoActivity" />
         <activity android:name=".CarritoActivity" />
         <activity android:name=".DetalleContenidoActivity" />

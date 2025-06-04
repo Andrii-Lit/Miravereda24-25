@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import es.ieslavereda.miravereda.Base.BaseActivity;
 
-public class UserInfoActivity extends BaseActivity {
+public class ResetActivity extends BaseActivity {
     private TextView tvEmail;
     private TextView tvPassword;
     private FloatingActionButton fbtBack;
@@ -24,7 +19,7 @@ public class UserInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_user_info);
+        setContentView(R.layout.activity_reset);
 
         tvEmail = findViewById(R.id.tvEmail);
         tvPassword = findViewById(R.id.tvPassword);

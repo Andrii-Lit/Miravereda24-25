@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
         });
 
         tvContrasenya.setOnClickListener(v -> {
-            startActivity(new Intent(this, UserInfoActivity.class));
+            startActivity(new Intent(this, ResetActivity.class));
         });
     }
 
