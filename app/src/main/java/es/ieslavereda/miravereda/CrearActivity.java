@@ -51,7 +51,7 @@ public class CrearActivity extends BaseActivity {
         crear_backBTN.setOnClickListener((View view)->{
             Intent intent = new Intent();
             setResult(RESULT_CANCELED, intent);
-            Toast.makeText(CrearActivity.this, "Acción cancelada", LENGTH_SHORT).show();
+            Toast.makeText(CrearActivity.this, R.string.toastAccionCancelada, LENGTH_SHORT).show();
             finish();
         });
 
@@ -78,7 +78,7 @@ public class CrearActivity extends BaseActivity {
             public void doInUI(Cliente data) {
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
-                Toast.makeText(CrearActivity.this, "Cuenta creada con éxito", LENGTH_LONG).show();
+                Toast.makeText(CrearActivity.this, R.string.toastCrearExito, LENGTH_LONG).show();
                 finish();
             }
         });

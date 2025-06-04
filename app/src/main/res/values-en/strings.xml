@@ -56,5 +56,26 @@
     <string name="toastCarritoVacio">The cart is empty.</string>
     <string name="toastErrorCargar">The contents of the shopping cart could not be loaded.</string>
     <string name="toastErrorCargarCarrito">Error loading cart: </string>
+    <string name="toastAccionCancelada">Action cancelled</string>
+    <string name="toastCrearExito">Account created successfully</string>
+    <string name="toastErrorObtenerID">Could not get client ID</string>
+    <string name="toastIntroducirNota">You must enter a note</string>
+    <string name="toastNotaNumero">The grade must be a number</string>
+    <string name="toastValoracionenviada">Rating sent successfully!</string>
+    <string name="toastErrorActNotaMedia">Error updating the average grade</string>
+    <string name="toastContenidoAñadidoCarrito">Content added to cart</string>
+
+
+    <!-- Mas traduccion random -->
+    <string name="toastCliente">customer</string>
+    <string name="toastClienteId">customId</string>
+    <string name="toastEmail">e-mail</string>
+    <string name="toastContrasenya">password</string>
+    <string name="toastCarrito">cart/</string>
+    <string name="toastComprar">buy/</string>
+    <string name="toastcarrito">Cart</string>
+    <string name="toastErrorCarga">Error loading content list</string>
+    <string name="toastEmailLeido">Email address:</string>
+
 </resources>
 

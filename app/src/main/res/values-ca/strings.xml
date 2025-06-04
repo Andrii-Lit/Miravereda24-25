@@ -56,4 +56,23 @@
     <string name="toastCarritoVacio">El carret està buit.</string>
     <string name="toastErrorCargar">No es van poder carregar els continguts del carret.</string>
     <string name="toastErrorCargarCarrito">Error carregant carret: </string>
+    <string name="toastAccionCancelada">Acció cancel·lada</string>
+    <string name="toastCrearExito">Compte creat amb èxit</string>
+    <string name="toastErrorObtenerID">No es va poder obtindre l\'ANEU del client</string>
+    <string name="toastIntroducirNota">Has d\'introduir una nota</string>
+    <string name="toastNotaNumero">La nota ha de ser un número</string>
+    <string name="toastValoracionenviada">Valoració enviada correctament!</string>
+    <string name="toastErrorActNotaMedia">Error en actualitzar la nota mitjana</string>
+    <string name="toastContenidoAñadidoCarrito">Contingut afegit al carret</string>
+
+    <!-- Mas traduccion random -->
+    <string name="toastCliente">client</string>
+    <string name="toastClienteId">clientId</string>
+    <string name="toastEmail">email</string>
+    <string name="toastContrasenya">contrasenya</string>
+    <string name="toastCarrito">carret/</string>
+    <string name="toastComprar">comprar/</string>
+    <string name="toastcarrito">Carret</string>
+    <string name="toastErrorCarga">Error en carregar llista contingut</string>
+    <string name="toastEmailLeido">Llegit email: </string>
 </resources>

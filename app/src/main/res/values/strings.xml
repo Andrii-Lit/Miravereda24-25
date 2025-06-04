@@ -56,5 +56,25 @@
     <string name="toastCarritoVacio">El carrito está vacío.</string>
     <string name="toastErrorCargar">No se pudieron cargar los contenidos del carrito.</string>
     <string name="toastErrorCargarCarrito">Error cargando carrito: </string>
+    <string name="toastAccionCancelada">Acción cancelada</string>
+    <string name="toastCrearExito">Cuenta creada con éxito</string>
+    <string name="toastErrorObtenerID">No se pudo obtener el ID del cliente</string>
+    <string name="toastIntroducirNota">Debes introducir una nota</string>
+    <string name="toastNotaNumero">La nota debe ser un número</string>
+    <string name="toastValoracionenviada">¡Valoración enviada correctamente!</string>
+    <string name="toastErrorActNotaMedia">Error al actualizar la nota media</string>
+    <string name="toastContenidoAñadidoCarrito">Contenido añadido al carrito</string>
+
+    <!-- Mas traduccion random -->
+    <string name="toastCliente">cliente</string>
+    <string name="toastClienteId">clienteId</string>
+    <string name="toastEmail">email</string>
+    <string name="toastContrasenya">contrasenya</string>
+    <string name="toastCarrito">carrito/</string>
+    <string name="toastComprar">comprar/</string>
+    <string name="toastcarrito">Carrito</string>
+    <string name="toastErrorCarga">Error al cargar lista contenido</string>
+    <string name="toastEmailLeido">Leído email: </string>
+    <string name="toastContrasenyaLeido">Leído contrasenya: </string>
 </resources>
 
