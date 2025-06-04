@@ -47,8 +47,8 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         carrito_precioTV = findViewById(R.id.carrito_precioTV);
 
         // Leer clienteId desde SharedPreferences
-        SharedPreferences prefs = getSharedPreferences(String.valueOf(R.string.toastCliente), MODE_PRIVATE);
-        clienteId = prefs.getInt(String.valueOf(R.string.toastClienteId), -1);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.toastCliente), MODE_PRIVATE);
+        clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
             showToast(getString(R.string.toastErrorID));
@@ -56,8 +56,8 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
             return;
         }
 
-        String email = prefs.getString(String.valueOf(R.string.toastEmail), null);
-        String contrasenya = prefs.getString(String.valueOf(R.string.toastContrasenya), null);
+        String email = prefs.getString("email", null);
+        String contrasenya = prefs.getString("contrasenya", null);
         cliente = new Cliente(email, contrasenya);
 
         // Configurar botón volver
@@ -146,7 +146,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
             Log.d("Carrito", "Respuesta del backend: " + data);
             return data;
         } catch (Exception e) {
-            Log.e("carrito/", String.valueOf(R.string.toastErrorCarga), e);
+            Log.e("carrito/", "Error al cargar lista contenido", e);
             throw e;
         }
     }
