@@ -223,6 +223,8 @@ values
 ('vicenta404', 'Vicenta', 'Benito', 'Desengaño 21, 1ºA', '28004', 'vicenta.benito@miravereda.es', '1945-09-18', '7890123478901234'),
 
 -- Concha
-('concha505', 'Concha', 'Jiménez', 'Desengaño 21, 2ºB', '28004', 'concha.jimenez@miravereda.es', '1938-01-27', '8901234589012345');
+('concha505', 'Concha', 'Jiménez', 'Desengaño 21, 2ºB', '28004', 'concha.jimenez@miravereda.es', '1938-01-27', '8901234589012345'),
 
+-- Usuario de Andrii 
+('andrii123', 'Andrii', 'Litvinov', 'Desengaño 21, 2ºB', '28004', 'andlit@miravereda.es', '1938-01-27', '8901234589012345');
 

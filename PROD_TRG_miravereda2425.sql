@@ -223,6 +223,15 @@ after insert on valoracion for each row
 begin
 	call actualizar_nota(new.contenido_id);
 end$$
+#----------------------------------------------------------------------
+#-- TRIGGER que actualiza la nota al hacer UPDATE (volver a votar) en VALORACION
+#----------------------------------------------------------------------
+drop trigger if exists trigger_actualizar_nota_update$$
+create trigger trigger_actualizar_nota_update
+after update on valoracion for each row
+begin
+	call actualizar_nota(new.contenido_id);
+end$$
 
 #-----------------------------------------------------------------------------------------
 #-- TABLA CARRITO 

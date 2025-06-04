@@ -223,8 +223,10 @@ values
 ('vicenta404', 'Vicenta', 'Benito', 'Desengaño 21, 1ºA', '28004', 'vicenta.benito@miravereda.es', '1945-09-18', '7890123478901234'),
 
 -- Concha
-('concha505', 'Concha', 'Jiménez', 'Desengaño 21, 2ºB', '28004', 'concha.jimenez@miravereda.es', '1938-01-27', '8901234589012345');
+('concha505', 'Concha', 'Jiménez', 'Desengaño 21, 2ºB', '28004', 'concha.jimenez@miravereda.es', '1938-01-27', '8901234589012345'),
 
+-- Usuario de Andrii 
+('andrii123', 'Andrii', 'Litvinov', 'Desengaño 21, 2ºB', '28004', 'andlit@miravereda.es', '1938-01-27', '8901234589012345');
 
 #---------------------------------------
 #-- DUMP PROCEDIMIENTOS Y TRIGGERS SQL
@@ -448,6 +450,15 @@ end$$
 drop trigger if exists trigger_actualizar_nota$$
 create trigger trigger_actualizar_nota
 after insert on valoracion for each row
+begin
+	call actualizar_nota(new.contenido_id);
+end$$
+#----------------------------------------------------------------------
+#-- TRIGGER que actualiza la nota al hacer UPDATE (volver a votar) en VALORACION
+#----------------------------------------------------------------------
+drop trigger if exists trigger_actualizar_nota_update$$
+create trigger trigger_actualizar_nota_update
+after update on valoracion for each row
 begin
 	call actualizar_nota(new.contenido_id);
 end$$
@@ -710,7 +721,6 @@ begin
 end
 
 delimiter ;
-
 #-----------------------------------------------------------------------------------------------
 #-- SCRIPT para INSERTAR CONTENIDO de muestra
 #-- Se han insertado valoraciones_medias genéricas, se recalcularán al hacer una votación nueva 
@@ -862,4 +872,3 @@ insert into pelicula(contenido_id, tarifa_id, disponible_hasta, precio_base) val
 (3001, 1, '2025-12-31', 5.00),
 (3002, 1, '2025-12-31', 4.50),
 (3003, 1, '2025-12-31', 6.00);
-
