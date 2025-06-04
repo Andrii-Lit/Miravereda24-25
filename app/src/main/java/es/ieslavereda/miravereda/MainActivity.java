@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity {
         tvCrearCuenta = findViewById(R.id.tvCrearCuenta);
         tvContrasenya = findViewById(R.id.tvContrasenya);
         ivLogo=findViewById(R.id.ivLogo);
-        ivLogo.setImageResource(R.mipmap.logo_miravereda_foreground);
 
         tvCrearCuenta.setOnClickListener((View view)->{
             Intent intent = new Intent(this, CrearActivity.class);
