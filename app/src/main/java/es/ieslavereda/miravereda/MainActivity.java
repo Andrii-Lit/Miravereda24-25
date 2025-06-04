@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import es.ieslavereda.miravereda.Base.BaseActivity;
@@ -25,7 +26,7 @@ public class MainActivity extends BaseActivity {
     private TextInputEditText username;
     private TextInputEditText password;
     private Button btIniciarSesion;
-    private ImageView ivPreference;
+    private FloatingActionButton fabPreference;
     private TextView tvCrearCuenta, tvContrasenya;
 
     /**
@@ -47,7 +48,7 @@ public class MainActivity extends BaseActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btIniciarSesion = findViewById(R.id.btIniciarSesion);
-        ivPreference = findViewById(R.id.ivPreference);
+        fabPreference = findViewById(R.id.fabPreference);
         tvCrearCuenta = findViewById(R.id.tvCrearCuenta);
         tvContrasenya = findViewById(R.id.tvContrasenya);
 
@@ -57,7 +58,7 @@ public class MainActivity extends BaseActivity {
         });
         btIniciarSesion.setOnClickListener(v -> login());
 
-        ivPreference.setOnClickListener(v -> {
+        fabPreference.setOnClickListener(v -> {
             startActivity(new Intent(this, PreferenciasActivity.class));
         });
 

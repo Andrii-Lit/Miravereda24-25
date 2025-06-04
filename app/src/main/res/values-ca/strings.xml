@@ -20,7 +20,7 @@
     <string name="loginPlaceHolderContrasena">Introduïx la teua contrasenya</string>
     <string name="loginTextOlvidadoContra">¿Has oblidat la contrasenya?</string>
     <string name="loginTextIniciarSesion">INICIAR SESSIÓ</string>
-    <string name="loginTextCrearCuenta">No tens compte? Crea el teu compte</string>
+    <string name="loginTextCrearCuenta">No tens compte? CREAR COMPTE</string>
 
     <!-- Carrito -->
     <string name="carritoConfirmarCompra">CONFIRMAR COMPRA</string>

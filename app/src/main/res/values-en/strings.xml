@@ -18,9 +18,9 @@
     <!-- Login -->
     <string name="loginPlaceHolderCliente">Insert client</string>
     <string name="loginPlaceHolderContrasena">Enter your password</string>
-    <string name="loginTextOlvidadoContra">¿Did you forget your password?</string>
+    <string name="loginTextOlvidadoContra">¿Forgot your password?</string>
     <string name="loginTextIniciarSesion">LOG IN</string>
-    <string name="loginTextCrearCuenta">Don\'t have an account? Create your account</string>
+    <string name="loginTextCrearCuenta">Don\'t have an account? SIGN UP</string>
 
     <!-- Carrito -->
     <string name="carritoConfirmarCompra">CONFIRM PURCHASE</string>
