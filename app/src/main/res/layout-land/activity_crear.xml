@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Nombre"
+                    android:hint="@string/crearNombre"
                     android:inputType="text" />
 
                 <EditText
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Apellidos"
+                    android:hint="@string/crearApellidos"
                     android:inputType="text" />
             </TableRow>
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Código postal"
+                    android:hint="@string/crearCodigoPostal"
                     android:inputType="text" />
 
             </TableRow>
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Domicilio"
+                    android:hint="@string/crearDomicilio"
                     android:inputType="text" />
             </TableRow>
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Núm tarjeta"
+                    android:hint="@string/crearNumeroTarjeta"
                     android:inputType="text" />
             </TableRow>
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Correo electrónico"
+                    android:hint="@string/crearCorreo"
                     android:inputType="textEmailAddress" />
 
                 <EditText
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Contraseña"
+                    android:hint="@string/crearContrasenya"
                     android:inputType="text" />
             </TableRow>
         </TableLayout>
@@ -146,7 +146,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="CREAR CUENTA"
+        android:text="@string/crearCuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView"
         app:layout_constraintBottom_toBottomOf="parent" />
