@@ -7,6 +7,7 @@
     <title>CrudUsu</title>
 </head>
 <body>
+    <a href="inicio.php" class="btn-back">Volver atrás</a>
         <div>
             <form action="insert_pel.php" method="POST">
                 <h1>Añadir contenido</h1>

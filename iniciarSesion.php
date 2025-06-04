@@ -21,9 +21,10 @@
         }elseif (empty($password)){
             header("Location: index.php?error=Campo contraseña vacio.");
             exit();
+        }elseif ($usuario !== 'root@miravereda.es'){
+            header("Location: index.php?error=Solo el usuario root tiene acceso a este apartado.");
+            exit();
         }else{
-
-        
 
             $sql = "SELECT * FROM cliente WHERE email = '$usuario' AND contrasenya = '$password'";
             $result = mysqli_query($con, $sql);

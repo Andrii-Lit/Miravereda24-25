@@ -32,22 +32,22 @@ $html = '';
 if($num_rows > 0){
     while($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'.$row['id'].'</td>';
-        $html .= '<td>'.$row['nombre'].'</td>';
-        $html .= '<td>'.$row['apellidos'].'</td>';
-        $html .= '<td>'.$row['contrasenya'].'</td>';
-        $html .= '<td>'.$row['domicilio'].'</td>';
-        $html .= '<td>'.$row['cod_postal'].'</td>';
-        $html .= '<td>'.$row['email'].'</td>';
-        $html .= '<td>'.$row['fecha_nac'].'</td>';
-        $html .= '<td>'.$row['num_tarjeta'].'</td>';
+        $html .= '<td data-label="ID">'.$row['id'].'</td>';
+        $html .= '<td data-label="Nombre">'.$row['nombre'].'</td>';
+        $html .= '<td data-label="Apellidos">'.$row['apellidos'].'</td>';
+        $html .= '<td data-label="Contraseña">'.$row['contrasenya'].'</td>';
+        $html .= '<td data-label="Domicilio">'.$row['domicilio'].'</td>';
+        $html .= '<td data-label="Cód. Postal">'.$row['cod_postal'].'</td>';
+        $html .= '<td data-label="Email">'.$row['email'].'</td>';
+        $html .= '<td data-label="Nacimiento">'.$row['fecha_nac'].'</td>';
+        $html .= '<td data-label="Tarjeta">'.$row['num_tarjeta'].'</td>';
         $html .= '<td><a href="update_user.php?id=' . $row['id'] . '">Editar</a></td>';
         $html .= '<td><a href="delete_user.php?id=' . $row['id'] . '">Eliminar</a></td>';
         $html .= '</tr>';
     }
 } else {
     $html .= '<tr>';
-    $html .= '<td colspan="11">Sin resultados</td>';
+    $html .= '<td colspan="11" data-label="Resultado">Sin resultados</td>';
     $html .= '</tr>';
 }
 

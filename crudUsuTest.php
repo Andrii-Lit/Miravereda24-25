@@ -7,9 +7,12 @@
     <title>CrudUsu</title>
 </head>
 <body>
+    <a href="inicio.php" class="btn-back">Volver atrás</a>
     <div>
         <form action="insert_user.php" method="POST">
             <h1>Creación de usuarios</h1>
+
+            
 
             <input type="text" name="name" placeholder="Nombre">
             <input type="text" name="lastname" placeholder="Apellidos">

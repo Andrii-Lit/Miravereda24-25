@@ -126,6 +126,7 @@ thead th {
     font-weight: 700;
     text-align: left;
     word-wrap: break-word;
+    font-size: 0.6rem; /* Reduce tamaño para evitar cortes */
 }
 
 tbody td {
@@ -159,6 +160,41 @@ tbody td a:hover {
 /* Centrar el texto en celdas de acciones para botones */
 tbody td:nth-last-child(-n+2) {
     text-align: center;
+}
+
+/* Espaciado entre títulos y tablas (h1, h2) fuera de tablas */
+h1, h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* Botones de navegación */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.nav-buttons a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 192, 58);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    min-width: 15rem;
+    height: auto;
+    text-align: center;
+}
+
+.nav-buttons a:hover {
+    background-color: rgb(74, 254, 155);
 }
 
 /* Responsive */
@@ -204,7 +240,7 @@ tbody td:nth-last-child(-n+2) {
         position: absolute;
         top: 10px;
         left: 15px;
-        width: 45%;
+        width: 40%;
         white-space: nowrap;
         font-weight: 700;
         color: rgb(0, 255, 251);
@@ -223,29 +259,71 @@ tbody td:nth-last-child(-n+2) {
         color: rgb(0, 255, 251);
     }
 
-    /* Botones de navegación */
+    /* Nav buttons responsive: vertical stack */
     .nav-buttons {
-        display: flex;
         flex-direction: column; /* Uno debajo del otro */
         align-items: center;
         gap: 15px;
     }
+}
 
-    .nav-buttons a {
-        display: inline-block;
-        background-color: rgb(0, 192, 58);
-        color: white;
-        text-decoration: none;
-        padding: 12px 25px;
-        border-radius: 10px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-        width: 220px;
-        text-align: center;
+/* Estilo para enlaces sueltos en el body (sin contenedor) */
+body > a {
+    display: inline-block;
+    background-color: rgb(0, 192, 58);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin: 10px 15px; /* separa entre enlaces */
+    text-align: center;
+    min-width: 180px;
+}
+
+body > a:hover {
+    background-color: rgb(74, 254, 155);
+}
+
+.btn-back {
+    display: inline-block;
+    background-color: rgb(0, 192, 58);
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background-color: rgb(74, 254, 155);
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
     }
 
-    .nav-buttons a:hover {
-        background-color: rgb(74, 254, 155);
+    form {
+        padding: 30px;
+    }
+
+    input[type="submit"],
+    button[type="submit"] {
+        font-size: 1.2rem;
+    }
+
+    thead th {
+        font-size: 0.6rem;
+    }
+
+    tbody td {
+        font-size: 1rem;
     }
 }

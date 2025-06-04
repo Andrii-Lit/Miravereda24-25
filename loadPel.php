@@ -30,27 +30,28 @@ $num_rows = $resultado -> num_rows;
 
 $html = ''; 
 
+
 if($num_rows > 0){
     while($row = $resultado->fetch_assoc()) {
         $html .= '<tr>';
-            $html .= '<td>' . $row['id'] . '</td>';
-            $html .= '<td><img src="' . $row['poster_path'] . '"></td>';
-            $html .= '<td>' . $row['titulo'] . '</td>';
-            $html .= '<td>' . $row['genero'] . '</td>';
-            $html .= '<td>' . $row['nombre_dir'] . '</td>';
-            $html .= '<td>' . $row['duracion'] . '</td>';
-            $html .= '<td>' . $row['actores_principales'] . '</td>';
-            $html .= '<td>' . $row['fecha_estreno'] . '</td>';
-            $html .= '<td>' . $row['puntuacion_media'] . '</td>';
-            $html .= '<td>' . $row['tipo'] . '</td>';
-            $html .= '<td>' . $row['precio'] . '</td>';
+            $html .= '<td data-label="ID">' . $row['id'] . '</td>';
+            $html .= '<td data-label="POSTER"><img src="' . $row['poster_path'] . '" alt="Poster" style="max-width: 80px;"></td>';
+            $html .= '<td data-label="TÍTULO">' . $row['titulo'] . '</td>';
+            $html .= '<td data-label="GÉNERO">' . $row['genero'] . '</td>';
+            $html .= '<td data-label="DIRECTOR">' . $row['nombre_dir'] . '</td>';
+            $html .= '<td data-label="DURACIÓN">' . $row['duracion'] . '</td>';
+            $html .= '<td data-label="ACTORES">' . $row['actores_principales'] . '</td>';
+            $html .= '<td data-label="ESTRENO">' . $row['fecha_estreno'] . '</td>';
+            $html .= '<td data-label="PUNTUACIÓN">' . $row['puntuacion_media'] . '</td>';
+            $html .= '<td data-label="TIPO">' . $row['tipo'] . '</td>';
+            $html .= '<td data-label="PRECIO">' . $row['precio'] . '</td>';
             $html .= '<td><a href="update_pel.php?id=' . $row['id'] . '">Editar</a></td>';
             $html .= '<td><a href="delete_pel.php?id=' . $row['id'] . '">Eliminar</a></td>';
         $html .= '</tr>';
     }
 } else {
     $html .= '<tr>';
-    $html .= '<td colspan="11">Sin resultados</td>';
+    $html .= '<td colspan="13" data-label="Resultado">Sin resultados</td>';
     $html .= '</tr>';
 }
 

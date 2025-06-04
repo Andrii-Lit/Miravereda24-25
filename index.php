@@ -2,13 +2,14 @@
 <html>
 	<head>
 		<meta charset = "utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>MIRAVEREDA</title>
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
 		<h1>Miravereda</h1>
         
-        <div>
+        <div class="container">
             <form action="iniciarSesion.php" method="POST">
                 <h2>Inicio de sesión</h2>
 				<hr>
