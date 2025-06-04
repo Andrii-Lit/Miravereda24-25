@@ -19,30 +19,58 @@ public class Temporada {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumero() {
         return numero;
     }
 
+    /**
+     *
+     * @return
+     */
     public Serie getSerie() {
         return serie;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Capitulo> getCapitulos() {
         return capitulos;
     }
 
+    /**
+     *
+     * @param capitulos
+     */
     public void setCapitulos(List<Capitulo> capitulos) {
         this.capitulos = capitulos;
     }
 
+    /**
+     *
+     * @param capitulo
+     */
     public void addCapitulo(Capitulo capitulo) {
         capitulos.add(capitulo);
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrecioTotal_base() {
         double total = 0.0;
         for (Capitulo c : capitulos) {

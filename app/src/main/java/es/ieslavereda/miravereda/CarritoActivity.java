@@ -35,6 +35,13 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     private Cliente cliente;
     private int clienteId = -1;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,16 +72,30 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
 
         // Configurar RecyclerView y adaptador con Listener
         carritorvAdapter = new CarritoAdaptadorRV(this, contenidos_anyadidos, carrito_precioTV, new OnCarritoDeleteListener() {
+            /**
+             *
+             * @param contenido
+             * @param position
+             */
             @Override
             public void onDelete(Contenido contenido, int position) {
                 showProgress();
                 executeCall(new CallInterface<Void>() {
+                    /**
+                     *
+                     * @return
+                     * @throws Exception
+                     */
                     @Override
                     public Void doInBackground() throws Exception {
                         Connector.getConector().deleteVoid("carrito/" + clienteId + "/" + contenido.getId());
                         return null;
                     }
 
+                    /**
+                     *
+                     * @param data
+                     */
                     @Override
                     public void doInUI(Void data) {
                         contenidos_anyadidos.remove(position);
@@ -84,6 +105,11 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                         Toast.makeText(CarritoActivity.this, R.string.toastEliminarCarrito, Toast.LENGTH_SHORT).show();
                     }
 
+                    /**
+                     *
+                     * @param context
+                     * @param e
+                     */
                     @Override
                     public void doInError(Context context, Exception e) {
                         hideProgress();
@@ -108,12 +134,21 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         carrito_comprarButton.setOnClickListener(v -> {
             showProgress();
             executeCall(new CallInterface<Void>() {
+                /**
+                 *
+                 * @return
+                 * @throws Exception
+                 */
                 @Override
                 public Void doInBackground() throws Exception {
                     Connector.getConector().postVoid("comprar/" + clienteId);
                     return null;
                 }
 
+                /**
+                 *
+                 * @param data
+                 */
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
@@ -122,6 +157,11 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                     executeCall(CarritoActivity.this);
                 }
 
+                /**
+                 *
+                 * @param context
+                 * @param e
+                 */
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
@@ -139,6 +179,11 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         executeCall(this);
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Contenido> doInBackground() throws Exception {
         try {
@@ -151,6 +196,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         }
     }
 
+    /**
+     *
+     * @param data
+     */
     @Override
     public void doInUI(List<Contenido> data) {
         hideProgress();
@@ -171,6 +220,11 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         }
     }
 
+    /**
+     *
+     * @param context
+     * @param e
+     */
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();

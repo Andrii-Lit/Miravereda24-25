@@ -19,6 +19,18 @@ public class Cliente implements Serializable {
     private String email;
     private LocalDate fecha_nac;
     private String num_tarjeta;
+
+    /**
+     *
+     * @param contrasenya
+     * @param nombre
+     * @param apellidos
+     * @param domicilio
+     * @param cod_postal
+     * @param email
+     * @param fecha_nac
+     * @param num_tarjeta
+     */
     public Cliente(String contrasenya, String nombre, String apellidos, String domicilio, String cod_postal, String email, LocalDate fecha_nac, String num_tarjeta) {
         this.contrasenya = contrasenya;
         this.nombre = nombre;
@@ -30,14 +42,16 @@ public class Cliente implements Serializable {
         this.num_tarjeta = num_tarjeta;
     }
 
-
-
-
     // Constructor vacío obligatorio para Gson
     public Cliente() {
 
     }
 
+    /**
+     *
+     * @param email
+     * @param contrasenya
+     */
     public Cliente(String email, String contrasenya) {
         this.email = email;
         this.contrasenya = contrasenya;
@@ -45,74 +59,146 @@ public class Cliente implements Serializable {
 
     // Getters y setters
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getContrasenya() {
         return contrasenya;
     }
 
+    /**
+     *
+     * @param contrasenya
+     */
     public void setContrasenya(String contrasenya) {
         this.contrasenya = contrasenya;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getApellidos() {
         return apellidos;
     }
 
+    /**
+     *
+     * @param apellidos
+     */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDomicilio() {
         return domicilio;
     }
 
+    /**
+     *
+     * @param domicilio
+     */
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCod_postal() {
         return cod_postal;
     }
 
+    /**
+     *
+     * @param cod_postal
+     */
     public void setCod_postal(String cod_postal) {
         this.cod_postal = cod_postal;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public LocalDate getFecha_nac() {
         return fecha_nac;
     }
 
+    /**
+     *
+     * @param fecha_nac
+     */
     public void setFecha_nac(LocalDate fecha_nac) {
         this.fecha_nac = fecha_nac;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNum_tarjeta() {
         return num_tarjeta;
     }
 
+    /**
+     *
+     * @param num_tarjeta
+     */
     public void setNum_tarjeta(String num_tarjeta) {
         this.num_tarjeta = num_tarjeta;
     }

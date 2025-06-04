@@ -33,6 +33,13 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
 
     private CarritoRequest carritoRequest;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,12 +100,21 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
 
             showProgress();
             executeCall(new CallInterface<Void>() {
+                /**
+                 *
+                 * @return
+                 * @throws Exception
+                 */
                 @Override
                 public Void doInBackground() throws Exception {
                     Connector.getConector().postVoid(valoracionRequest, "votar");
                     return null;
                 }
 
+                /**
+                 *
+                 * @param data
+                 */
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
@@ -108,6 +124,11 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                     finish();
                 }
 
+                /**
+                 *
+                 * @param context
+                 * @param e
+                 */
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
@@ -128,17 +149,30 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         });
     }
 
+    /**
+     *
+     * @return
+     */
     private int obtenerClienteId() {
         SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
         return prefs.getInt("clienteId", -1);
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     @Override
     public Void doInBackground() throws Exception {
         Connector.getConector().postVoid(carritoRequest, "carrito/");
         return null;
     }
 
+    /**
+     *
+     * @param data
+     */
     @Override
     public void doInUI(Void data) {
         hideProgress();
@@ -146,6 +180,11 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         finish();
     }
 
+    /**
+     *
+     * @param context
+     * @param e
+     */
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();

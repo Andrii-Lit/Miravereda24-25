@@ -28,7 +28,14 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
+    /**
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param ViewType The view type of the new View.
+     *
+     * @return
+     */
     @NonNull
     @Override
     public AdaptadorRV.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int ViewType) {
@@ -37,6 +44,12 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    /**
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull AdaptadorRV.ViewHolder holder, int position) {
         Contenido contenido = contenidos.get(position);
@@ -46,6 +59,11 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     }
 
     //devuelve el número de elementos de la lista
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return contenidos.size();
@@ -56,6 +74,10 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         TextView titulo;
         TextView notaMediaValor; // Corregido a TextView
 
+        /**
+         *
+         * @param itemView
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             poster = itemView.findViewById(R.id.Poster); // Nombre corregido

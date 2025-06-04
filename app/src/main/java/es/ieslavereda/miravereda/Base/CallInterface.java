@@ -8,6 +8,11 @@ public interface CallInterface<T> {
 
     void doInUI(T data);
 
+    /**
+     *
+     * @param context
+     * @param e
+     */
     default void doInError(Context context, Exception e) {
         Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
     }

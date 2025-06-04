@@ -26,6 +26,13 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
     private final TextView totalTextView;
     private final OnCarritoDeleteListener deleteListener;
 
+    /**
+     *
+     * @param context
+     * @param contenidos
+     * @param totalTextView
+     * @param deleteListener
+     */
     public CarritoAdaptadorRV(Context context, List<Contenido> contenidos, TextView totalTextView, OnCarritoDeleteListener deleteListener) {
         this.context = context;
         this.contenidos = contenidos;
@@ -35,6 +42,14 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         actualizarTotal();
     }
 
+    /**
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     *
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +57,12 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         return new ViewHolder(view);
     }
 
+    /**
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Contenido contenido = contenidos.get(position);
@@ -69,11 +90,19 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         });
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return contenidos.size();
     }
 
+    /**
+     *
+     * @return
+     */
     private double calcularTotal() {
         double total = 0;
         for (Contenido contenido : contenidos) {
@@ -95,6 +124,10 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
         FloatingActionButton vh_carrito_borrarButton;
         TextView vh_carrito_tituloTV, vh_carrito_directorTV, vh_carrito_costeTV;
 
+        /**
+         *
+         * @param itemView
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             vh_carrito_portada = itemView.findViewById(R.id.vh_carrito_portada);

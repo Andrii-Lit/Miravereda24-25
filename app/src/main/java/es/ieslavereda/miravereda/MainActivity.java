@@ -17,6 +17,9 @@ import es.ieslavereda.miravereda.Base.BaseActivity;
 import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Cliente;
 
+/**
+ * @author Andrii,Cristobal,Dario,Leonardo
+ */
 public class MainActivity extends BaseActivity {
 
     private TextInputEditText username;
@@ -25,6 +28,13 @@ public class MainActivity extends BaseActivity {
     private ImageView ivPreference;
     private TextView tvCrearCuenta, tvContrasenya;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = getSharedPreferences("config", MODE_PRIVATE);
@@ -68,6 +78,11 @@ public class MainActivity extends BaseActivity {
         final Cliente cliente = new Cliente(email, contrasenya);
 
         executeCall(new CallInterface<Cliente>() {
+            /**
+             *
+             * @return
+             * @throws Exception
+             */
             @Override
             public Cliente doInBackground() throws Exception {
 
@@ -78,6 +93,10 @@ public class MainActivity extends BaseActivity {
                 }
             }
 
+            /**
+             *
+             * @param clienteResponse
+             */
             @Override
             public void doInUI(Cliente clienteResponse) {
                 if (clienteResponse != null) {

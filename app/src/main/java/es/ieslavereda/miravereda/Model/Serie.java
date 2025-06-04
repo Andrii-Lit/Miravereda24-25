@@ -11,6 +11,22 @@ public class Serie extends Contenido {
     private boolean disponibilidad;
 
 
+    /**
+     *
+     * @param id
+     * @param titulo
+     * @param descripcion
+     * @param genero
+     * @param nombre_dir
+     * @param duracion
+     * @param actores_principales
+     * @param fecha_estreno
+     * @param puntuacion_media
+     * @param poster_path
+     * @param tarifa_id
+     * @param disponibilidad
+     * @param temporadas
+     */
     public Serie(int id, String titulo, String descripcion, String genero, String nombre_dir,
                  int duracion, String actores_principales, LocalDate fecha_estreno, double puntuacion_media, String poster_path,
                  int tarifa_id, boolean disponibilidad, List<Temporada> temporadas) {
@@ -22,22 +38,42 @@ public class Serie extends Contenido {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDisponible() {
         return disponibilidad;
     }
 
+    /**
+     *
+     * @param disponibilidad
+     */
     public void setDisponibilidad(boolean disponibilidad) {
         this.disponibilidad = disponibilidad;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Temporada> getTemporadas() {
         return temporadas;
     }
 
+    /**
+     *
+     * @param temporadas
+     */
     public void setTemporadas(List<Temporada> temporadas) {
         this.temporadas = temporadas;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrecioTotal_base() {
         double total = 0.0;
         if (temporadas != null) {
