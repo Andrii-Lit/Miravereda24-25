@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * @author Andrii,Cristobal,Dario,Leonardo
+ * @author Andrii,Cristobal,Dario,Leonardo,Ivan
  * @version 1.0
  *
  */
