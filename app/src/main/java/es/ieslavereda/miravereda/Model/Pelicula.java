@@ -9,6 +9,22 @@ public class Pelicula extends Contenido {
     private LocalDate disponible_hasta;
     private double precio_base;
 
+    /**
+     *
+     * @param id
+     * @param titulo
+     * @param descripcion
+     * @param genero
+     * @param nombre_dir
+     * @param duracion
+     * @param actores_principales
+     * @param fecha_estreno
+     * @param puntuacion_media
+     * @param poster_path
+     * @param tarifa_id
+     * @param disponible_hasta
+     * @param precio_base
+     */
     public Pelicula(int id, String titulo, String descripcion, String genero,
                     String nombre_dir, int duracion, String actores_principales,
                     LocalDate fecha_estreno, double puntuacion_media, String poster_path,
@@ -20,22 +36,42 @@ public class Pelicula extends Contenido {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public LocalDate getDisponible_hasta() {
         return disponible_hasta;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrecio_base() {
         return precio_base;
     }
 
+    /**
+     *
+     * @param disponible_hasta
+     */
     public void setDisponible_hasta(LocalDate disponible_hasta) {
         this.disponible_hasta = disponible_hasta;
     }
 
+    /**
+     *
+     * @param precio_base
+     */
     public void setPrecio_base(double precio_base) {
         this.precio_base = precio_base;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTarifa_id() {
         return tarifa_id;
     }

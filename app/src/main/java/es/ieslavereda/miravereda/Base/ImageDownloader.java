@@ -18,23 +18,49 @@ public class ImageDownloader {
     private static RequestQueue colaPeticiones ;
     private final static String TAG = ImageDownloader.class.getName();
 
+    /**
+     *
+     * @param url
+     * @param imageView
+     */
     public static void downloadImage(String url, ImageView imageView){
         Picasso.get().load(url).into(imageView);
     }
+
+    /**
+     *
+     * @param url
+     * @param errorDrawable
+     * @param imageView
+     */
     public static void downloadImage(String url, Drawable errorDrawable, ImageView imageView){
         Picasso.get().load(url).error(errorDrawable).into(imageView);
     }
 
-
+    /**
+     *
+     * @param context
+     * @param url
+     * @param imageView
+     * @param defaultDrawable
+     */
     public static void downloadImage(Context context, String url, ImageView imageView, int defaultDrawable){
         ImageRequest peticion = new ImageRequest(
                 url,
                 new Response.Listener<Bitmap>() {
+                    /**
+                     *
+                     * @param bitmap
+                     */
                     @Override public void onResponse(Bitmap bitmap) {
                         imageView.setImageBitmap(bitmap);
                     }
                 }, 0, 0, null, // maxWidth, maxHeight, decodeConfig
                 new Response.ErrorListener() {
+                    /**
+                     *
+                     * @param error
+                     */
                     @Override public void onErrorResponse(VolleyError error) {
                         imageView.setImageResource(defaultDrawable);
                         Log.e(TAG,error.getMessage());
@@ -44,6 +70,11 @@ public class ImageDownloader {
         getRequestQueue(context).add(peticion);
     }
 
+    /**
+     *
+     * @param context
+     * @return
+     */
     private static RequestQueue getRequestQueue(Context context){
         if(colaPeticiones==null)
             colaPeticiones = Volley.newRequestQueue(context);

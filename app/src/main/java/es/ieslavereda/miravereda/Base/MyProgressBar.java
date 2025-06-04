@@ -14,19 +14,37 @@ public class MyProgressBar extends ProgressBar {
 
     private ViewGroup rootView;
 
+    /**
+     *
+     * @param context
+     */
     public MyProgressBar(Context context) {
         super(context);
     }
 
+    /**
+     *
+     * @param context
+     * @param attrs
+     */
     public MyProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
+    /**
+     *
+     * @param context
+     * @param attrs
+     * @param defStyleAttr
+     */
     public MyProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-
+    /**
+     *
+     * @param rootView
+     */
     public void initControl(ViewGroup rootView){
         this.rootView = rootView;
         center();

@@ -33,6 +33,11 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
     private FloatingActionButton botonVoladorMagico;
 
     public class LocaleHelper {
+        /**
+         *
+         * @param context
+         * @param languageCode
+         */
         public void setLocale(Context context, String languageCode) {
             Locale locale = new Locale(languageCode);
             Locale.setDefault(locale);
@@ -49,6 +54,13 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
         }
     }
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,6 +83,13 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
         aSpinner.setAdapter(adapter);
         setSpinnerSelection();
         aSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *
+             * @param parent The AdapterView where the selection happened
+             * @param view The view within the AdapterView that was clicked
+             * @param position The position of the view in the adapter
+             * @param id The row id of the item that is selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                 if (!userSelect) {
@@ -82,6 +101,7 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
                 String currentLang = getSharedPreferences("Settings", MODE_PRIVATE).getString("My_Lang", "es");
 
                 String newLang = currentLang;
+
 
                 if (selectedLanguage.equals("Castellano") || selectedLanguage.equals("Castella") || selectedLanguage.equals("Spanish")) {
                     newLang = "es";
@@ -96,6 +116,10 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
                 }
             }
 
+            /**
+             *
+             * @param parent The AdapterView that now contains no selected item.
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -107,6 +131,13 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
         bSpinner.setSelection(temaGuardado);
 
         bSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *
+             * @param adapterView The AdapterView where the selection happened
+             * @param view The view within the AdapterView that was clicked
+             * @param position The position of the view in the adapter
+             * @param id The row id of the item that is selected
+             */
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 
@@ -123,12 +154,20 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
                 }
             }
 
+            /**
+             *
+             * @param parent The AdapterView that now contains no selected item.
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
         botonVoladorMagico.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             */
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PreferenciasActivity.this, MainActivity.class);
@@ -139,11 +178,22 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
 
     }
 
+    /**
+     *
+     * @param adapterView The AdapterView where the selection happened
+     * @param view The view within the AdapterView that was clicked
+     * @param position The position of the view in the adapter
+     * @param id The row id of the item that is selected
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 
     }
 
+    /**
+     *
+     * @param parent The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
@@ -163,6 +213,10 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
         aSpinner.setSelection(position);
     }
 
+    /**
+     *
+     * @param langCode
+     */
     private void changeLanguage(String langCode) {
         SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("My_Lang", langCode);
@@ -181,6 +235,10 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
         }
     }
 
+    /**
+     *
+     * @param langCode
+     */
     private void setLocale(String langCode) {
         Locale locale = new Locale(langCode);
         Locale.setDefault(locale);

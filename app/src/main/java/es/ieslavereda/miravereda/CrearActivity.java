@@ -27,6 +27,14 @@ public class CrearActivity extends BaseActivity {
             crear_cod_postalET,crear_direccionET, crear_num_tarjetaET, crear_emailET, crear_contrasenyaET;
     private FloatingActionButton crear_backBTN;
     private Button crear_BTN;
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = getSharedPreferences("config", MODE_PRIVATE);
@@ -69,11 +77,20 @@ public class CrearActivity extends BaseActivity {
                     crear_num_tarjetaET.getText().toString()
                     );
         executeCall(new CallInterface<Cliente>() {
+            /**
+             *
+             * @return
+             * @throws Exception
+             */
             @Override
             public Cliente doInBackground() throws Exception {
                 return Connector.getConector().post(Cliente.class, cliente, "cliente/");
             }
 
+            /**
+             *
+             * @param data
+             */
             @Override
             public void doInUI(Cliente data) {
                 Intent intent = new Intent();

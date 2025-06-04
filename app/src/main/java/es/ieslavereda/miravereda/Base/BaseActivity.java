@@ -23,6 +23,13 @@ public  class BaseActivity extends AppCompatActivity {
         protected Handler handler = new Handler(Looper.getMainLooper());
         protected MyProgressBar progressBar;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -30,6 +37,12 @@ public  class BaseActivity extends AppCompatActivity {
             progressBar = new MyProgressBar(this);
             hideSystemUI();
         }
+
+    /**
+     *
+     * @param hasFocus Whether the window of this activity has focus.
+     *
+     */
         @Override
         public void onWindowFocusChanged(boolean hasFocus) {
             super.onWindowFocusChanged(hasFocus);
@@ -55,9 +68,16 @@ public  class BaseActivity extends AppCompatActivity {
                 }
             });
         }
+
+    /**
+     *
+     * @param mensaje
+     */
     public  void showToast(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
+
+
 
         public void showProgress(){
             progressBar.show();
@@ -70,13 +90,20 @@ public  class BaseActivity extends AppCompatActivity {
 
         // Sobreescribimos el metodo para asociar a la barra de progreso al ContraintLayout o RelativeLayout
         // y asi poder centrarla y manipular la visibilidad del resto de componentes del ViewGroup
-        @Override
+
+    /**
+     *
+     * @param layout Resource ID to be inflated.
+     *
+     */
+    @Override
         public void setContentView(int layout){
             super.setContentView(layout);
             ViewGroup rootView = (ViewGroup) ((ViewGroup) this .findViewById(android.R.id.content)).getChildAt(0);
             progressBar.initControl(rootView);
             hideProgress();
         }
+
     private void hideSystemUI() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_IMMERSIVE
