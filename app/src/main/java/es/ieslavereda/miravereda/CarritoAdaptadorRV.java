@@ -56,7 +56,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
 
         holder.vh_carrito_tituloTV.setText(contenido.getTitulo());
         holder.vh_carrito_directorTV.setText(contenido.getNombre_dir());
-        holder.vh_carrito_costeTV.setText(String.valueOf(contenido.getPrecio())+" €");
+        holder.vh_carrito_costeTV.setText(contenido.getPrecio()+" €");
         ImageDownloader.downloadImage(contenido.getPoster_path(), holder.vh_carrito_portada);
 
         holder.vh_carrito_borrarButton.setOnClickListener(v -> {
@@ -85,7 +85,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
 
     public void actualizarTotal() {
         if (totalTextView != null) {
-            totalTextView.setText(calcularTotal()+" €");
+            totalTextView.setText("Total: €" + calcularTotal());
         }
     }
 
