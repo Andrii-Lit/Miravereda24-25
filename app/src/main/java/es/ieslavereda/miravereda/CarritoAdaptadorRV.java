@@ -49,6 +49,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
             holder.vh_carrito_tituloTV.setText("");
             holder.vh_carrito_directorTV.setText("");
             holder.vh_carrito_costeTV.setText("");
+            holder.vh_carrito_costeTV.setText("");
             holder.vh_carrito_portada.setImageDrawable(null);
             holder.vh_carrito_borrarButton.setOnClickListener(null);
             return;

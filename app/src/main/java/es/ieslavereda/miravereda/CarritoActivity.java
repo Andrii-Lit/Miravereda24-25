@@ -47,11 +47,11 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         carrito_precioTV = findViewById(R.id.carrito_precioTV);
 
         // Leer clienteId desde SharedPreferences
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.toastCliente), MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
         clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
-            showToast(getString(R.string.toastErrorID));
+            showToast("No se encontró el ID del cliente. Por favor inicia sesión.");
             finish();
             return;
         }

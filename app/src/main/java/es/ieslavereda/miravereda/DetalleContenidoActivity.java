@@ -70,24 +70,25 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         descripcion.setText(contenido.getDescripcion());
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
         nombreautor.setText(contenido.getNombre_dir());
-        preciovalor.setText(contenido.getPrecio()+" €");
+        preciovalor.setText(String.valueOf(contenido.getPrecio())+" €");
+        volver.setOnClickListener(v -> finish());
 
         valorar.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
             if (clienteId == -1) {
-                showToast(String.valueOf(R.string.toastErrorObtenerID));
+                showToast(getString(R.string.toastErrorObtenerID));
                 return;
             }
             String notaStr = notaCliente.getText().toString();
             if (notaStr.isEmpty()) {
-                showToast(String.valueOf(R.string.toastIntroducirNota));
+                showToast(getString(R.string.toastIntroducirNota));
                 return;
             }
             float valor;
             try {
                 valor = Float.parseFloat(notaStr);
             } catch (NumberFormatException e) {
-                showToast(String.valueOf(R.string.toastNotaNumero));
+                showToast(getString(R.string.toastNotaNumero));
                 return;
             }
 
@@ -107,11 +108,8 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
-                    showToast("Valoración enviada");
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("actualizado", true);
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
+                    showToast(getString(R.string.toastValoracionenviada));
+                    recargarContenido(); // <-- ACTUALIZA LA NOTA MEDIA TRAS VOTAR
                 }
 
                 @Override
@@ -122,14 +120,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
             });
         });
 
-        volver.setOnClickListener(v -> finish());
-
-
-
         anyadirAlCarrito.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
             if (clienteId == -1) {
-                showToast(String.valueOf(R.string.toastErrorObtenerID));
+                showToast(getString(R.string.toastErrorObtenerID));
                 return;
             }
             carritoRequest = new CarritoRequest(clienteId, contenido.getId());
@@ -177,7 +171,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     @Override
     public void doInUI(Void data) {
         hideProgress();
-        showToast(String.valueOf(R.string.toastContenidoAñadidoCarrito));
+        showToast(getString(R.string.toastContenidoAñadidoCarrito));
         finish();
     }
 
