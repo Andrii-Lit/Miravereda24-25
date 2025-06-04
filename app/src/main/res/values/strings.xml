@@ -40,6 +40,16 @@
     <string name="informacionDirector">Director: </string>
     <string name="informacionValorar">Valorar</string>
 
+    <!-- Activity crear -->
+    <string name="crearNombre">Nombre</string>
+    <string name="crearApellidos">Apellidos</string>
+    <string name="crearCodigoPostal">Código postal</string>
+    <string name="crearDomicilio">Domicilio</string>
+    <string name="crearNumeroTarjeta">Núm tarjeta</string>
+    <string name="crearCorreo">Correo electrónico</string>
+    <string name="crearContrasenya">Contraseña</string>
+    <string name="crearCuenta">CREAR CUENTA</string>
+
     <!-- Tostadas -->
     <string name="tostadaRellenarCampos">Por favor, rellena todos los campos</string>
     <string name="tostadaLogin">Login correcto</string>
