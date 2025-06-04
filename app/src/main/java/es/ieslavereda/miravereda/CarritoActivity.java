@@ -51,7 +51,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
-            showToast(String.valueOf(R.string.toastErrorID));
+            showToast(getString(R.string.toastErrorID));
             finish();
             return;
         }
@@ -117,7 +117,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
-                    showToast(String.valueOf(R.string.toastCompraExito));
+                    showToast(getString(R.string.toastCompraExito));
                     // Recargar el carrito para reflejar los cambios reales desde el backend
                     executeCall(CarritoActivity.this);
                 }
@@ -125,7 +125,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
-                    showToast(String.valueOf(R.string.toastErrorCompra));
+                    showToast(getString(R.string.toastErrorCompra));
                 }
             });
         });
@@ -164,9 +164,9 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         } else if (data != null && data.isEmpty()) {
             carritorvAdapter.notifyDataSetChanged();
             carritorvAdapter.actualizarTotal();
-            showToast(String.valueOf(R.string.toastCarritoVacio));
+            showToast(getString(R.string.toastCarritoVacio));
         } else {
-            showToast(String.valueOf(R.string.toastErrorCargar));
+            showToast(getString(R.string.toastErrorCargar));
             carritorvAdapter.actualizarTotal();
         }
     }
@@ -174,7 +174,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();
-        showToast(String.valueOf(R.string.toastErrorCargarCarrito));
+        showToast(getString(R.string.toastErrorCargarCarrito));
         carritorvAdapter.actualizarTotal();
     }
 }
