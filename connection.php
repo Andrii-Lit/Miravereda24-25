@@ -1,9 +1,14 @@
 <?php
 
     function connection(){
-        $host = "http://10.249.158.47:8080/api/";
+        
+        $host = "localhost";
         $user = "root";
         $pass = "";
+        
+        //$host = "http://10.249.158.47:8080/api/";
+        //$user = "proyecto2425";
+        //$pass = "1111";
 
         $bd = "miravereda2425";
 
