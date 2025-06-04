@@ -22,7 +22,7 @@ public class MainActivity extends BaseActivity {
     private TextInputEditText username;
     private TextInputEditText password;
     private Button btIniciarSesion;
-    private ImageView ivPreference,ivLogo;
+    private ImageView ivPreference;
     private TextView tvCrearCuenta, tvContrasenya;
 
     @Override
@@ -40,7 +40,6 @@ public class MainActivity extends BaseActivity {
         ivPreference = findViewById(R.id.ivPreference);
         tvCrearCuenta = findViewById(R.id.tvCrearCuenta);
         tvContrasenya = findViewById(R.id.tvContrasenya);
-        ivLogo=findViewById(R.id.ivLogo);
 
         tvCrearCuenta.setOnClickListener((View view)->{
             Intent intent = new Intent(this, CrearActivity.class);

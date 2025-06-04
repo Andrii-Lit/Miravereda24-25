@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@mipmap/logo_miravereda_foreground" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycled"
