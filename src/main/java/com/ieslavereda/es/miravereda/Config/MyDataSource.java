@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 /**
- * @author Andrii,Cristobal,Dario,Leonardo
+ * @author Andrii,Cristobal,Dario,Leonardo,Ivan
  * @version 1.0
  *
  */
