@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -39,9 +38,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     private Cliente cliente;
     private AdaptadorRV adaptadorRV;
 
-    // Para saber si se debe actualizar al volver del carrito
-    private boolean debeActualizar = false;
-
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
@@ -56,12 +52,16 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             return insets;
         });
 
-        // Registrar el launcher para iniciar CarritoActivity y manejar resultado
+        // El launcher ahora gestiona el resultado del detalle (no solo del carrito)
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        debeActualizar = true;
+                        Intent data = result.getData();
+                        if (data != null && data.getBooleanExtra("actualizado", false)) {
+                            executeCall(this);
+                            showProgress();
+                        }
                     }
                 }
         );
@@ -91,28 +91,23 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
         carrito.setOnClickListener(view -> {
             Intent intent = new Intent(this, CarritoActivity.class);
-            activityResultLauncher.launch(intent);
+            startActivity(intent);
         });
 
-        // Inicializa adaptador vacío, lo actualizaremos al recibir datos
         adaptadorRV = new AdaptadorRV(this, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Ejecuta la carga de datos en background
         executeCall(this);
         showProgress();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (debeActualizar) {
-            executeCall(this);
-            showProgress();
-            debeActualizar = false;
-        }
-    }
+    // NO RECARGUES EN onResume
+    // @Override
+    // protected void onResume() {
+    //     super.onResume();
+    //     // Nada aquí
+    // }
 
     @Override
     public void onClick(View v) {
@@ -120,7 +115,8 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Contenido contenido = contenidos.get(pos);
         Intent intent = new Intent(this, DetalleContenidoActivity.class);
         intent.putExtra("contenido", contenido);
-        startActivity(intent);
+        // Usa el launcher para el detalle
+        activityResultLauncher.launch(intent);
     }
 
     @Override

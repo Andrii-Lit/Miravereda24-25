@@ -70,8 +70,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         descripcion.setText(contenido.getDescripcion());
         notaMediaValor.setText(String.valueOf(contenido.getPuntuacion_media()));
         nombreautor.setText(contenido.getNombre_dir());
-        preciovalor.setText(String.valueOf(contenido.getPrecio())+" €");
-        volver.setOnClickListener(v -> finish());
+        preciovalor.setText(contenido.getPrecio()+" €");
 
         valorar.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
@@ -108,8 +107,11 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
-                    showToast(String.valueOf(R.string.toastValoracionenviada));
-                    recargarContenido(); // <-- ACTUALIZA LA NOTA MEDIA TRAS VOTAR
+                    showToast("Valoración enviada");
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("actualizado", true);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
                 }
 
                 @Override
@@ -119,6 +121,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 }
             });
         });
+
+        volver.setOnClickListener(v -> finish());
+
+
 
         anyadirAlCarrito.setOnClickListener(v -> {
             int clienteId = obtenerClienteId();
