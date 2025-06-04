@@ -19,7 +19,7 @@ import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Cliente;
 
 /**
- * @author Andrii,Cristobal,Dario,Leonardo
+ * @author Andrii,Cristobal,Dario,Leonardo,Ivan
  */
 public class MainActivity extends BaseActivity {
 
