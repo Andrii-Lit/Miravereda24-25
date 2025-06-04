@@ -74,6 +74,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                         Connector.getConector().deleteVoid("carrito/" + clienteId + "/" + contenido.getId());
                         return null;
                     }
+
                     @Override
                     public void doInUI(Void data) {
                         contenidos_anyadidos.remove(position);
@@ -82,10 +83,16 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                         hideProgress();
                         Toast.makeText(CarritoActivity.this, R.string.toastEliminarCarrito, Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void doInError(Context context, Exception e) {
                         hideProgress();
-                        Toast.makeText(CarritoActivity.this, R.string.toastErrorEliminar + (e.getMessage() != null ? e.getMessage() : R.string.toastErrorDesconocido), Toast.LENGTH_LONG).show();
+                        Toast.makeText(CarritoActivity.this,
+                                getString(R.string.toastErrorEliminar) +
+                                        (e.getMessage() != null ? e.getMessage()
+                                                : getString(R.string.toastErrorDesconocido)),
+                                Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
