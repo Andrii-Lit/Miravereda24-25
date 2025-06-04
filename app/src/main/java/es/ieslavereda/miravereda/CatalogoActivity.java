@@ -34,7 +34,6 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
 
     private List<Contenido> contenidos = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ImageView ivLogo;
     private FloatingActionButton volver;
     private FloatingActionButton carrito;
     private Cliente cliente;
@@ -85,11 +84,9 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Log.d("PREFS", "Leído email: " + email);
         Log.d("PREFS", "Leído contrasenya: " + contrasenya);
 
-        ivLogo = findViewById(R.id.ivLogo);
         volver = findViewById(R.id.Volver);
         carrito = findViewById(R.id.Carrito);
         recyclerView = findViewById(R.id.recycled);
-        ivLogo.setImageResource(R.mipmap.logo_miravereda_foreground);
 
         volver.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
         carrito.setOnClickListener(view -> {
