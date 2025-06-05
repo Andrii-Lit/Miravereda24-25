@@ -47,7 +47,7 @@ public class ResetActivity extends BaseActivity {
             String nuevaContrasenya = reset_contrasenyaTIET.getText().toString().trim();
 
             if (email.isEmpty() || nuevaContrasenya.isEmpty()) {
-                Toast.makeText(ResetActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetActivity.this, R.string.ResetRellenarCampos, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -72,14 +72,14 @@ public class ResetActivity extends BaseActivity {
                             }
                             @Override
                             public void doInUI(Cliente updated) {
-                                Toast.makeText(ResetActivity.this, "Contraseña cambiada correctamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ResetActivity.this, R.string.toastContraseñaCambiada, Toast.LENGTH_SHORT).show();
                                 setResult(RESULT_OK, new Intent());
                                 finish();
                             }
                         });
 
                     } else {
-                        Toast.makeText(ResetActivity.this, "Correo no encontrado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResetActivity.this, R.string.toastCorreoNoEncontrado, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
