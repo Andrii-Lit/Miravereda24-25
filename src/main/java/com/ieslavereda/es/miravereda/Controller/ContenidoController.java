@@ -13,10 +13,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
- * @author Andrii,Cristobal,Dario,Leonardo
- * @version 1.0
+ * Controlador REST que gestiona las operaciones relacionadas con contenidos,
+ * carritos de compra, votaciones y procesos de compra.
+ * Proporciona endpoints para realizar operaciones CRUD sobre contenidos,
+ * así como funcionalidades adicionales como añadir al carrito o votar un contenido.
  *
+ * @author
+ * Andrii, Cristobal, Dario, Leonardo, Ivan
+ * @version 1.0
  */
 @RestController
 @RequestMapping("/api")
@@ -27,9 +33,10 @@ public class ContenidoController {
     private ContenidoService service;
 
     /**
+     * Obtiene un contenido por su ID.
      *
-     * @param id
-     * @return
+     * @param id ID del contenido a obtener.
+     * @return ResponseEntity con el contenido si se encuentra, o un mensaje de error si no existe.
      */
     @GetMapping("/contenido/{id}")
     public ResponseEntity<?> getContenido(@PathVariable int id) {
@@ -48,8 +55,9 @@ public class ContenidoController {
     }
 
     /**
+     * Obtiene todos los contenidos disponibles.
      *
-     * @return
+     * @return ResponseEntity con la lista de todos los contenidos, o mensaje de error.
      */
     @GetMapping("/contenido/")
     public ResponseEntity<?> getAllContenidos() {
@@ -64,9 +72,10 @@ public class ContenidoController {
     }
 
     /**
+     * Añade un nuevo contenido al sistema.
      *
-     * @param contenido
-     * @return
+     * @param contenido Objeto Contenido a añadir.
+     * @return ResponseEntity con el contenido creado o mensaje de error si falla.
      */
     @PostMapping("/contenido/")
     public ResponseEntity<?> addContenido(@RequestBody Contenido contenido) {
@@ -82,9 +91,10 @@ public class ContenidoController {
     }
 
     /**
+     * Actualiza un contenido existente.
      *
-     * @param contenido
-     * @return
+     * @param contenido Objeto Contenido con la información a actualizar.
+     * @return ResponseEntity con el contenido actualizado o mensaje de error si no se encuentra.
      */
     @PutMapping("/contenido/")
     public ResponseEntity<?> updateContenido(@RequestBody Contenido contenido) {
@@ -103,9 +113,10 @@ public class ContenidoController {
     }
 
     /**
+     * Elimina un contenido dado su ID.
      *
-     * @param id
-     * @return
+     * @param id ID del contenido a eliminar.
+     * @return ResponseEntity con el contenido eliminado o mensaje de error si no se encuentra.
      */
     @DeleteMapping("/contenido/{id}")
     public ResponseEntity<?> deleteContenido(@PathVariable int id) {
@@ -124,15 +135,15 @@ public class ContenidoController {
     }
 
     /**
+     * Obtiene todos los contenidos del carrito de un cliente por su ID.
      *
-     * @param id
-     * @return
+     * @param id ID del cliente.
+     * @return ResponseEntity con la lista de contenidos del carrito.
      */
     @GetMapping("/carrito/{id}")
     public ResponseEntity<?> getAllCarrito(@PathVariable int id) {
         try {
             List<Contenido> carrito = service.getAllCarrito(id);
-            // Devuelve una lista vacía si no hay contenido en el carrito
             if (carrito == null) {
                 carrito = new ArrayList<>();
             }
@@ -146,9 +157,10 @@ public class ContenidoController {
     }
 
     /**
+     * Añade un contenido al carrito de un cliente.
      *
-     * @param carritoRequest
-     * @return
+     * @param carritoRequest Objeto con el ID del cliente y del contenido.
+     * @return ResponseEntity con mensaje de éxito o error.
      */
     @PostMapping("/carrito/")
     public ResponseEntity<?> anyadirCarrito(@RequestBody CarritoRequest carritoRequest) {
@@ -164,9 +176,10 @@ public class ContenidoController {
     }
 
     /**
+     * Procesa la compra de todos los contenidos en el carrito de un cliente.
      *
-     * @param clienteId
-     * @return
+     * @param clienteId ID del cliente que realiza la compra.
+     * @return ResponseEntity con mensaje de éxito o error.
      */
     @PostMapping("/comprar/{clienteId}")
     public ResponseEntity<?> comprar(@PathVariable int clienteId) {
@@ -182,9 +195,10 @@ public class ContenidoController {
     }
 
     /**
+     * Registra una votación por parte de un cliente sobre un contenido.
      *
-     * @param request
-     * @return
+     * @param request Mapa con las claves: clienteId, contenidoId, valor.
+     * @return ResponseEntity con mensaje de éxito o error.
      */
     @PostMapping("/votar")
     public ResponseEntity<?> votar(@RequestBody Map<String, Object> request) {
@@ -209,10 +223,11 @@ public class ContenidoController {
     }
 
     /**
+     * Elimina un contenido del carrito de un cliente.
      *
-     * @param clienteId
-     * @param contenidoId
-     * @return
+     * @param clienteId ID del cliente.
+     * @param contenidoId ID del contenido a eliminar del carrito.
+     * @return ResponseEntity con mensaje de éxito o error.
      */
     @DeleteMapping("/carrito/{clienteId}/{contenidoId}")
     public ResponseEntity<?> quitarProducto(@PathVariable int clienteId, @PathVariable int contenidoId) {
@@ -232,10 +247,3 @@ public class ContenidoController {
         }
     }
 }
-
-
-
-
-
-
-

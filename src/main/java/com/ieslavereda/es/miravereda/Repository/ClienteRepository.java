@@ -12,17 +12,6 @@ public class ClienteRepository implements IClienteRepository {
 
     /**
      *
-     * @param email
-     * @return
-     * @throws SQLException
-     */
-    @Override
-    public Cliente getClientePorEmail(String email) throws SQLException {
-        return callClientePorEmail(email);
-    }
-
-    /**
-     *
      * @param id
      * @return
      * @throws SQLException
@@ -35,6 +24,8 @@ public class ClienteRepository implements IClienteRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+
+
             return     Cliente.builder().id(rs.getInt("id")).contrasenya(rs.getString("contrasenya"))
                         .nombre(rs.getString("nombre"))
                         .apellidos(rs.getString("apellidos")).domicilio(rs.getString("domicilio"))
@@ -50,7 +41,6 @@ public class ClienteRepository implements IClienteRepository {
 
 
     }
-
 
     /**
      *
@@ -206,7 +196,7 @@ public class ClienteRepository implements IClienteRepository {
             if(!loginOk){
                  return null;
             }
-            return callClientePorEmail(email);
+            return getClientePorEmail(email);
         }
 
 
@@ -218,12 +208,14 @@ public class ClienteRepository implements IClienteRepository {
      * @return
      * @throws SQLException
      */
-    private Cliente callClientePorEmail(String email) throws SQLException {
+    private Cliente getClientePorEmail(String email) throws SQLException {
         String sqlGetCliente = "{CALL get_cliente_por_email(?)}";
 
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
              CallableStatement csCliente = conn.prepareCall(sqlGetCliente)) {
+
             csCliente.setString(1, email);
+
             ResultSet rs = csCliente.executeQuery();
                 if (rs.next()) {
 
