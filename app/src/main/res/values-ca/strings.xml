@@ -17,6 +17,12 @@
     <string name="URLservidor">Ruta del servidor: http://10.249.159.10:8080/</string>
     <string name="URLAPI">Endpoints API Rest: http://10.249.159.10:8080/api/</string>
 
+    <!-- Cambiar contraseña -->
+    <string name="ResetCorreo">Correu</string>
+    <string name="ResetContrasenya">Nova contrasenya</string>
+    <string name="ResetBoton">CANVIAR CONTRASENYA</string>
+    <string name="ResetRellenarCampos">Farcida tots els camps</string>
+
     <!-- Login -->
     <string name="loginPlaceHolderCliente">Introduïx client</string>
     <string name="loginPlaceHolderContrasena">Introduïx la teua contrasenya</string>
@@ -76,6 +82,8 @@
     <string name="toastValoracionenviada">Valoració enviada correctament!</string>
     <string name="toastErrorActNotaMedia">Error en actualitzar la nota mitjana</string>
     <string name="toastContenidoAñadidoCarrito">Contingut afegit al carret</string>
+    <string name="toastContraseñaCambiada">Contrasenya canviada correctament</string>
+    <string name="toastCorreoNoEncontrado">Correu no trobat</string>
 
     <!-- Mas traduccion random -->
     <string name="toastCliente">client</string>

@@ -17,6 +17,12 @@
     <string name="URLservidor">Ruta del servidor: http://10.249.159.10:8080/</string>
     <string name="URLAPI">Endpoints API Rest: http://10.249.159.10:8080/api/</string>
 
+    <!-- Cambiar contraseña -->
+    <string name="ResetCorreo">Correo</string>
+    <string name="ResetContrasenya">Nueva contraseña</string>
+    <string name="ResetBoton">CAMBIAR CONTRASEÑA</string>
+    <string name="ResetRellenarCampos">Rellena todos los campos</string>
+
     <!-- Login -->
     <string name="loginPlaceHolderCliente">Introduce tu correo</string>
     <string name="loginPlaceHolderContrasena">Introduce tu contraseña</string>
@@ -76,6 +82,8 @@
     <string name="toastValoracionenviada">¡Valoración enviada correctamente!</string>
     <string name="toastErrorActNotaMedia">Error al actualizar la nota media</string>
     <string name="toastContenidoAñadidoCarrito">Contenido añadido al carrito</string>
+    <string name="toastContraseñaCambiada">Contraseña cambiada correctamente</string>
+    <string name="toastCorreoNoEncontrado">Correo no encontrado</string>
 
     <!-- Mas traduccion random -->
     <string name="toastCliente">cliente</string>

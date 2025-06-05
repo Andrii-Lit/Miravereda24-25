@@ -17,6 +17,12 @@
     <string name="URLservidor">Server route: http://10.249.159.10:8080/</string>
     <string name="URLAPI">Rest API Endpoints: http://10.249.159.10:8080/api/</string>
 
+    <!-- Cambiar contraseña -->
+    <string name="ResetCorreo">Email</string>
+    <string name="ResetContrasenya">New password</string>
+    <string name="ResetBoton">CHANGE PASSWORD</string>
+    <string name="ResetRellenarCampos">Fill in all fields</string>
+
     <!-- Login -->
     <string name="loginPlaceHolderCliente">Insert client</string>
     <string name="loginPlaceHolderContrasena">Enter your password</string>
@@ -76,7 +82,8 @@
     <string name="toastValoracionenviada">Rating sent successfully!</string>
     <string name="toastErrorActNotaMedia">Error updating the average grade</string>
     <string name="toastContenidoAñadidoCarrito">Content added to cart</string>
-
+    <string name="toastContraseñaCambiada">Password changed successfully</string>
+    <string name="toastCorreoNoEncontrado">Email not found</string>
 
     <!-- Mas traduccion random -->
     <string name="toastCliente">customer</string>
