@@ -29,7 +29,7 @@
                 android:id="@+id/reset_correoTIET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo" />
+                android:hint="@string/ResetCorreo" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -40,7 +40,7 @@
                 android:id="@+id/reset_contrasenyaTIET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nueva contraseña" />
+                android:hint="@string/ResetContrasenya" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:text="CAMBIAR CONTRASEÑA"
+        android:text="@string/ResetBoton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
