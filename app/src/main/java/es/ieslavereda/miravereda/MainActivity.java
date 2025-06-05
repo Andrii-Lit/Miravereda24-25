@@ -122,7 +122,6 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(MainActivity.this, "Lanzando catalogo...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
                     startActivity(intent);
-                    finish();
                 } else {
                     Toast.makeText(MainActivity.this, R.string.tostadaCredencialesIncorrectas, Toast.LENGTH_LONG).show();
                 }
