@@ -11,8 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import es.ieslavereda.miravereda.Base.BaseActivity;
 
 public class ResetActivity extends BaseActivity {
-    private TextView tvEmail;
-    private TextView tvPassword;
+
     private FloatingActionButton fbtBack;
 
     /**
@@ -28,8 +27,6 @@ public class ResetActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reset);
 
-        tvEmail = findViewById(R.id.tvEmail);
-        tvPassword = findViewById(R.id.tvPassword);
         fbtBack = findViewById(R.id.fbtBack);
         Intent intent = getIntent();
 

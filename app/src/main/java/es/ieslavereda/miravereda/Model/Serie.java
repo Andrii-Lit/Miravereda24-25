@@ -70,18 +70,6 @@ public class Serie extends Contenido {
         this.temporadas = temporadas;
     }
 
-    /**
-     *
-     * @return
-     */
-    public double getPrecioTotal_base() {
-        double total = 0.0;
-        if (temporadas != null) {
-            for (Temporada temporada : temporadas) {
-                total += temporada.getPrecioTotal_base();
-            }
-        }
-        return total;
-    }
+
 
 }

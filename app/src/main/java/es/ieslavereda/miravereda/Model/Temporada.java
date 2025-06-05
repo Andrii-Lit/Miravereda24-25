@@ -67,17 +67,6 @@ public class Temporada {
         capitulos.add(capitulo);
     }
 
-    /**
-     *
-     * @return
-     */
-    public double getPrecioTotal_base() {
-        double total = 0.0;
-        for (Capitulo c : capitulos) {
-            total += c.getPrecio();
-        }
-        return total;
-    }
 
 
 }
