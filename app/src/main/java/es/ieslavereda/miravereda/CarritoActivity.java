@@ -76,6 +76,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
              *
              * @param contenido
              * @param position
+             * Metodo para eliminar del carrito el contenido.
              */
             @Override
             public void onDelete(Contenido contenido, int position) {
@@ -95,6 +96,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                     /**
                      *
                      * @param data
+                     * Mostrar los cambios en el recycler view cuando se elimina
                      */
                     @Override
                     public void doInUI(Void data) {
@@ -109,6 +111,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                      *
                      * @param context
                      * @param e
+                     * Cuando ocurre un error nos muestra el mensaje.
                      */
                     @Override
                     public void doInError(Context context, Exception e) {
@@ -138,6 +141,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                  *
                  * @return
                  * @throws Exception
+                 * Llama a la api en el path comprar/ y le hace la llamada a la api para comprar un producto.
                  */
                 @Override
                 public Void doInBackground() throws Exception {
@@ -148,12 +152,14 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                 /**
                  *
                  * @param data
+                 *  Recargar el carrito para reflejar los cambios reales desde el backend
                  */
+
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
                     showToast(getString(R.string.toastCompraExito));
-                    // Recargar el carrito para reflejar los cambios reales desde el backend
+
                     executeCall(CarritoActivity.this);
                 }
 
@@ -161,6 +167,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                  *
                  * @param context
                  * @param e
+                 * Muestra un toast con mensaje de error.
                  */
                 @Override
                 public void doInError(Context context, Exception e) {
@@ -174,7 +181,6 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     @Override
     protected void onResume() {
         super.onResume();
-        // onResume se llama cada vez que la Activity vuelve a primer plano.
         showProgress();
         executeCall(this);
     }
@@ -183,6 +189,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
      *
      * @return
      * @throws Exception
+     * Llama a la api para pedirle la lista del carrito del cliente.
      */
     @Override
     public List<Contenido> doInBackground() throws Exception {
@@ -199,6 +206,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     /**
      *
      * @param data
+     * Añade los contenido a la lista cuando recibe la información de la API.
      */
     @Override
     public void doInUI(List<Contenido> data) {
@@ -224,6 +232,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
      *
      * @param context
      * @param e
+     * Muestra un toast indicando el error de no poder cargar la información del carrito.
      */
     @Override
     public void doInError(Context context, Exception e) {

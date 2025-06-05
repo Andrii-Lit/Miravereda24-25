@@ -19,7 +19,7 @@ import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Cliente;
 
 /**
- * @author Andrii,Cristobal,Dario,Leonardo
+ * @author Andrii,Cristobal,Dario,Leonardo,Ivan
  */
 public class MainActivity extends BaseActivity {
 
@@ -67,6 +67,11 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Metodo que llama a la api para comprobar que el cliente esta en la base de datos
+     * y que acceda si pone sus credenciales correctamente.
+     */
+
     private void login() {
         final String email = username.getText().toString();
         final String contrasenya = password.getText().toString();
@@ -83,6 +88,8 @@ public class MainActivity extends BaseActivity {
              *
              * @return
              * @throws Exception
+             * Realiza la llamada a la Api en segundo plano para que le diga si las creedenciales son correctas.
+             * Si no lo son lanza una excepcion.
              */
             @Override
             public Cliente doInBackground() throws Exception {
@@ -97,6 +104,8 @@ public class MainActivity extends BaseActivity {
             /**
              *
              * @param clienteResponse
+             * Si la llamda a la api le devuelve las credenciales como correctas lo manda con un intent
+             * a la actividad catalogo.
              */
             @Override
             public void doInUI(Cliente clienteResponse) {
