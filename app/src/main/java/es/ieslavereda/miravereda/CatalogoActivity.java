@@ -79,6 +79,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
             cliente = new Cliente(email, contrasenya);
             cliente.setId(cliente_id);
         } else {
+            Log.d("CATALOGO", "No hay sesión: vuelvo a MainActivity");
             Toast.makeText(this, R.string.toastSesionNoIniciada, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
             finish();
