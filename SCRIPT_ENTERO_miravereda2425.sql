@@ -226,8 +226,10 @@ values
 ('concha505', 'Concha', 'Jiménez', 'Desengaño 21, 2ºB', '28004', 'concha.jimenez@miravereda.es', '1938-01-27', '8901234589012345'),
 
 -- Usuario de Andrii 
-('andrii123', 'Andrii', 'Litvinov', 'Desengaño 21, 2ºB', '28004', 'andlit@miravereda.es', '1938-01-27', '8901234589012345');
+('andrii123', 'Andrii', 'Litvinov', 'Desengaño 21, 2ºB', '28004', 'andlit@miravereda.es', '1938-01-27', '8901234589012345'),
 
+-- Usuario root
+('123456', 'root', 'root', 'Desengaño 21, 2ºB', '28004', 'root@miravereda.es', '1938-01-27', '8901234589012345');
 #---------------------------------------
 #-- DUMP PROCEDIMIENTOS Y TRIGGERS SQL
 #-- by Cristóbal
