@@ -1,5 +1,5 @@
 <?php
-
+include('auth.php');
 require 'connection.php';
 
 $con = connection();

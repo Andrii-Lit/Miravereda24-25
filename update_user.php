@@ -1,4 +1,5 @@
 <?php 
+include('auth.php');
 include('connection.php');
 $con = connection();
 
@@ -18,6 +19,7 @@ $row = mysqli_fetch_array($query);
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <a href="inicio.php" class="btn-back">Volver</a>
         <div>
             <form action="edit_user.php" method="POST">
                 <h1>Editar usuario</h1>
