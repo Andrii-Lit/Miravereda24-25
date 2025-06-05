@@ -93,7 +93,7 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         carrito = findViewById(R.id.Carrito);
         recyclerView = findViewById(R.id.recycled);
 
-        volver.setOnClickListener(view -> finish());
+        volver.setOnClickListener((View view)->{finish();});
         carrito.setOnClickListener(view -> {
             Intent intent = new Intent(this, CarritoActivity.class);
             startActivity(intent);
