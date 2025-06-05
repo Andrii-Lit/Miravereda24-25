@@ -7,58 +7,42 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class ContenidoRepository implements IContenidoRepository {
-    /**
-     *
-     * @param id
-     * @return
-     * @throws SQLException
-     */
+
     @Override
     public Contenido getContenido(int id) throws SQLException {
-        Contenido contenido = null;
         String sql = "SELECT * FROM contenido WHERE id = ?";
-        try (Connection con = MyDataSource.getMydataSource().getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                contenido = new Contenido(
-                        rs.getInt("id"),
-                        rs.getString("titulo"),
-                        rs.getString("descripcion"),
-                        rs.getString("genero"),
-                        rs.getString("nombre_dir"),
-                        rs.getInt("duracion"),
-                        rs.getString("actores_principales"),
-                        rs.getDate("fecha_estreno"),
-                        rs.getDouble("puntuacion_media"),
-                        rs.getString("poster_path"),
-                        rs.getDouble("precio")
-
-                );
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Contenido(
+                            rs.getInt("id"),
+                            rs.getString("titulo"),
+                            rs.getString("descripcion"),
+                            rs.getString("genero"),
+                            rs.getString("nombre_dir"),
+                            rs.getInt("duracion"),
+                            rs.getString("actores_principales"),
+                            rs.getDate("fecha_estreno"),
+                            rs.getDouble("puntuacion_media"),
+                            rs.getString("poster_path"),
+                            rs.getDouble("precio")
+                    );
+                }
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return contenido;
+        return null;
     }
 
-    /**
-     *
-     * @param contenido
-     * @return
-     * @throws SQLException
-     */
     @Override
     public Contenido addContenido(Contenido contenido) throws SQLException {
         String sql = "INSERT INTO contenido (id, duracion, titulo, descripcion, genero, nombre_dir, actores_principales, poster_path, fecha_estreno, puntuacion_media) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = MyDataSource.getMydataSource().getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
-
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, contenido.getId());
             ps.setInt(2, contenido.getDuracion());
             ps.setString(3, contenido.getTitulo());
@@ -79,20 +63,11 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
-    /**
-     *
-     * @param contenido
-     * @return
-     * @throws SQLException
-     */
     @Override
     public Contenido updateContenido(Contenido contenido) throws SQLException {
-        String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?,actores_principales = ?, poster_path = ?,fecha_estreno = ?, puntuacion_media = ? where id = ?";
-        Contenido contenidoActualizado = null;
-
+        String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?, actores_principales = ?, poster_path = ?, fecha_estreno = ?, puntuacion_media = ? WHERE id = ?";
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, contenido.getDuracion());
             ps.setString(2, contenido.getTitulo());
             ps.setString(3, contenido.getDescripcion());
@@ -104,48 +79,36 @@ public class ContenidoRepository implements IContenidoRepository {
             ps.setDouble(9, contenido.getPuntuacion_media());
             ps.setInt(10, contenido.getId());
 
-            ps.executeUpdate();
-
-
-            contenidoActualizado = contenido;
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new SQLException("Updating contenido failed, no rows affected.");
+            }
+            return contenido;
         }
-
-
-
-        return contenidoActualizado;
     }
 
-
-    /**
-     *
-     * @param id
-     * @return
-     * @throws SQLException
-     */
     @Override
-        public Contenido deleteContenido(int id) throws SQLException {
-        Contenido contenido=getContenido(id);
+    public Contenido deleteContenido(int id) throws SQLException {
+        Contenido contenido = getContenido(id);
+        if (contenido == null) {
+            return null; // O lanzar excepción si prefieres
+        }
         String sql = "DELETE FROM contenido WHERE id = ?";
-        try (Connection conn = MyDataSource.getMydataSource().getConnection()){
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         }
         return contenido;
     }
 
-    /**
-     *
-     * @return
-     * @throws SQLException
-     */
     @Override
     public List<Contenido> getAllContenidos() throws SQLException {
         String sql = "SELECT * FROM contenido";
         List<Contenido> contenidos = new ArrayList<>();
-        try (Connection con = MyDataSource.getMydataSource().getConnection()) {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Contenido contenido = new Contenido(
                         rs.getInt("id"),
@@ -161,61 +124,32 @@ public class ContenidoRepository implements IContenidoRepository {
                         rs.getDouble("precio")
                 );
                 contenidos.add(contenido);
-
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return contenidos;
     }
 
-    /**
-     *
-     * @param p_cliente_id
-     * @param p_contenido_id
-     * @throws SQLException
-     */
     @Override
     public void anyadirCarrito(int p_cliente_id, int p_contenido_id) throws SQLException {
-        String sql="{call anyadir_al_carrito(?,?)}";
-
-        try(Connection conn = MyDataSource.getMydataSource().getConnection()){
-            CallableStatement ps = conn.prepareCall(sql);
+        String sql = "{call anyadir_al_carrito(?,?)}";
+        try (Connection conn = MyDataSource.getMydataSource().getConnection();
+             CallableStatement ps = conn.prepareCall(sql)) {
             ps.setInt(1, p_cliente_id);
             ps.setInt(2, p_contenido_id);
             ps.execute();
-
-        }catch (SQLException e) {
-           throw new SQLException(e.getMessage());
         }
-
     }
 
-    /**
-     *
-     * @param clienteId
-     * @throws SQLException
-     */
     public void comprar(int clienteId) throws SQLException {
         String sql = "{CALL comprar(?)}";
-
         try (Connection connection = MyDataSource.getMydataSource().getConnection();
              CallableStatement stmt = connection.prepareCall(sql)) {
-
-                stmt.setInt(1, clienteId);
-                stmt.execute();
-            }
+            stmt.setInt(1, clienteId);
+            stmt.execute();
         }
+    }
 
-        /**
-        *
-        * @param clienteId
-        * @param contenidoId
-        * @param valor
-        * @throws SQLException
-        */
-        public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
+    public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
         String sql = "{call votar(?, ?, ?)}";
         try (Connection con = MyDataSource.getMydataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {
@@ -226,52 +160,38 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
-
-    /**
-     *
-     * @param clienteId
-     * @return
-     */
     public List<Contenido> getAllCarrito(int clienteId) {
-        String sql="{ call get_all_carrito(?)}";
+        String sql = "{ call get_all_carrito(?)}";
         List<Contenido> contenidos = new ArrayList<>();
-        try(Connection con=MyDataSource.getMydataSource().getConnection()){
-            CallableStatement ps = con.prepareCall(sql);
+        try (Connection con = MyDataSource.getMydataSource().getConnection();
+             CallableStatement ps = con.prepareCall(sql)) {
             ps.setInt(1, clienteId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Contenido contenido = Contenido.builder()
-                        .id(rs.getInt("id"))
-                        .duracion(rs.getInt("duracion"))
-                        .titulo(rs.getString("titulo"))
-                        .descripcion(rs.getString("descripcion"))
-                        .genero(rs.getString("genero"))
-                        .nombre_dir(rs.getString("nombre_dir"))
-                        .actores_principales(rs.getString("actores_principales"))
-                        .poster_path(rs.getString("poster_path"))
-                        .fecha_estreno(rs.getDate("fecha_estreno"))
-                        .puntuacion_media(rs.getDouble("puntuacion_media"))
-                        .precio(rs.getDouble("precio"))
-                        .build();
-                contenidos.add(contenido);
-
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Contenido contenido = Contenido.builder()
+                            .id(rs.getInt("id"))
+                            .duracion(rs.getInt("duracion"))
+                            .titulo(rs.getString("titulo"))
+                            .descripcion(rs.getString("descripcion"))
+                            .genero(rs.getString("genero"))
+                            .nombre_dir(rs.getString("nombre_dir"))
+                            .actores_principales(rs.getString("actores_principales"))
+                            .poster_path(rs.getString("poster_path"))
+                            .fecha_estreno(rs.getDate("fecha_estreno"))
+                            .puntuacion_media(rs.getDouble("puntuacion_media"))
+                            .precio(rs.getDouble("precio"))
+                            .build();
+                    contenidos.add(contenido);
+                }
             }
-
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return contenidos;
     }
 
-    /**
-     *
-     * @param clienteId
-     * @param contenidoId
-     * @throws SQLException
-     */
     public void quitarProducto(int clienteId, int contenidoId) throws SQLException {
-        String sql="{call quitar_producto(?, ?)}";
+        String sql = "{call quitar_producto(?, ?)}";
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
              CallableStatement stmt = conn.prepareCall(sql)) {
             stmt.setInt(1, clienteId);
@@ -280,4 +200,3 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 }
-

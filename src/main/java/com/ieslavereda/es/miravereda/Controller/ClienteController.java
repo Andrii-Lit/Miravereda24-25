@@ -10,52 +10,55 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
- * @author Andrii,Cristobal,Dario,Leonardo,Ivan
- * @version 1.0
+ * Controlador REST que gestiona las operaciones relacionadas con los clientes.
  *
+ * <p>Incluye funcionalidades para obtener, crear, actualizar, eliminar y autenticar clientes.</p>
+ *
+ * @author Andrii, Cristobal, Dario, Leonardo, Ivan
+ * @version 1.0
  */
 @RestController
 @RequestMapping("/api")
 public class ClienteController extends BaseController {
+
     @Autowired
     private ClienteService service;
 
     /**
+     * Obtiene un cliente por su identificador.
      *
-     * @param id
-     * @return
+     * @param id el ID del cliente.
+     * @return un {@link ResponseEntity} con el cliente encontrado o mensaje de error.
      */
     @GetMapping("/cliente/{id}")
     public ResponseEntity<?> getCliente(@PathVariable int id) {
-
         try {
             Cliente c = service.getCliente(id);
             if (c == null)
                 return new ResponseEntity<>("Cliente Not Found", HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(c, HttpStatus.OK);
-
         } catch (SQLException e) {
             Map<String, Object> response = new HashMap<>();
             response.put("code", e.getErrorCode());
             response.put("message", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
     }
 
     /**
+     * Actualiza un cliente existente.
      *
-     * @param cliente
-     * @return
+     * @param cliente el objeto cliente con los datos actualizados.
+     * @return un {@link ResponseEntity} con el cliente actualizado o mensaje de error.
      */
     @PutMapping("/cliente")
     public ResponseEntity<?> updateCliente(@RequestBody Cliente cliente) {
         try {
             Cliente updated = service.updateCliente(cliente);
-            if (updated == null) {
+            if (updated == null)
                 return new ResponseEntity<>("CLIENTE NOT FOUND", HttpStatus.NOT_FOUND);
-            }
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (SQLException e) {
             Map<String, Object> response = new HashMap<>();
@@ -66,15 +69,16 @@ public class ClienteController extends BaseController {
     }
 
     /**
+     * Añade un nuevo cliente al sistema.
      *
-     * @param cliente
-     * @return
+     * @param cliente el nuevo cliente a registrar.
+     * @return un {@link ResponseEntity} con el cliente añadido o mensaje de error.
      */
     @PostMapping("/cliente/")
     public ResponseEntity<?> addCliente(@RequestBody Cliente cliente) {
         try {
             Cliente usuario = service.addCliente(cliente);
-            if (cliente == null)
+            if (usuario == null) // Corregido: se debe comprobar si "usuario" es null, no "cliente"
                 return new ResponseEntity<>("USER NOT FOUND", HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(usuario, HttpStatus.OK);
         } catch (SQLException e) {
@@ -83,13 +87,13 @@ public class ClienteController extends BaseController {
             response.put("message", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     /**
+     * Elimina un cliente dado su ID.
      *
-     * @param id
-     * @return
+     * @param id el identificador del cliente.
+     * @return un {@link ResponseEntity} con el cliente eliminado o mensaje de error.
      */
     @CrossOrigin(origins = "*")
     @DeleteMapping("/cliente/{id}")
@@ -108,8 +112,9 @@ public class ClienteController extends BaseController {
     }
 
     /**
+     * Obtiene la lista de todos los clientes.
      *
-     * @return
+     * @return un {@link ResponseEntity} con la lista de clientes o mensaje de error.
      */
     @GetMapping("/cliente/")
     public ResponseEntity<?> getAllClientes() {
@@ -124,9 +129,10 @@ public class ClienteController extends BaseController {
     }
 
     /**
+     * Inicia sesión de un cliente mediante correo electrónico y contraseña.
      *
-     * @param credenciales
-     * @return
+     * @param credenciales objeto cliente que contiene el email y la contraseña.
+     * @return un {@link ResponseEntity} con los datos del cliente o mensaje de error.
      */
     @PostMapping("/login/")
     public ResponseEntity<?> login(@RequestBody Cliente credenciales) {
@@ -143,8 +149,3 @@ public class ClienteController extends BaseController {
         }
     }
 }
-
-
-
-
-
