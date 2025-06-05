@@ -14,6 +14,8 @@
     <!-- Preferencias -->
     <string name="Idioma">Idioma</string>
     <string name="Tema">Tema</string>
+    <string name="URLservidor">Ruta del servidor: http://10.249.159.10:8080/</string>
+    <string name="URLAPI">Endpoints API Rest: http://10.249.159.10:8080/api/</string>
 
     <!-- Login -->
     <string name="loginPlaceHolderCliente">Introduce tu correo</string>

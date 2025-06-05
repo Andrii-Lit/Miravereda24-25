@@ -1,6 +1,7 @@
 package es.ieslavereda.miravereda;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Locale;
 
 import es.ieslavereda.miravereda.Base.ImageDownloader;
 import es.ieslavereda.miravereda.Model.Contenido;
@@ -78,7 +80,8 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
 
         holder.vh_carrito_tituloTV.setText(contenido.getTitulo());
         holder.vh_carrito_directorTV.setText(contenido.getNombre_dir());
-        holder.vh_carrito_costeTV.setText(contenido.getPrecio()+" €");
+        holder.vh_carrito_costeTV.setText(String.format(Locale.getDefault(), "%.2f €", contenido.getPrecio()));
+        Log.d("CarritoAdaptadorRV", "Título: " + contenido.getTitulo() + ", Precio: " + contenido.getPrecio());
         ImageDownloader.downloadImage(contenido.getPoster_path(), holder.vh_carrito_portada);
 
         holder.vh_carrito_borrarButton.setOnClickListener(v -> {
@@ -115,7 +118,7 @@ public class CarritoAdaptadorRV extends RecyclerView.Adapter<CarritoAdaptadorRV.
 
     public void actualizarTotal() {
         if (totalTextView != null) {
-            totalTextView.setText(calcularTotal()+" €");
+            totalTextView.setText(String.format(Locale.getDefault(), "%.2f €", calcularTotal()));
         }
     }
 
