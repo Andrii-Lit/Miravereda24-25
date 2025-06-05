@@ -9,7 +9,14 @@ import java.util.List;
  * Interfaz para el repositorio de clientes que define los métodos CRUD y autenticación.
  */
 public interface IClienteRepository {
-
+    /**
+     * Obtiene un cliente dado su identificador único.
+     *
+     * @param email Correo del cliente a buscar.
+     * @return El cliente correspondiente al email.
+     * @throws SQLException Si ocurre un error durante la consulta a la base de datos.
+     */
+    Cliente getClientePorEmail(String email) throws SQLException;
     /**
      * Obtiene un cliente dado su identificador único.
      *

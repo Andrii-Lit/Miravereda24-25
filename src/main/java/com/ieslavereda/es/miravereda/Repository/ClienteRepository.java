@@ -9,6 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class ClienteRepository implements IClienteRepository {
+    /**
+     *
+     * @param email Correo del cliente a buscar.
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Cliente getClientePorEmail(String email) throws SQLException {
+        return callClientePorEmail(email);
+    }
+
 
     /**
      *
@@ -196,7 +207,7 @@ public class ClienteRepository implements IClienteRepository {
             if(!loginOk){
                  return null;
             }
-            return getClientePorEmail(email);
+            return callClientePorEmail(email);
         }
 
 
@@ -208,7 +219,7 @@ public class ClienteRepository implements IClienteRepository {
      * @return
      * @throws SQLException
      */
-    private Cliente getClientePorEmail(String email) throws SQLException {
+    private Cliente callClientePorEmail(String email) throws SQLException {
         String sqlGetCliente = "{CALL get_cliente_por_email(?)}";
 
         try (Connection conn = MyDataSource.getMydataSource().getConnection();

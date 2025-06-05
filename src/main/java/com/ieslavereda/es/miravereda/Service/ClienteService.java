@@ -15,7 +15,9 @@ import java.util.List;
 public class ClienteService {
     @Autowired
     private ClienteRepository repository;
-
+    public Cliente getClientePorEmail(String email) throws SQLException {
+        return repository.getClientePorEmail(email);
+    }
     /**
      * Obtiene un cliente dado su identificador único.
      *
