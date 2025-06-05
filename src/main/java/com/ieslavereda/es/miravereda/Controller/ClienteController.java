@@ -25,6 +25,12 @@ public class ClienteController extends BaseController {
 
     @Autowired
     private ClienteService service;
+    /**
+     * Obtiene un cliente por su email.
+     *
+     * @param email el ID del cliente.
+     * @return un {@link ResponseEntity} con el cliente encontrado o mensaje de error.
+     */
     @GetMapping("/cliente")
     public ResponseEntity<?> getClientePorEmail(@RequestParam String email) {
         try {
