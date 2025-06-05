@@ -21,6 +21,22 @@ public class ClienteController extends BaseController {
     @Autowired
     private ClienteService service;
 
+    @GetMapping("/cliente")
+    public ResponseEntity<?> getClientePorEmail(@RequestParam String email) {
+        try {
+            Cliente c = service.getClientePorEmail(email);
+            if (c == null) {
+                return new ResponseEntity<>("Cliente Not Found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(c, HttpStatus.OK);
+        } catch (SQLException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /**
      *
      * @param id
@@ -49,7 +65,7 @@ public class ClienteController extends BaseController {
      * @param cliente
      * @return
      */
-    @PutMapping("/cliente")
+    @PutMapping("/cliente/")
     public ResponseEntity<?> updateCliente(@RequestBody Cliente cliente) {
         try {
             Cliente updated = service.updateCliente(cliente);

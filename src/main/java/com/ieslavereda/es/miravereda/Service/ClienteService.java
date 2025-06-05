@@ -13,7 +13,15 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-
+    /**
+     *
+     * @param email
+     * @return
+     * @throws SQLException
+     */
+    public Cliente getClientePorEmail(String email) throws SQLException {
+        return repository.getClientePorEmail(email);
+    }
     /**
      *
      * @param id

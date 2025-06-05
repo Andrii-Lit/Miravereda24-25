@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IClienteRepository {
+    Cliente getClientePorEmail(String email) throws SQLException;
     /**
      *
      * @param id

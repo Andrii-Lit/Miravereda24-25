@@ -10,6 +10,12 @@ import java.util.List;
 @Repository
 public class ClienteRepository implements IClienteRepository {
 
+    @Override
+    public Cliente getClientePorEmail(String email) throws SQLException {
+        return callClientePorEmail(email);
+    }
+
+
     /**
      *
      * @param id
@@ -41,6 +47,7 @@ public class ClienteRepository implements IClienteRepository {
 
 
     }
+
 
     /**
      *
@@ -196,7 +203,7 @@ public class ClienteRepository implements IClienteRepository {
             if(!loginOk){
                  return null;
             }
-            return getClientePorEmail(email);
+            return callClientePorEmail(email);
         }
 
 
@@ -208,14 +215,12 @@ public class ClienteRepository implements IClienteRepository {
      * @return
      * @throws SQLException
      */
-    private Cliente getClientePorEmail(String email) throws SQLException {
+    private Cliente callClientePorEmail(String email) throws SQLException {
         String sqlGetCliente = "{CALL get_cliente_por_email(?)}";
 
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
              CallableStatement csCliente = conn.prepareCall(sqlGetCliente)) {
-
             csCliente.setString(1, email);
-
             ResultSet rs = csCliente.executeQuery();
                 if (rs.next()) {
 
