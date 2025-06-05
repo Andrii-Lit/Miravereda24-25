@@ -163,7 +163,18 @@ public class   PreferenciasActivity extends BaseActivity implements AdapterView.
 
             }
         });
-        botonVoladorMagico.setOnClickListener((View view)->{finish();});
+        botonVoladorMagico.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreferenciasActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }
