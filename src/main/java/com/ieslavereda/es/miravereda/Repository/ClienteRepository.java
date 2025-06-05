@@ -10,11 +10,16 @@ import java.util.List;
 @Repository
 public class ClienteRepository implements IClienteRepository {
 
+    /**
+     *
+     * @param email
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Cliente getClientePorEmail(String email) throws SQLException {
         return callClientePorEmail(email);
     }
-
 
     /**
      *
@@ -30,8 +35,6 @@ public class ClienteRepository implements IClienteRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-
-
             return     Cliente.builder().id(rs.getInt("id")).contrasenya(rs.getString("contrasenya"))
                         .nombre(rs.getString("nombre"))
                         .apellidos(rs.getString("apellidos")).domicilio(rs.getString("domicilio"))

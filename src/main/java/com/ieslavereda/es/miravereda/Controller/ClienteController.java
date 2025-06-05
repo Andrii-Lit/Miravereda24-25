@@ -21,6 +21,11 @@ public class ClienteController extends BaseController {
     @Autowired
     private ClienteService service;
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GetMapping("/cliente")
     public ResponseEntity<?> getClientePorEmail(@RequestParam String email) {
         try {
