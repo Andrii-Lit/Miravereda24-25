@@ -292,6 +292,7 @@ create procedure actualizar_precio_serie(in p_serie_id int)
 begin
     declare precio_total decimal(10,2);
 	declare porcentaje decimal(5,2);
+    declare precio_serie decimal(10,2);
 	
 	-- El precio_total es la suma de los capitulos
      select ifnull(sum(c.precio_base), 0) into precio_total
@@ -310,6 +311,11 @@ begin
 	update serie set precio_base = precio_total,
 			precio = precio_total * (1+porcentaje) 
 	where contenido_id = p_serie_id;
+
+    -- Recogemos el precio de la serie ya actualizado
+    select precio into precio_serie from serie where contenido_id = p_serie_id;
+    -- Lo seteamos a contenido
+    update contenido set precio = precio_serie where id = p_serie_id;
 
 end$$
 
