@@ -59,6 +59,8 @@
     <string name="crearCuenta">CREATE ACCOUNT</string>
 
     <!-- Tostadas -->
+    <string name="toastErrorAñadirContenido">Error adding content to cart:</string>
+    <string name="toastErrorValorar">Error rating: </string>
     <string name="toastCarritoVacio2">The cart is empty, you cannot make a purchase</string>
     <string name="toastLanzandoCatalogo">Launching catalog...</string>
     <string name="tostadaRellenarCampos">Please, fill in all the fields</string>

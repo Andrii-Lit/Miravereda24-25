@@ -143,7 +143,7 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
-                    showToast("Error al valorar: " + e.getMessage());
+                    showToast(R.string.toastErrorValorar + e.getMessage());
                 }
             });
         });
@@ -205,6 +205,6 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     @Override
     public void doInError(Context context, Exception e) {
         hideProgress();
-        showToast("Error al añadir contenido al carrito: " + e.getMessage());
+        showToast(R.string.toastErrorAñadirContenido + e.getMessage());
     }
 }
