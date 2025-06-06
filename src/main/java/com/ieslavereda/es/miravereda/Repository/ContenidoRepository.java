@@ -8,9 +8,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Repositorio que gestiona las operaciones CRUD y otras funcionalidades
+ * sobre los objetos de tipo Contenido en la base de datos.
+ */
 @Repository
 public class ContenidoRepository implements IContenidoRepository {
 
+    /**
+     * Obtiene un contenido a partir de su identificador.
+     *
+     * @param id Identificador del contenido a buscar.
+     * @return Objeto Contenido si se encuentra, o null si no existe.
+     * @throws SQLException Si ocurre un error de acceso a la base de datos.
+     */
     @Override
     public Contenido getContenido(int id) throws SQLException {
         String sql = "SELECT * FROM contenido WHERE id = ?";
@@ -38,6 +49,13 @@ public class ContenidoRepository implements IContenidoRepository {
         return null;
     }
 
+    /**
+     * Añade un nuevo contenido a la base de datos.
+     *
+     * @param contenido Objeto contenido con los datos a insertar.
+     * @return El objeto contenido insertado.
+     * @throws SQLException Si ocurre un error en la inserción.
+     */
     @Override
     public Contenido addContenido(Contenido contenido) throws SQLException {
         String sql = "INSERT INTO contenido (id, duracion, titulo, descripcion, genero, nombre_dir, actores_principales, poster_path, fecha_estreno, puntuacion_media) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -63,6 +81,13 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
+    /**
+     * Actualiza un contenido existente en la base de datos.
+     *
+     * @param contenido Objeto contenido con los datos actualizados (debe incluir el ID).
+     * @return El objeto contenido actualizado.
+     * @throws SQLException Si ocurre un error durante la actualización.
+     */
     @Override
     public Contenido updateContenido(Contenido contenido) throws SQLException {
         String sql = "UPDATE contenido SET duracion = ?, titulo = ?, descripcion = ?, genero = ?, nombre_dir = ?, actores_principales = ?, poster_path = ?, fecha_estreno = ?, puntuacion_media = ? WHERE id = ?";
@@ -87,11 +112,18 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
+    /**
+     * Elimina un contenido de la base de datos.
+     *
+     * @param id Identificador del contenido a eliminar.
+     * @return El objeto contenido eliminado, o null si no existía.
+     * @throws SQLException Si ocurre un error durante la eliminación.
+     */
     @Override
     public Contenido deleteContenido(int id) throws SQLException {
         Contenido contenido = getContenido(id);
         if (contenido == null) {
-            return null; // O lanzar excepción si prefieres
+            return null;
         }
         String sql = "DELETE FROM contenido WHERE id = ?";
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
@@ -102,6 +134,12 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenido;
     }
 
+    /**
+     * Devuelve una lista con todos los contenidos de la base de datos.
+     *
+     * @return Lista de objetos Contenido.
+     * @throws SQLException Si ocurre un error al recuperar los datos.
+     */
     @Override
     public List<Contenido> getAllContenidos() throws SQLException {
         String sql = "SELECT * FROM contenido";
@@ -129,6 +167,13 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenidos;
     }
 
+    /**
+     * Añade un contenido al carrito de un cliente mediante un procedimiento almacenado.
+     *
+     * @param p_cliente_id ID del cliente.
+     * @param p_contenido_id ID del contenido.
+     * @throws SQLException Si ocurre un error en la llamada al procedimiento.
+     */
     @Override
     public void anyadirCarrito(int p_cliente_id, int p_contenido_id) throws SQLException {
         String sql = "{call anyadir_al_carrito(?,?)}";
@@ -140,6 +185,12 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
+    /**
+     * Realiza la compra de todos los productos en el carrito del cliente.
+     *
+     * @param clienteId ID del cliente.
+     * @throws SQLException Si ocurre un error en la operación.
+     */
     public void comprar(int clienteId) throws SQLException {
         String sql = "{CALL comprar(?)}";
         try (Connection connection = MyDataSource.getMydataSource().getConnection();
@@ -149,6 +200,14 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
+    /**
+     * Permite a un cliente votar un contenido.
+     *
+     * @param clienteId ID del cliente.
+     * @param contenidoId ID del contenido.
+     * @param valor Valor del voto (puntuación).
+     * @throws SQLException Si ocurre un error en la base de datos.
+     */
     public void votar(int clienteId, int contenidoId, int valor) throws SQLException {
         String sql = "{call votar(?, ?, ?)}";
         try (Connection con = MyDataSource.getMydataSource().getConnection();
@@ -160,6 +219,12 @@ public class ContenidoRepository implements IContenidoRepository {
         }
     }
 
+    /**
+     * Devuelve todos los contenidos que están actualmente en el carrito del cliente.
+     *
+     * @param clienteId ID del cliente.
+     * @return Lista de contenidos en el carrito.
+     */
     public List<Contenido> getAllCarrito(int clienteId) {
         String sql = "{ call get_all_carrito(?)}";
         List<Contenido> contenidos = new ArrayList<>();
@@ -190,6 +255,13 @@ public class ContenidoRepository implements IContenidoRepository {
         return contenidos;
     }
 
+    /**
+     * Elimina un contenido del carrito del cliente.
+     *
+     * @param clienteId ID del cliente.
+     * @param contenidoId ID del contenido a eliminar.
+     * @throws SQLException Si ocurre un error en la operación.
+     */
     public void quitarProducto(int clienteId, int contenidoId) throws SQLException {
         String sql = "{call quitar_producto(?, ?)}";
         try (Connection conn = MyDataSource.getMydataSource().getConnection();
