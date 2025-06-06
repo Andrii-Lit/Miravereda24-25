@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity {
                     editor.putInt("clienteId",clienteResponse.getId());
                     editor.apply();
                     Log.d("LOGIN", "Voy a lanzar catalogo activity");
-                    Toast.makeText(MainActivity.this, "Lanzando catalogo...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.toastLanzandoCatalogo, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, CatalogoActivity.class);
                     startActivity(intent);
                 } else {

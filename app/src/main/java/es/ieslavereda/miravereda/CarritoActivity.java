@@ -58,7 +58,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
-            showToast("No se encontró el ID del cliente. Por favor inicia sesión.");
+            showToast(getString(R.string.toastErrorID));
             finish();
             return;
         }
