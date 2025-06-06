@@ -1,14 +1,12 @@
 package es.ieslavereda.miravereda.Model;
 
 import java.io.Serializable;
-
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+/**
+ * Clase que representa un cliente de la plataforma.
+ * Implementa Serializable para permitir su paso entre componentes.
+ */
 public class Cliente implements Serializable {
     private int id;
     private String contrasenya;
@@ -21,15 +19,16 @@ public class Cliente implements Serializable {
     private String num_tarjeta;
 
     /**
+     * Constructor completo con todos los campos excepto id.
      *
-     * @param contrasenya
-     * @param nombre
-     * @param apellidos
-     * @param domicilio
-     * @param cod_postal
-     * @param email
-     * @param fecha_nac
-     * @param num_tarjeta
+     * @param contrasenya Contraseña del cliente.
+     * @param nombre Nombre del cliente.
+     * @param apellidos Apellidos del cliente.
+     * @param domicilio Dirección de domicilio.
+     * @param cod_postal Código postal.
+     * @param email Email del cliente.
+     * @param fecha_nac Fecha de nacimiento.
+     * @param num_tarjeta Número de tarjeta asociado.
      */
     public Cliente(String contrasenya, String nombre, String apellidos, String domicilio, String cod_postal, String email, LocalDate fecha_nac, String num_tarjeta) {
         this.contrasenya = contrasenya;
@@ -42,167 +41,182 @@ public class Cliente implements Serializable {
         this.num_tarjeta = num_tarjeta;
     }
 
-
+    /**
+     * Constructor vacío.
+     */
     public Cliente() {
-
     }
 
     /**
+     * Constructor con email y contraseña, útil para login.
      *
-     * @param email
-     * @param contrasenya
+     * @param email Email del cliente.
+     * @param contrasenya Contraseña del cliente.
      */
     public Cliente(String email, String contrasenya) {
         this.email = email;
         this.contrasenya = contrasenya;
     }
 
-    // Getters y setters
-
     /**
+     * Obtiene el identificador único del cliente.
      *
-     * @return
+     * @return Id del cliente.
      */
     public int getId() {
         return id;
     }
 
     /**
+     * Establece el identificador único del cliente.
      *
-     * @param id
+     * @param id Id del cliente.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
+     * Obtiene la contraseña del cliente.
      *
-     * @return
+     * @return Contraseña.
      */
     public String getContrasenya() {
         return contrasenya;
     }
 
     /**
+     * Establece la contraseña del cliente.
      *
-     * @param contrasenya
+     * @param contrasenya Contraseña.
      */
     public void setContrasenya(String contrasenya) {
         this.contrasenya = contrasenya;
     }
 
     /**
+     * Obtiene el nombre del cliente.
      *
-     * @return
+     * @return Nombre.
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
+     * Establece el nombre del cliente.
      *
-     * @param nombre
+     * @param nombre Nombre.
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
+     * Obtiene los apellidos del cliente.
      *
-     * @return
+     * @return Apellidos.
      */
     public String getApellidos() {
         return apellidos;
     }
 
     /**
+     * Establece los apellidos del cliente.
      *
-     * @param apellidos
+     * @param apellidos Apellidos.
      */
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
 
     /**
+     * Obtiene el domicilio del cliente.
      *
-     * @return
+     * @return Domicilio.
      */
     public String getDomicilio() {
         return domicilio;
     }
 
     /**
+     * Establece el domicilio del cliente.
      *
-     * @param domicilio
+     * @param domicilio Domicilio.
      */
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
 
     /**
+     * Obtiene el código postal.
      *
-     * @return
+     * @return Código postal.
      */
     public String getCod_postal() {
         return cod_postal;
     }
 
     /**
+     * Establece el código postal.
      *
-     * @param cod_postal
+     * @param cod_postal Código postal.
      */
     public void setCod_postal(String cod_postal) {
         this.cod_postal = cod_postal;
     }
 
     /**
+     * Obtiene el email del cliente.
      *
-     * @return
+     * @return Email.
      */
     public String getEmail() {
         return email;
     }
 
     /**
+     * Establece el email del cliente.
      *
-     * @param email
+     * @param email Email.
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
+     * Obtiene la fecha de nacimiento.
      *
-     * @return
+     * @return Fecha de nacimiento.
      */
     public LocalDate getFecha_nac() {
         return fecha_nac;
     }
 
     /**
+     * Establece la fecha de nacimiento.
      *
-     * @param fecha_nac
+     * @param fecha_nac Fecha de nacimiento.
      */
     public void setFecha_nac(LocalDate fecha_nac) {
         this.fecha_nac = fecha_nac;
     }
 
     /**
+     * Obtiene el número de tarjeta asociado al cliente.
      *
-     * @return
+     * @return Número de tarjeta.
      */
     public String getNum_tarjeta() {
         return num_tarjeta;
     }
 
     /**
+     * Establece el número de tarjeta asociado al cliente.
      *
-     * @param num_tarjeta
+     * @param num_tarjeta Número de tarjeta.
      */
     public void setNum_tarjeta(String num_tarjeta) {
         this.num_tarjeta = num_tarjeta;
     }
-
-
 }
-
