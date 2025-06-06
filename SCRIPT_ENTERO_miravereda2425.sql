@@ -565,9 +565,10 @@ create trigger trigger_actualizar_precio_serie_after_insert_capitulo
 after insert on capitulo
 for each row
 begin
-    declare serie_id int;
-    select serie_id into serie_id from temporada where id = new.temporada_id;
-    call actualizar_precio_serie(serie_id);
+    declare p_serie_id int;
+    set p_serie_id = (select serie_id from temporada where id = new.temporada_id);
+
+    call actualizar_precio_serie(p_serie_id);
 end$$
 
 #-- AFTER UPDATE
@@ -576,9 +577,10 @@ create trigger trigger_actualizar_precio_serie_after_update_capitulo
 after update on capitulo
 for each row
 begin
-    declare serie_id int;
-    select serie_id into serie_id from temporada where id = new.temporada_id;
-    call actualizar_precio_serie(serie_id);
+    declare p_serie_id int;
+    set p_serie_id = (select serie_id from temporada where id = new.temporada_id);
+
+    call actualizar_precio_serie(p_serie_id);
 end$$
 
 #-- AFTER DELETE
@@ -587,9 +589,10 @@ create trigger trigger_actualizar_precio_serie_after_delete_capitulo
 after delete on capitulo
 for each row
 begin
-    declare serie_id int;
-    select serie_id into serie_id from temporada where id = old.temporada_id;
-    call actualizar_precio_serie(serie_id);
+    declare p_serie_id int;
+    set p_serie_id = (select serie_id from temporada where id = new.temporada_id);
+
+    call actualizar_precio_serie(p_serie_id);
 end$$
 
 
