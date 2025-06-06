@@ -122,6 +122,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
 
         // Listener para el botón comprar
         carrito_comprarButton.setOnClickListener(v -> {
+            if (contenidos_anyadidos.isEmpty()) {
+                showToast("El carrito está vacío, no puedes realizar una compra");
+                return;
+            }
             showProgress();
             executeCall(new CallInterface<Void>() {
                 @Override
