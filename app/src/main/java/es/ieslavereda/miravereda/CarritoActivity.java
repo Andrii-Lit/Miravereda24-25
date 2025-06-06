@@ -24,6 +24,10 @@ import es.ieslavereda.miravereda.Model.Cliente;
 import es.ieslavereda.miravereda.Model.Contenido;
 import es.ieslavereda.miravereda.Model.OnCarritoDeleteListener;
 
+/**
+ * Actividad que gestiona el carrito de compras.
+ * Implementa la interfaz CallInterface para manejar llamadas asíncronas que devuelven una lista de Contenido.
+ */
 public class CarritoActivity extends BaseActivity implements CallInterface<List<Contenido>> {
 
     private List<Contenido> contenidos_anyadidos = new ArrayList<>();
@@ -36,11 +40,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     private int clienteId = -1;
 
     /**
+     * Método llamado al crear la actividad.
+     * Inicializa vistas, configura listeners y carga el carrito desde backend.
      *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
+     * @param savedInstanceState Bundle con estado guardado de la actividad (si existe).
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         clienteId = prefs.getInt("clienteId", -1);
 
         if (clienteId == -1) {
-            showToast("No se encontró el ID del cliente. Por favor inicia sesión.");
+            showToast(getString(R.string.toastErrorID));
             finish();
             return;
         }
@@ -67,37 +70,27 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         String contrasenya = prefs.getString("contrasenya", null);
         cliente = new Cliente(email, contrasenya);
 
-        // Configurar botón volver
+        // Configurar botón volver para cerrar la actividad
         carrito_backButton.setOnClickListener(v -> finish());
 
-        // Configurar RecyclerView y adaptador con Listener
+        // Configurar RecyclerView con adaptador y listener para eliminar items
         carritorvAdapter = new CarritoAdaptadorRV(this, contenidos_anyadidos, carrito_precioTV, new OnCarritoDeleteListener() {
             /**
+             * Método que se ejecuta cuando se elimina un contenido del carrito.
              *
-             * @param contenido
-             * @param position
-             * Metodo para eliminar del carrito el contenido.
+             * @param contenido Contenido a eliminar.
+             * @param position Posición del contenido en la lista.
              */
             @Override
             public void onDelete(Contenido contenido, int position) {
                 showProgress();
                 executeCall(new CallInterface<Void>() {
-                    /**
-                     *
-                     * @return
-                     * @throws Exception
-                     */
                     @Override
                     public Void doInBackground() throws Exception {
                         Connector.getConector().deleteVoid("carrito/" + clienteId + "/" + contenido.getId());
                         return null;
                     }
 
-                    /**
-                     *
-                     * @param data
-                     * Mostrar los cambios en el recycler view cuando se elimina
-                     */
                     @Override
                     public void doInUI(Void data) {
                         contenidos_anyadidos.remove(position);
@@ -107,12 +100,6 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                         Toast.makeText(CarritoActivity.this, R.string.toastEliminarCarrito, Toast.LENGTH_SHORT).show();
                     }
 
-                    /**
-                     *
-                     * @param context
-                     * @param e
-                     * Cuando ocurre un error nos muestra el mensaje.
-                     */
                     @Override
                     public void doInError(Context context, Exception e) {
                         hideProgress();
@@ -121,54 +108,35 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
                                         (e.getMessage() != null ? e.getMessage()
                                                 : getString(R.string.toastErrorDesconocido)),
                                 Toast.LENGTH_LONG).show();
-
                     }
                 });
             }
         });
+
         carrito_recyclerView.setAdapter(carritorvAdapter);
         carrito_recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Cargar datos del carrito en background
+        // Cargar datos del carrito al iniciar
         showProgress();
         executeCall(this);
 
-        // Listener para botón comprar
+        // Listener para el botón comprar
         carrito_comprarButton.setOnClickListener(v -> {
             showProgress();
             executeCall(new CallInterface<Void>() {
-                /**
-                 *
-                 * @return
-                 * @throws Exception
-                 * Llama a la api en el path comprar/ y le hace la llamada a la api para comprar un producto.
-                 */
                 @Override
                 public Void doInBackground() throws Exception {
                     Connector.getConector().postVoid("comprar/" + clienteId);
                     return null;
                 }
 
-                /**
-                 *
-                 * @param data
-                 *  Recargar el carrito para reflejar los cambios reales desde el backend
-                 */
-
                 @Override
                 public void doInUI(Void data) {
                     hideProgress();
                     showToast(getString(R.string.toastCompraExito));
-
                     executeCall(CarritoActivity.this);
                 }
 
-                /**
-                 *
-                 * @param context
-                 * @param e
-                 * Muestra un toast con mensaje de error.
-                 */
                 @Override
                 public void doInError(Context context, Exception e) {
                     hideProgress();
@@ -178,6 +146,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
         });
     }
 
+    /**
+     * Método llamado al reanudar la actividad.
+     * Recarga la información del carrito.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -186,10 +158,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     }
 
     /**
+     * Llamada en segundo plano para obtener la lista de contenidos del carrito desde el backend.
      *
-     * @return
-     * @throws Exception
-     * Llama a la api para pedirle la lista del carrito del cliente.
+     * @return Lista de contenidos añadidos al carrito.
+     * @throws Exception En caso de error en la llamada.
      */
     @Override
     public List<Contenido> doInBackground() throws Exception {
@@ -204,9 +176,9 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     }
 
     /**
+     * Actualiza la interfaz de usuario con la lista de contenidos recibida.
      *
-     * @param data
-     * Añade los contenido a la lista cuando recibe la información de la API.
+     * @param data Lista de contenidos obtenida del backend.
      */
     @Override
     public void doInUI(List<Contenido> data) {
@@ -229,10 +201,10 @@ public class CarritoActivity extends BaseActivity implements CallInterface<List<
     }
 
     /**
+     * Muestra un mensaje de error en caso de que falle la carga del carrito.
      *
-     * @param context
-     * @param e
-     * Muestra un toast indicando el error de no poder cargar la información del carrito.
+     * @param context Contexto de la aplicación.
+     * @param e       Excepción ocurrida.
      */
     @Override
     public void doInError(Context context, Exception e) {

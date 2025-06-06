@@ -29,6 +29,11 @@ import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.Cliente;
 import es.ieslavereda.miravereda.Model.Contenido;
 
+/**
+ * Actividad que muestra un catálogo de contenidos disponibles.
+ * Permite navegar a detalles del contenido y gestionar carrito de compras.
+ * Implementa {@link CallInterface} para manejar llamadas asíncronas a la API.
+ */
 public class CatalogoActivity extends BaseActivity implements View.OnClickListener, CallInterface<Collection<Contenido>> {
 
     private List<Contenido> contenidos = new ArrayList<>();
@@ -41,11 +46,10 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     /**
+     * Método llamado al crear la actividad.
+     * Inicializa vistas, recupera sesión, configura RecyclerView y lanza carga de contenidos.
      *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
+     * @param savedInstanceState Bundle con el estado previo guardado (puede ser null).
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +57,25 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         EdgeToEdge.enable(this);
         setContentView(R.layout.catalogo_layout);
 
+        // Ajuste para respetar áreas del sistema (barras, notch, etc)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.ConstraintLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Registrar launcher para resultados de actividades (detalles contenido)
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK || result.getResultCode() == RESULT_CANCELED) {
                         executeCall(this);
                         showProgress();
-
                     }
                 }
         );
 
+        // Recuperar sesión cliente de SharedPreferences
         SharedPreferences prefs = getSharedPreferences("cliente", Context.MODE_PRIVATE);
         String email = prefs.getString("email", null);
         String contrasenya = prefs.getString("contrasenya", null);
@@ -89,27 +95,32 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Log.d("PREFS", "Leído email: " + email);
         Log.d("PREFS", "Leído contrasenya: " + contrasenya);
 
+        // Inicializar vistas y listeners
         volver = findViewById(R.id.Volver);
         carrito = findViewById(R.id.Carrito);
         recyclerView = findViewById(R.id.recycled);
 
-        volver.setOnClickListener((View view)->{finish();});
+        volver.setOnClickListener((View view) -> finish());
         carrito.setOnClickListener(view -> {
             Intent intent = new Intent(this, CarritoActivity.class);
             startActivity(intent);
         });
 
+        // Configurar RecyclerView con adaptador y layout manager
         adaptadorRV = new AdaptadorRV(this, contenidos, this);
         recyclerView.setAdapter(adaptadorRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Cargar contenidos desde API
         executeCall(this);
         showProgress();
     }
 
     /**
+     * Manejador de clics sobre elementos del RecyclerView.
+     * Abre la actividad de detalle del contenido seleccionado.
      *
-     * @param v The view that was clicked.
+     * @param v Vista clicada.
      */
     @Override
     public void onClick(View v) {
@@ -117,14 +128,14 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
         Contenido contenido = contenidos.get(pos);
         Intent intent = new Intent(this, DetalleContenidoActivity.class);
         intent.putExtra("contenido", contenido);
-        // Usa el launcher para el detalle
         activityResultLauncher.launch(intent);
     }
 
     /**
+     * Lógica para ejecutar en segundo plano y obtener la lista de contenidos desde la API.
      *
-     * @return
-     * @throws Exception
+     * @return Colección de contenidos recibidos.
+     * @throws Exception Si hay error en la llamada.
      */
     @Override
     public Collection<Contenido> doInBackground() throws Exception {
@@ -134,8 +145,9 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
+     * Actualiza la UI con la lista de contenidos obtenida.
      *
-     * @param contenido
+     * @param contenido Colección de contenidos recibida.
      */
     @Override
     public void doInUI(Collection<Contenido> contenido) {
@@ -148,9 +160,10 @@ public class CatalogoActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
+     * Muestra mensaje de error en la UI si la carga de contenidos falla.
      *
-     * @param context
-     * @param e
+     * @param context Contexto para mostrar el Toast.
+     * @param e       Excepción ocurrida.
      */
     @Override
     public void doInError(Context context, Exception e) {

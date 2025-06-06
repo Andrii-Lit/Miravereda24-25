@@ -22,23 +22,30 @@ import es.ieslavereda.miravereda.Base.CallInterface;
 import es.ieslavereda.miravereda.Model.CarritoRequest;
 import es.ieslavereda.miravereda.Model.Contenido;
 
+/**
+ * Actividad que muestra los detalles de un contenido multimedia,
+ * permite valorar el contenido y añadirlo al carrito de compra.
+ */
 public class DetalleContenidoActivity extends BaseActivity implements CallInterface<Void> {
 
+    /** Objeto contenido con los datos que se muestran en la pantalla */
     private Contenido contenido;
+
+    /** Elementos gráficos de la interfaz */
     private ImageView poster;
     private TextView descripcion, nombreautor, preciovalor, notaMediaValor, titulo, anyo;
     private EditText notaCliente;
     private Button anyadirAlCarrito, valorar;
     private FloatingActionButton volver;
 
+    /** Objeto que representa la petición para añadir al carrito */
     private CarritoRequest carritoRequest;
 
     /**
+     * Método llamado al crear la actividad.
+     * Inicializa la interfaz, recupera el contenido recibido y configura listeners.
      *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
+     * @param savedInstanceState Bundle con estado previo guardado (puede ser null).
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +75,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
         nombreautor.setText(contenido.getNombre_dir());
         preciovalor.setText(contenido.getPrecio() + " €");
 
-        volver.setOnClickListener((View view)->{
-                Intent intent = new Intent();
-                setResult(RESULT_CANCELED, intent);
-                finish();
+        volver.setOnClickListener((View view) -> {
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELED, intent);
+            finish();
         });
 
         valorar.setOnClickListener(v -> {
@@ -101,9 +108,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
             showProgress();
             executeCall(new CallInterface<Void>() {
                 /**
+                 * Ejecuta la petición POST para enviar la valoración.
                  *
-                 * @return
-                 * @throws Exception
+                 * @return null
+                 * @throws Exception si hay error en la comunicación
                  */
                 @Override
                 public Void doInBackground() throws Exception {
@@ -112,8 +120,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 }
 
                 /**
+                 * Se ejecuta al recibir respuesta correcta.
+                 * Muestra mensaje y finaliza la actividad.
                  *
-                 * @param data
+                 * @param data null
                  */
                 @Override
                 public void doInUI(Void data) {
@@ -125,9 +135,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
                 }
 
                 /**
+                 * Se ejecuta si hay error durante la petición.
                  *
-                 * @param context
-                 * @param e
+                 * @param context Contexto actual
+                 * @param e Excepción ocurrida
                  */
                 @Override
                 public void doInError(Context context, Exception e) {
@@ -150,8 +161,9 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     }
 
     /**
+     * Obtiene el id del cliente almacenado en preferencias.
      *
-     * @return
+     * @return id del cliente o -1 si no se encuentra.
      */
     private int obtenerClienteId() {
         SharedPreferences prefs = getSharedPreferences("cliente", MODE_PRIVATE);
@@ -159,9 +171,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     }
 
     /**
+     * Implementación de la llamada en segundo plano para añadir contenido al carrito.
      *
-     * @return
-     * @throws Exception
+     * @return null
+     * @throws Exception si falla la petición
      */
     @Override
     public Void doInBackground() throws Exception {
@@ -170,8 +183,10 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     }
 
     /**
+     * Acción a realizar en la interfaz al completar la petición correctamente.
+     * Oculta progreso, muestra mensaje y finaliza la actividad.
      *
-     * @param data
+     * @param data null
      */
     @Override
     public void doInUI(Void data) {
@@ -181,9 +196,11 @@ public class DetalleContenidoActivity extends BaseActivity implements CallInterf
     }
 
     /**
+     * Acción a realizar en caso de error durante la petición.
+     * Oculta progreso y muestra mensaje con la excepción.
      *
-     * @param context
-     * @param e
+     * @param context Contexto actual
+     * @param e Excepción ocurrida
      */
     @Override
     public void doInError(Context context, Exception e) {

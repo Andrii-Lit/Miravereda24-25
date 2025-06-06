@@ -59,6 +59,7 @@
     <string name="crearCuenta">CREAR CUENTA</string>
 
     <!-- Tostadas -->
+    <string name="toastLanzandoCatalogo">Lanzando catalogo...</string>
     <string name="tostadaRellenarCampos">Por favor, rellena todos los campos</string>
     <string name="tostadaLogin">Sesión iniciada correctamente</string>
     <string name="tostadaCredencialesIncorrectas">Credenciales incorrectas</string>
