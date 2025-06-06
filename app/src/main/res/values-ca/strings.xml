@@ -59,6 +59,7 @@
     <string name="crearCuenta">CREAR COMPTE</string>
 
     <!-- Tostadas -->
+    <string name="toastCarritoVacio2">El carret està buit, no pots realitzar una compra</string>
     <string name="toastLanzandoCatalogo">Llançant catalogue...</string>
     <string name="tostadaRellenarCampos">Per favor, farcida tots els camps</string>
     <string name="tostadaLogin">Sessió iniciada correctament</string>

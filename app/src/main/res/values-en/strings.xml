@@ -59,6 +59,7 @@
     <string name="crearCuenta">CREATE ACCOUNT</string>
 
     <!-- Tostadas -->
+    <string name="toastCarritoVacio2">The cart is empty, you cannot make a purchase</string>
     <string name="toastLanzandoCatalogo">Launching catalog...</string>
     <string name="tostadaRellenarCampos">Please, fill in all the fields</string>
     <string name="tostadaLogin">Successful login</string>
