@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
             /**
              *
              * @param clienteResponse
-             * Si la llamda a la api le devuelve las credenciales como correctas lo manda con un intent
+             * Si la llamada a la api le devuelve las credenciales como correctas lo manda con un intent
              * a la actividad catalogo.
              */
             @Override
